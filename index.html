@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dale — Astrophotography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inconsolata:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root,
+  [data-theme="dark"] {
+    --ink: #e8e2d9;
+    --dim: #7a7468;
+    --bg: #0c0b09;
+    --accent: #c8a96e;
+    --card-bg: #131210;
+    --border: #2e2c28;
+    --placeholder-a: #131210;
+    --placeholder-b: #1a1814;
+    --placeholder-hover-a: #1a1814;
+    --placeholder-hover-b: #211e18;
+    --modal-bg: #131210;
+    --input-bg: #0c0b09;
+    --lightbox-bg: rgba(8,7,6,0.96);
+    --overlay-bg: rgba(8,7,6,0.94);
+  }
+
+  [data-theme="light"] {
+    --ink: #1a1814;
+    --dim: #8a8278;
+    --bg: #f5f2ec;
+    --accent: #a07840;
+    --card-bg: #ffffff;
+    --border: #ddd8ce;
+    --placeholder-a: #ede8df;
+    --placeholder-b: #e4ddd2;
+    --placeholder-hover-a: #ddd8ce;
+    --placeholder-hover-b: #d5cfc4;
+    --modal-bg: #ffffff;
+    --input-bg: #f5f2ec;
+    --lightbox-bg: rgba(240,236,228,0.97);
+    --overlay-bg: rgba(200,190,175,0.90);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 0.35s, color 0.35s;
+  }
+
+  #stars {
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none; opacity: 0.6;
+    transition: opacity 0.35s;
+  }
+  [data-theme="light"] #stars { opacity: 0.15; }
+
+  /* ── HEADER ── */
+  header {
+    position: relative; z-index: 10;
+    padding: 3.5rem 4rem 2rem;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    transition: border-color 0.35s;
+  }
+  .site-title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 300; letter-spacing: 0.04em; line-height: 1; }
+  .site-title em { font-style: italic; color: var(--accent); }
+  .site-subtitle { font-family: 'Inconsolata', monospace; font-size: 0.7rem; font-weight: 300; color: var(--dim); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 0.5rem; }
+  .header-right { display: flex; align-items: center; gap: 2.5rem; }
+  nav { display: flex; gap: 2.5rem; font-family: 'Inconsolata', monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
+  nav a { color: inherit; text-decoration: none; transition: color 0.2s; cursor: pointer; }
+  nav a:hover { color: var(--accent); }
+
+  /* ── THEME TOGGLE ── */
+  .theme-toggle {
+    font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+    background: transparent; border: 1px solid var(--border); color: var(--dim);
+    padding: 0.38rem 0.85rem; cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 0.45rem; white-space: nowrap;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .toggle-icon { font-size: 0.9rem; line-height: 1; transition: transform 0.4s; display: inline-block; }
+  .theme-toggle:hover .toggle-icon { transform: rotate(22deg); }
+
+  /* ── HERO ── */
+  .hero { position: relative; z-index: 5; padding: 6rem 4rem 4rem; max-width: 700px; }
+  .hero-label { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
+  .hero h2 { font-size: clamp(2.2rem, 4vw, 3.8rem); font-weight: 300; line-height: 1.15; letter-spacing: 0.01em; margin-bottom: 1.5rem; }
+  .hero p { font-size: 1.1rem; line-height: 1.75; color: var(--dim); font-style: italic; max-width: 480px; }
+
+  /* ── FILTER BAR ── */
+  .filter-bar { position: relative; z-index: 5; padding: 0 4rem 2.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+  .filter-label { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); margin-right: 0.5rem; }
+  .filter-btn { font-family: 'Inconsolata', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; background: transparent; border: 1px solid var(--border); color: var(--dim); padding: 0.4rem 1rem; cursor: pointer; transition: all 0.2s; border-radius: 0; }
+  .filter-btn:hover, .filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(200,169,110,0.06); }
+
+  /* ── GALLERY GRID ── */
+  .gallery-section { position: relative; z-index: 5; padding: 0 4rem 5rem; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+  .card:nth-child(5) { grid-column: span 2; }
+  .card:nth-child(8) { grid-column: span 2; }
+  @media (max-width: 900px) {
+    .card:nth-child(5), .card:nth-child(8) { grid-column: span 1; }
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    overflow: hidden; cursor: pointer;
+    transition: border-color 0.3s, transform 0.3s, background 0.35s;
+    animation: fadeUp 0.6s ease both; position: relative;
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+  /* ── CARD ACTIONS ── */
+  .card-actions { position: absolute; top: 0.6rem; right: 0.6rem; display: flex; gap: 0.35rem; z-index: 20; opacity: 0; transition: opacity 0.2s; }
+  .card:hover .card-actions { opacity: 1; }
+  .card-action-btn { font-family: 'Inconsolata', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid; padding: 0.28rem 0.6rem; cursor: pointer; transition: all 0.18s; backdrop-filter: blur(6px); line-height: 1.4; }
+  .edit-btn { background: rgba(12,11,9,0.78); border-color: var(--border); color: var(--dim); }
+  [data-theme="light"] .edit-btn { background: rgba(245,242,236,0.88); }
+  .edit-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(200,169,110,0.15); }
+  .delete-btn { background: rgba(12,11,9,0.78); border-color: rgba(180,60,60,0.4); color: rgba(210,100,100,0.8); }
+  [data-theme="light"] .delete-btn { background: rgba(245,242,236,0.88); }
+  .delete-btn:hover { border-color: #c04040; color: #e05050; background: rgba(200,50,50,0.12); }
+
+  /* ── CARD IMAGE ── */
+  .card-img-wrap { position: relative; overflow: hidden; aspect-ratio: 4/3; background: var(--placeholder-a); transition: background 0.35s; }
+  .card:nth-child(5) .card-img-wrap, .card:nth-child(8) .card-img-wrap { aspect-ratio: 16/7; }
+  .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease, filter 0.4s; filter: saturate(0.85) brightness(0.95); }
+  .card:hover .card-img-wrap img { transform: scale(1.04); filter: saturate(1) brightness(1); }
+
+  .card-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background: linear-gradient(135deg, var(--placeholder-a) 0%, var(--placeholder-b) 100%); color: var(--dim); font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
+  .card:hover .card-placeholder { background: linear-gradient(135deg, var(--placeholder-hover-a) 0%, var(--placeholder-hover-b) 100%); color: var(--accent); }
+  .card-placeholder svg { opacity: 0.3; transition: opacity 0.3s; }
+  .card:hover .card-placeholder svg { opacity: 0.6; }
+
+  .card-info { padding: 1rem 1.2rem 1.1rem; display: flex; justify-content: space-between; align-items: flex-end; }
+  .card-title { font-size: 1.05rem; font-weight: 400; letter-spacing: 0.02em; line-height: 1.3; margin-bottom: 0.25rem; }
+  .card-meta { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
+  .card-tag { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(200,169,110,0.3); padding: 0.2rem 0.5rem; white-space: nowrap; }
+
+  /* ── ADD CARD ── */
+  .card-add { border: 1px dashed var(--border); background: transparent; cursor: pointer; transition: all 0.3s; min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; animation: fadeUp 0.6s ease both; }
+  .card-add:hover { border-color: var(--accent); background: rgba(200,169,110,0.03); }
+  .card-add-icon { width: 44px; height: 44px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--dim); font-size: 1.5rem; font-weight: 300; transition: all 0.3s; line-height: 1; }
+  .card-add:hover .card-add-icon { border-color: var(--accent); color: var(--accent); }
+  .card-add-text { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); transition: color 0.3s; }
+  .card-add:hover .card-add-text { color: var(--accent); }
+
+  /* ── LIGHTBOX ── */
+  .lightbox { display: none; position: fixed; inset: 0; z-index: 100; background: var(--lightbox-bg); align-items: center; justify-content: center; padding: 2rem; }
+  .lightbox.open { display: flex; }
+  .lightbox-inner { max-width: 1100px; width: 100%; display: flex; gap: 3rem; align-items: center; }
+  .lightbox-img-wrap { flex: 1; max-height: 80vh; overflow: hidden; }
+  .lightbox-img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .lightbox-details { width: 240px; flex-shrink: 0; }
+  .lightbox-tag { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .lightbox-title { font-size: 2rem; font-weight: 300; font-style: italic; line-height: 1.2; margin-bottom: 1rem; }
+  .lightbox-meta { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--dim); line-height: 2; margin-bottom: 1.5rem; }
+  .lightbox-desc { font-size: 0.95rem; line-height: 1.7; color: var(--dim); font-style: italic; }
+  .lightbox-close { position: absolute; top: 2rem; right: 2.5rem; font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); background: none; border: 1px solid var(--border); padding: 0.4rem 0.8rem; cursor: pointer; transition: all 0.2s; }
+  .lightbox-close:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* ── MODAL ── */
+  .modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: var(--overlay-bg); align-items: center; justify-content: center; padding: 2rem; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--modal-bg); border: 1px solid var(--border); padding: 2.5rem; width: 100%; max-width: 500px; transition: background 0.35s, border-color 0.35s; max-height: 90vh; overflow-y: auto; }
+  .modal-title { font-family: 'Inconsolata', monospace; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.8rem; }
+  .modal label { display: block; font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.4rem; margin-top: 1.2rem; }
+  .modal label:first-of-type { margin-top: 0; }
+  .modal input, .modal select, .modal textarea { width: 100%; background: var(--input-bg); border: 1px solid var(--border); color: var(--ink); font-family: 'Cormorant Garamond', serif; font-size: 1rem; padding: 0.6rem 0.8rem; outline: none; transition: border-color 0.2s, background 0.35s, color 0.35s; resize: vertical; }
+  .modal input:focus, .modal select:focus, .modal textarea:focus { border-color: var(--accent); }
+  .modal select option { background: var(--modal-bg); color: var(--ink); }
+
+  /* Filename input hint */
+  .input-hint { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.08em; color: var(--dim); margin-top: 0.35rem; line-height: 1.5; }
+  .input-hint code { color: var(--accent); font-size: 0.62rem; }
+
+  /* Image preview strip */
+  .img-preview-wrap { margin-top: 0.6rem; width: 100%; aspect-ratio: 16/7; overflow: hidden; background: var(--input-bg); border: 1px solid var(--border); display: none; }
+  .img-preview-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* Delete confirm strip */
+  .delete-confirm { display: none; margin-top: 1.4rem; border-top: 1px solid var(--border); padding-top: 1.4rem; }
+  .delete-confirm.visible { display: block; }
+  .delete-confirm p { font-style: italic; font-size: 0.95rem; color: var(--dim); margin-bottom: 1rem; }
+  .delete-confirm-btns { display: flex; gap: 0.6rem; }
+
+  .modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.8rem; align-items: center; }
+
+  /* ── BUTTONS ── */
+  .btn { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.55rem 1.4rem; cursor: pointer; transition: all 0.2s; border: 1px solid; }
+  .btn-ghost { background: transparent; border-color: var(--border); color: var(--dim); }
+  .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: #0c0b09; }
+  .btn-primary:hover { filter: brightness(1.1); }
+  .btn-danger { background: transparent; border-color: rgba(180,60,60,0.45); color: #b05050; }
+  .btn-danger:hover { background: rgba(200,50,50,0.1); border-color: #c04040; color: #e05050; }
+
+  /* ── FOOTER ── */
+  footer { position: relative; z-index: 5; border-top: 1px solid var(--border); padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; transition: border-color 0.35s; }
+  .footer-left { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
+  .footer-right { font-style: italic; font-size: 0.9rem; color: var(--dim); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.12s; }
+  .card:nth-child(3) { animation-delay: 0.19s; }
+  .card:nth-child(4) { animation-delay: 0.26s; }
+  .card:nth-child(5) { animation-delay: 0.33s; }
+  .card:nth-child(6) { animation-delay: 0.40s; }
+
+  @media (max-width: 768px) {
+    header { padding: 2rem; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    .header-right { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .hero { padding: 3rem 2rem 2rem; }
+    .filter-bar { padding: 0 2rem 2rem; }
+    .gallery-section { padding: 0 2rem 4rem; }
+    footer { padding: 1.5rem 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    .lightbox-inner { flex-direction: column; }
+    .lightbox-details { width: 100%; }
+  }
+
+  .empty-state { grid-column: 1/-1; text-align: center; padding: 5rem 2rem; color: var(--dim); font-style: italic; font-size: 1.1rem; display: none; }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<!-- HEADER -->
+<header>
+  <div>
+    <h1 class="site-title">Dale — <em>Among Stars</em></h1>
+    <p class="site-subtitle">Astrophotography · Edinburgh, Scotland</p>
+  </div>
+  <div class="header-right">
+    <nav>
+      <a onclick="filterGallery('all',null)">All</a>
+      <a onclick="filterGallery('galaxy',null)">Galaxies</a>
+      <a onclick="filterGallery('nebula',null)">Nebulae</a>
+      <a onclick="filterGallery('cluster',null)">Clusters</a>
+      <a onclick="filterGallery('planet',null)">Planets</a>
+    </nav>
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span class="toggle-icon" id="toggle-icon">☀</span>
+      <span id="toggle-label">Light</span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-label">// Personal Archive</p>
+  <h2>Light from the edge<br>of the observable</h2>
+  <p>Captured from Edinburgh with a Dwarf 3 smart telescope. Each image represents hours of integration against the northern light-polluted sky.</p>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-label">Filter —</span>
+  <button class="filter-btn active" onclick="filterGallery('all',this)">All</button>
+  <button class="filter-btn" onclick="filterGallery('galaxy',this)">Galaxies</button>
+  <button class="filter-btn" onclick="filterGallery('nebula',this)">Nebulae</button>
+  <button class="filter-btn" onclick="filterGallery('cluster',this)">Clusters</button>
+  <button class="filter-btn" onclick="filterGallery('planet',this)">Planets</button>
+</div>
+
+<!-- GALLERY -->
+<!--
+  ========================================================
+  HOW TO ADD A PHOTO
+  ========================================================
+  1. Drop your image file into the images/ folder
+  2. Copy one of the <div class="card"> blocks below
+  3. Set data-img="images/your-filename.jpg"
+  4. Fill in data-title, data-tag, data-meta, data-desc
+  5. Save and push to GitHub — done!
+
+  Valid data-tag values: galaxy | nebula | cluster | planet | other
+  ========================================================
+-->
+<section class="gallery-section">
+  <div class="gallery-grid" id="gallery">
+
+    <!-- ↓ SAMPLE CARDS — replace data-img with your real filenames ↓ -->
+
+    <div class="card"
+      data-img="images/andromeda.jpg"
+      data-tag="galaxy"
+      data-title="Andromeda Galaxy"
+      data-meta="M31 · 26 Feb 2025 · Edinburgh"
+      data-desc="Our nearest large galactic neighbour, 2.5 million light-years away. Captured over 4 nights with Duo-Band filter.">
+    </div>
+
+    <div class="card"
+      data-img="images/orion.jpg"
+      data-tag="nebula"
+      data-title="Orion Nebula"
+      data-meta="M42 · 14 Jan 2025 · Edinburgh"
+      data-desc="The jewel of the winter sky, a stellar nursery 1,344 light-years distant. One of the brightest nebulae visible to the naked eye.">
+    </div>
+
+    <div class="card"
+      data-img="images/pleiades.jpg"
+      data-tag="cluster"
+      data-title="Pleiades"
+      data-meta="M45 · 3 Dec 2024 · Edinburgh"
+      data-desc="The Seven Sisters, an open cluster 444 light-years away. The blue reflection nebulosity surrounding the brightest stars is striking.">
+    </div>
+
+    <div class="card"
+      data-img="images/saturn.jpg"
+      data-tag="planet"
+      data-title="Saturn"
+      data-meta="Opposition · 18 Aug 2024 · Edinburgh"
+      data-desc="Captured during opposition with the Cassini Division clearly resolved. The planet's rings are currently tilting edge-on.">
+    </div>
+
+    <div class="card"
+      data-img="images/rosette.jpg"
+      data-tag="nebula"
+      data-title="Rosette Nebula"
+      data-meta="NGC 2244 · 8 Mar 2025 · Edinburgh"
+      data-desc="A vast emission nebula in Monoceros, roughly 5,000 light-years away. The Duo-Band filter was essential to cut through Edinburgh's light pollution.">
+    </div>
+
+    <div class="card"
+      data-img="images/triangulum.jpg"
+      data-tag="galaxy"
+      data-title="Triangulum Galaxy"
+      data-meta="M33 · 1 Oct 2024 · Edinburgh"
+      data-desc="The third-largest member of the Local Group, 2.7 million light-years distant. A challenging target requiring dark skies — captured with extended integration time.">
+    </div>
+
+    <!-- ↑ ADD NEW CARDS ABOVE THIS LINE ↑ -->
+
+    <div class="card card-add" id="add-card-hint">
+      <div class="card-add-icon">+</div>
+      <span class="card-add-text">Add card via HTML</span>
+    </div>
+    <div class="empty-state" id="empty-state">No images in this category yet.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">Dale · Edinburgh, Scotland · Dwarf 3 Telescope</div>
+  <div class="footer-right">Per aspera ad astra</div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+  <div class="lightbox-inner">
+    <div class="lightbox-img-wrap"><img id="lightbox-img" src="" alt=""></div>
+    <div class="lightbox-details">
+      <div class="lightbox-tag" id="lightbox-tag"></div>
+      <h3 class="lightbox-title" id="lightbox-title"></h3>
+      <div class="lightbox-meta" id="lightbox-meta"></div>
+      <p class="lightbox-desc" id="lightbox-desc"></p>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="edit-modal" onclick="overlayClick(event,'edit-modal')">
+  <div class="modal">
+    <div class="modal-title">// Edit Card</div>
+
+    <label>Image filename</label>
+    <input type="text" id="edit-img" placeholder="images/filename.jpg">
+    <p class="input-hint">Path relative to <code>index.html</code>, e.g. <code>images/andromeda.jpg</code></p>
+    <div class="img-preview-wrap" id="edit-preview-wrap">
+      <img id="edit-preview-img" src="" alt="preview">
+    </div>
+
+    <label>Title</label>
+    <input type="text" id="edit-title">
+
+    <label>Category</label>
+    <select id="edit-tag">
+      <option value="galaxy">Galaxy</option>
+      <option value="nebula">Nebula</option>
+      <option value="cluster">Cluster</option>
+      <option value="planet">Planet</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label>Date & Location</label>
+    <input type="text" id="edit-meta">
+
+    <label>Notes</label>
+    <textarea id="edit-desc" rows="3"></textarea>
+
+    <div class="delete-confirm" id="delete-confirm">
+      <p>Remove this card from the gallery? This cannot be undone.</p>
+      <div class="delete-confirm-btns">
+        <button class="btn btn-ghost" onclick="document.getElementById('delete-confirm').classList.remove('visible')">Keep it</button>
+        <button class="btn btn-danger" onclick="confirmDelete()">Yes, delete</button>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-danger" style="margin-right:auto" onclick="document.getElementById('delete-confirm').classList.toggle('visible')">Delete</button>
+      <button class="btn btn-ghost" onclick="closeEditModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEdit()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STARFIELD ──
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let stars = [];
+function resizeCanvas() { canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+function generateStars(n=280) {
+  stars=Array.from({length:n},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.1+0.2,a:Math.random(),speed:Math.random()*0.003+0.001,phase:Math.random()*Math.PI*2}));
+}
+function drawStars(t) {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const light=document.documentElement.dataset.theme==='light';
+  stars.forEach(s=>{
+    const pulse=s.a*(0.5+0.5*Math.sin(t*s.speed*60+s.phase));
+    ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle=light?`rgba(80,70,55,${pulse*0.4})`:`rgba(232,226,217,${pulse})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(t=>drawStars(t/1000));
+}
+resizeCanvas(); generateStars(); drawStars(0);
+window.addEventListener('resize',()=>{resizeCanvas();generateStars();});
+
+// ── THEME TOGGLE ──
+function toggleTheme() {
+  const html=document.documentElement;
+  const goLight=html.dataset.theme==='dark';
+  html.dataset.theme=goLight?'light':'dark';
+  document.getElementById('toggle-icon').textContent=goLight?'☾':'☀';
+  document.getElementById('toggle-label').textContent=goLight?'Dark':'Light';
+}
+
+// ── BUILD CARDS FROM DATA ATTRIBUTES ──
+// Cards are defined purely as <div class="card" data-*> in the HTML.
+// On page load we render them, so images load from the images/ folder.
+function placeholderSVG() {
+  return `<div class="card-placeholder">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+    No image
+  </div>`;
+}
+
+function renderCard(card) {
+  const tag   = card.dataset.tag   || 'other';
+  const title = card.dataset.title || 'Untitled';
+  const meta  = card.dataset.meta  || '';
+  const imgSrc= card.dataset.img   || '';
+  const label = tag.charAt(0).toUpperCase()+tag.slice(1);
+
+  const imgHTML = imgSrc
+    ? `<img src="${imgSrc}" alt="${title}" onerror="this.parentElement.innerHTML='${placeholderSVG().replace(/'/g,"\\'").replace(/\n/g,'')}';">`
+    : placeholderSVG();
+
+  card.innerHTML = `
+    <div class="card-actions">
+      <button class="card-action-btn edit-btn" onclick="openEditModal(event,this.closest('.card'))">Edit</button>
+      <button class="card-action-btn delete-btn" onclick="triggerDelete(event,this.closest('.card'))">Delete</button>
+    </div>
+    <div class="card-img-wrap">${imgHTML}</div>
+    <div class="card-info">
+      <div>
+        <div class="card-title">${title}</div>
+        <div class="card-meta">${meta}</div>
+      </div>
+      <span class="card-tag">${label}</span>
+    </div>`;
+}
+
+// Render all data-defined cards on load
+document.querySelectorAll('.card:not(.card-add)').forEach(renderCard);
+
+// ── FILTER ──
+function filterGallery(tag, btn) {
+  if(btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+  const cards=document.querySelectorAll('.card:not(.card-add)');
+  let vis=0;
+  cards.forEach(c=>{const show=tag==='all'||c.dataset.tag===tag;c.style.display=show?'':'none';if(show)vis++;});
+  document.getElementById('empty-state').style.display=vis===0?'block':'none';
+}
+
+// ── LIGHTBOX ──
+document.getElementById('gallery').addEventListener('click',e=>{
+  if(e.target.classList.contains('card-action-btn')) return;
+  if(e.target.closest('.card-add')) return;
+  const card=e.target.closest('.card:not(.card-add)');
+  if(!card) return;
+  const img=card.querySelector('img');
+  if(!img) return;
+  document.getElementById('lightbox-img').src=img.src;
+  document.getElementById('lightbox-title').textContent=card.dataset.title||'';
+  document.getElementById('lightbox-tag').textContent=(card.dataset.tag||'').toUpperCase();
+  document.getElementById('lightbox-meta').textContent=card.dataset.meta||'';
+  document.getElementById('lightbox-desc').textContent=card.dataset.desc||'';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+});
+
+function closeLightbox(e) {
+  if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('lightbox-close')) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ── EDIT / DELETE ──
+let editingCard=null;
+
+// Live preview image as filename is typed
+document.getElementById('edit-img').addEventListener('input', function() {
+  const val=this.value.trim();
+  const wrap=document.getElementById('edit-preview-wrap');
+  const prev=document.getElementById('edit-preview-img');
+  if(val){prev.src=val;wrap.style.display='block';}
+  else{wrap.style.display='none';}
+});
+
+function openEditModal(e,card) {
+  e.stopPropagation();
+  editingCard=card;
+  document.getElementById('edit-img').value   = card.dataset.img  ||'';
+  document.getElementById('edit-title').value = card.dataset.title||'';
+  document.getElementById('edit-tag').value   = card.dataset.tag  ||'galaxy';
+  document.getElementById('edit-meta').value  = card.dataset.meta ||'';
+  document.getElementById('edit-desc').value  = card.dataset.desc ||'';
+
+  const wrap=document.getElementById('edit-preview-wrap');
+  const prev=document.getElementById('edit-preview-img');
+  if(card.dataset.img){prev.src=card.dataset.img;wrap.style.display='block';}
+  else{wrap.style.display='none';}
+
+  document.getElementById('delete-confirm').classList.remove('visible');
+  document.getElementById('edit-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function triggerDelete(e,card) {
+  e.stopPropagation();
+  editingCard=card;
+  card.style.transition='opacity 0.25s, transform 0.25s';
+  card.style.opacity='0.5'; card.style.transform='scale(0.97)';
+  openEditModal(e,card);
+  setTimeout(()=>document.getElementById('delete-confirm').classList.add('visible'),50);
+}
+
+function saveEdit() {
+  if(!editingCard) return;
+  const img  =document.getElementById('edit-img').value.trim();
+  const title=document.getElementById('edit-title').value.trim()||'Untitled';
+  const tag  =document.getElementById('edit-tag').value;
+  const meta =document.getElementById('edit-meta').value.trim()||'';
+  const desc =document.getElementById('edit-desc').value.trim()||'';
+
+  editingCard.dataset.img   = img;
+  editingCard.dataset.title = title;
+  editingCard.dataset.tag   = tag;
+  editingCard.dataset.meta  = meta;
+  editingCard.dataset.desc  = desc;
+
+  renderCard(editingCard);
+  closeEditModal();
+}
+
+function confirmDelete() {
+  if(!editingCard) return;
+  const c=editingCard;
+  c.style.transition='opacity 0.28s, transform 0.28s';
+  c.style.opacity='0'; c.style.transform='scale(0.94)';
+  setTimeout(()=>{c.remove();closeEditModal();},300);
+}
+
+function closeEditModal() {
+  document.getElementById('edit-modal').classList.remove('open');
+  document.body.style.overflow='';
+  if(editingCard){editingCard.style.opacity='';editingCard.style.transform='';}
+  editingCard=null;
+  document.getElementById('delete-confirm').classList.remove('visible');
+}
+
+function overlayClick(e,id) {
+  if(e.target===document.getElementById(id)) closeEditModal();
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeLightbox({target:document.getElementById('lightbox')});closeEditModal();}
+});
+</script>
+</body>
+</html>
