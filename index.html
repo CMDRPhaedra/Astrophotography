@@ -178,15 +178,12 @@
   .modal input:focus, .modal select:focus, .modal textarea:focus { border-color: var(--accent); }
   .modal select option { background: var(--modal-bg); color: var(--ink); }
 
-  /* Filename input hint */
   .input-hint { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.08em; color: var(--dim); margin-top: 0.35rem; line-height: 1.5; }
   .input-hint code { color: var(--accent); font-size: 0.62rem; }
 
-  /* Image preview strip */
   .img-preview-wrap { margin-top: 0.6rem; width: 100%; aspect-ratio: 16/7; overflow: hidden; background: var(--input-bg); border: 1px solid var(--border); display: none; }
   .img-preview-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-  /* Delete confirm strip */
   .delete-confirm { display: none; margin-top: 1.4rem; border-top: 1px solid var(--border); padding-top: 1.4rem; }
   .delete-confirm.visible { display: block; }
   .delete-confirm p { font-style: italic; font-size: 0.95rem; color: var(--dim); margin-bottom: 1rem; }
@@ -247,7 +244,7 @@
       <a onclick="filterGallery('galaxy',null)">Galaxies</a>
       <a onclick="filterGallery('nebula',null)">Nebulae</a>
       <a onclick="filterGallery('cluster',null)">Clusters</a>
-      <a onclick="filterGallery('planet',null)">Planets</a>
+      <a onclick="filterGallery('other',null)">Comets</a>
     </nav>
     <button class="theme-toggle" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon">☀</span>
@@ -270,81 +267,169 @@
   <button class="filter-btn" onclick="filterGallery('galaxy',this)">Galaxies</button>
   <button class="filter-btn" onclick="filterGallery('nebula',this)">Nebulae</button>
   <button class="filter-btn" onclick="filterGallery('cluster',this)">Clusters</button>
-  <button class="filter-btn" onclick="filterGallery('planet',this)">Planets</button>
+  <button class="filter-btn" onclick="filterGallery('other',this)">Comets</button>
 </div>
 
-<!-- GALLERY -->
 <!--
-  ========================================================
+  =====================================================
   HOW TO ADD A PHOTO
-  ========================================================
-  1. Drop your image file into the images/ folder
-  2. Copy one of the <div class="card"> blocks below
-  3. Set data-img="images/your-filename.jpg"
-  4. Fill in data-title, data-tag, data-meta, data-desc
-  5. Save and push to GitHub — done!
+  =====================================================
+  1. Drop the image into the images/ folder
+  2. Copy one <div class="card"> block below
+  3. Update data-img, data-tag, data-title, data-meta, data-desc
+  4. Save the file
 
-  Valid data-tag values: galaxy | nebula | cluster | planet | other
-  ========================================================
+  data-tag values: galaxy | nebula | cluster | planet | other
+  =====================================================
 -->
 <section class="gallery-section">
   <div class="gallery-grid" id="gallery">
 
-    <!-- ↓ SAMPLE CARDS — replace data-img with your real filenames ↓ -->
+    <!-- GALAXIES -->
+    <div class="card" data-img="images/M31 Andromeda Galaxy.PNG"
+      data-tag="galaxy" data-title="Andromeda Galaxy" data-meta="M31 · Edinburgh"
+      data-desc="The largest galaxy in the Local Group at 2.5 million light-years away, Andromeda is on a collision course with the Milky Way — the two will merge in roughly 4.5 billion years. At over 200,000 light-years across it is twice the diameter of our own galaxy, and on a dark night is visible to the naked eye as a faint smudge in the constellation Andromeda."></div>
 
-    <div class="card"
-      data-img="images/andromeda.jpg"
-      data-tag="galaxy"
-      data-title="Andromeda Galaxy"
-      data-meta="M31 · 26 Feb 2025 · Edinburgh"
-      data-desc="Our nearest large galactic neighbour, 2.5 million light-years away. Captured over 4 nights with Duo-Band filter.">
-    </div>
+    <div class="card" data-img="images/M33 Triangulum Galaxy.JPG"
+      data-tag="galaxy" data-title="Triangulum Galaxy" data-meta="M33 · Edinburgh"
+      data-desc="The third-largest member of the Local Group at 2.7 million light-years distant, the Triangulum Galaxy is one of the most remote objects visible to the naked eye under perfect conditions. It is a pure spiral with no central bulge, and hosts one of the largest known HII regions — the giant star-forming cloud NGC 604, which dwarfs anything in the Milky Way."></div>
 
-    <div class="card"
-      data-img="images/orion.jpg"
-      data-tag="nebula"
-      data-title="Orion Nebula"
-      data-meta="M42 · 14 Jan 2025 · Edinburgh"
-      data-desc="The jewel of the winter sky, a stellar nursery 1,344 light-years distant. One of the brightest nebulae visible to the naked eye.">
-    </div>
+    <div class="card" data-img="images/M51 Whirlpool Galaxy.jpg"
+      data-tag="galaxy" data-title="Whirlpool Galaxy" data-meta="M51 · Edinburgh"
+      data-desc="Located 23 million light-years away in Canes Venatici, M51 was the first galaxy in which spiral structure was observed, by Lord Rosse in 1845. It is actively interacting with its smaller companion NGC 5195, whose gravitational influence is thought to be compressing gas in M51&apos;s spiral arms and triggering vigorous star formation throughout."></div>
 
-    <div class="card"
-      data-img="images/pleiades.jpg"
-      data-tag="cluster"
-      data-title="Pleiades"
-      data-meta="M45 · 3 Dec 2024 · Edinburgh"
-      data-desc="The Seven Sisters, an open cluster 444 light-years away. The blue reflection nebulosity surrounding the brightest stars is striking.">
-    </div>
+    <div class="card" data-img="images/M81 Bodes Galaxy.JPG"
+      data-tag="galaxy" data-title="Bode's Galaxy" data-meta="M81 · Edinburgh"
+      data-desc="Discovered by Johann Elert Bode in 1774, M81 lies 12 million light-years away in Ursa Major and is one of the brightest galaxies in the night sky. Its tightly wound grand-design spiral arms are driven by an unusually massive central black hole weighing in at around 70 million solar masses — roughly 17 times heavier than the Milky Way&apos;s own Sagittarius A*."></div>
 
-    <div class="card"
-      data-img="images/saturn.jpg"
-      data-tag="planet"
-      data-title="Saturn"
-      data-meta="Opposition · 18 Aug 2024 · Edinburgh"
-      data-desc="Captured during opposition with the Cassini Division clearly resolved. The planet's rings are currently tilting edge-on.">
-    </div>
+    <div class="card" data-img="images/M82 Cigar Galaxy & M81 Bodes Galaxy.JPG"
+      data-tag="galaxy" data-title="Cigar Galaxy &amp; Bode's Galaxy" data-meta="M82 &amp; M81 · Edinburgh"
+      data-desc="M81 and M82 form a striking interacting pair 12 million light-years away. Gravitational disturbance from M81 has triggered a ferocious burst of star formation in M82, the Cigar Galaxy, at a rate roughly ten times that of the Milky Way. The resulting supernovae drive a dramatic superwind of hot gas that erupts perpendicular to M82&apos;s disc, visible here as diffuse red filaments of hydrogen."></div>
 
-    <div class="card"
-      data-img="images/rosette.jpg"
-      data-tag="nebula"
-      data-title="Rosette Nebula"
-      data-meta="NGC 2244 · 8 Mar 2025 · Edinburgh"
-      data-desc="A vast emission nebula in Monoceros, roughly 5,000 light-years away. The Duo-Band filter was essential to cut through Edinburgh's light pollution.">
-    </div>
+    <div class="card" data-img="images/M101 Pin Wheel Galaxy.PNG"
+      data-tag="galaxy" data-title="Pinwheel Galaxy" data-meta="M101 · Edinburgh"
+      data-desc="Spanning 170,000 light-years — nearly twice the Milky Way — M101 lies 21 million light-years away in Ursa Major. Its asymmetric spiral arms, pulled askew by interactions with neighbouring galaxies, are peppered with luminous star-forming knots. In 2023 it hosted SN 2023bee, one of the nearest Type Ia supernovae in recent decades, making it a valuable distance-calibration target."></div>
 
-    <div class="card"
-      data-img="images/triangulum.jpg"
-      data-tag="galaxy"
-      data-title="Triangulum Galaxy"
-      data-meta="M33 · 1 Oct 2024 · Edinburgh"
-      data-desc="The third-largest member of the Local Group, 2.7 million light-years distant. A challenging target requiring dark skies — captured with extended integration time.">
-    </div>
+    <div class="card" data-img="images/M101 Pinwheel Galaxy.jpeg"
+      data-tag="galaxy" data-title="Pinwheel Galaxy (v2)" data-meta="M101 · Edinburgh"
+      data-desc="A second integration of M101, the Pinwheel Galaxy — 21 million light-years away in Ursa Major. At 170,000 light-years across it is one of the largest known spiral galaxies. The asymmetry of its arms is thought to result from past tidal interactions with the smaller companion galaxy NGC 5474, which sits just outside the frame to the south."></div>
 
-    <!-- ↑ ADD NEW CARDS ABOVE THIS LINE ↑ -->
+    <div class="card" data-img="images/IC2574 Coddington's Nebula.JPG"
+      data-tag="galaxy" data-title="Coddington&apos;s Nebula" data-meta="IC 2574 · Edinburgh"
+      data-desc="Despite its misleading name, IC 2574 is a dwarf irregular galaxy roughly 4 million light-years away in Ursa Major, and a satellite of M81. Discovered by Edwin Coddington in 1898, it is riddled with enormous expanding HI supershells — holes blown into the interstellar medium by successive generations of supernovae — making it a key laboratory for studying triggered star formation."></div>
 
-    <div class="card card-add" id="add-card-hint">
+    <!-- NEBULAE -->
+    <div class="card" data-img="images/M42 Orion Nebula.jpeg"
+      data-tag="nebula" data-title="Orion Nebula" data-meta="M42 · Edinburgh"
+      data-desc="At only 1,344 light-years away, the Orion Nebula is the closest large star-forming region to Earth and one of the most studied objects in the sky. The four hot young stars at its heart — the Trapezium cluster — were born roughly 300,000 years ago and their ultraviolet radiation sculpts the surrounding gas into glowing curtains and pillars. On a clear night it is just visible to the naked eye as the fuzzy middle &apos;star&apos; in Orion&apos;s sword."></div>
+
+    <div class="card" data-img="images/M27 Dumbbell Nebula.png"
+      data-tag="nebula" data-title="Dumbbell Nebula" data-meta="M27 · Edinburgh"
+      data-desc="The Dumbbell was the first planetary nebula ever catalogued, discovered by Charles Messier in 1764. Lying 1,360 light-years away in Vulpecula, it is the ejected outer envelope of a dying Sun-like star whose exposed white dwarf core now illuminates the surrounding gas. At roughly 2.5 light-years across it is one of the largest and brightest planetary nebulae in the sky."></div>
+
+    <div class="card" data-img="images/M8 Lagoon Nebula.png"
+      data-tag="nebula" data-title="Lagoon Nebula" data-meta="M8 · Edinburgh"
+      data-desc="One of only two star-forming nebulae visible to the naked eye from mid-northern latitudes, the Lagoon lies 4,100 light-years away in Sagittarius. Its dark central lane — the &apos;lagoon&apos; — is a dust lane silhouetted against the glowing gas behind it. The young open cluster NGC 6530, embedded within, is only a few million years old and its hot stars are the primary source of ionising radiation lighting up the nebula."></div>
+
+    <div class="card" data-img="images/C49 Rosette Nebula.JPG"
+      data-tag="nebula" data-title="Rosette Nebula" data-meta="C49 · Edinburgh"
+      data-desc="This vast emission nebula in Monoceros spans roughly 130 light-years and lies about 5,200 light-years away. The central open cluster NGC 2244 formed from this very gas cloud around 4 million years ago, and the intense stellar winds and radiation from its hot O-type stars have since carved a wide hole in the nebula&apos;s centre — giving it the characteristic rose shape. The Duo-Band filter is essential to cut through Edinburgh&apos;s light pollution and reveal the hydrogen-alpha structure."></div>
+
+    <div class="card" data-img="images/C27 Crescent Nebula.jpeg"
+      data-tag="nebula" data-title="Crescent Nebula" data-meta="C27 · Edinburgh"
+      data-desc="NGC 6888 in Cygnus is a wolf-rayet wind nebula — a shell of gas blown off and energised by the massive, rapidly evolving star WR 136 at its centre. Lying around 5,000 light-years away, the crescent shape is formed where the current fast stellar wind slams into slower material ejected during an earlier red giant phase. WR 136 will almost certainly end its life as a supernova within the next few hundred thousand years."></div>
+
+    <div class="card" data-img="images/IC443 The Jellyfish Nebula.JPG"
+      data-tag="nebula" data-title="The Jellyfish Nebula" data-meta="IC 443 · Edinburgh"
+      data-desc="IC 443 is a supernova remnant in Gemini, the expanding wreckage of a massive star that exploded between 3,000 and 30,000 years ago. It lies roughly 5,000 light-years away and its distinctive filamentary structure results from the blast wave colliding with clouds of interstellar gas at very different densities. A neutron star — the crushed stellar core left behind by the explosion — has been identified at its southern edge."></div>
+
+    <div class="card" data-img="images/IC63 The Ghost of Cassiopeia.PNG.jpeg"
+      data-tag="nebula" data-title="The Ghost of Cassiopeia" data-meta="IC 63 · Edinburgh"
+      data-desc="IC 63 is a small but striking reflection and emission nebula in Cassiopeia, only about 200 light-years away — making it one of the closest nebulae to Earth. It is being actively eroded by intense ultraviolet radiation from the nearby giant star Gamma Cassiopeiae, creating a glowing photodissociation region at its surface. The blue-white reflection component and the red hydrogen-alpha emission are both visible in longer exposures."></div>
+
+    <div class="card" data-img="images/IC805 Heart Nebula.JPG"
+      data-tag="nebula" data-title="Heart Nebula" data-meta="IC 805 · Edinburgh"
+      data-desc="The Heart Nebula in Cassiopeia is a large emission nebula around 7,500 light-years away whose distinctive shape is carved by powerful stellar winds from the young open cluster Melotte 15 at its core. The central cluster contains several O-type stars, some of the hottest and most massive stars known, whose combined radiation ionises the surrounding hydrogen and sculpts the dramatic cavities and pillars visible in hydrogen-alpha imaging."></div>
+
+    <div class="card" data-img="images/IC805 Heart and IC1848 Soul Nebula.JPG"
+      data-tag="nebula" data-title="Heart &amp; Soul Nebula" data-meta="IC 805 &amp; IC 1848 · Edinburgh"
+      data-desc="The Heart (IC 805) and Soul (IC 1848) nebulae form a vast star-forming complex in Cassiopeia spanning roughly 300 light-years and lying around 7,500 light-years away. Together they represent one of the most active regions of stellar nurseries visible from the northern hemisphere. Both are sculpted by the radiation and winds of their respective embedded star clusters, creating the intricate pillars and cavities that make this a favourite wide-field target."></div>
+
+    <div class="card" data-img="images/B150 The Dark Seahorse Nebula.jpeg"
+      data-tag="nebula" data-title="The Dark Seahorse Nebula" data-meta="B150 · Edinburgh"
+      data-desc="Barnard 150 is a dense dark nebula — a cold, opaque cloud of dust and molecular gas — in Cepheus, roughly 1,200 light-years away. Unlike emission or reflection nebulae it produces no light of its own; it is visible only as a silhouette against the star-rich background of the Milky Way. The elongated seahorse shape traces a dense filament of interstellar dust where future generations of stars are slowly condensing under gravity."></div>
+
+    <div class="card" data-img="images/B33 Horse Head Nebula.JPG"
+      data-tag="nebula" data-title="Horsehead Nebula" data-meta="B33 · Edinburgh"
+      data-desc="One of the most recognisable shapes in the night sky, Barnard 33 is a dark nebula in Orion silhouetted against the bright emission nebula IC 434 behind it, approximately 1,375 light-years away. The horse-head shape is a dense pillar of cold gas and dust slowly being eroded by ultraviolet radiation from the nearby hot star Sigma Orionis. New stars are forming deep within its dark interior, hidden from optical telescopes."></div>
+
+    <div class="card" data-img="images/NCG 281 Pacman Nebula.jpg"
+      data-tag="nebula" data-title="Pacman Nebula" data-meta="NGC 281 · Edinburgh"
+      data-desc="NGC 281 in Cassiopeia earned its nickname from its resemblance to the classic arcade character, with a dark dust lane cutting across the bright nebula like an open mouth. Lying around 9,200 light-years away, it is an active star-forming region containing a young open cluster, IC 1590, whose hot stars are ionising the surrounding gas and driving prominent Bok globules — the dark teardrops visible within the nebula — which may themselves be collapsing to form new stars."></div>
+
+    <div class="card" data-img="images/NGC 1499 California Nebula.JPG"
+      data-tag="nebula" data-title="California Nebula" data-meta="NGC 1499 · Edinburgh"
+      data-desc="Stretching over 100 light-years and located about 1,000 light-years away in Perseus, the California Nebula is one of the largest emission nebulae in the sky — but its extremely low surface brightness makes it surprisingly difficult to photograph from light-polluted sites. It is ionised almost entirely by a single star, Xi Persei (Menkib), a luminous blue giant blazing with the power of roughly 263,000 Suns."></div>
+
+    <div class="card" data-img="images/NGC 2174 Monkey head Nebula.PNG"
+      data-tag="nebula" data-title="Monkey Head Nebula" data-meta="NGC 2174 · Edinburgh"
+      data-desc="NGC 2174 in Orion is an emission nebula and star-forming region around 6,400 light-years away. Its sculpted pillars and cavities are driven by ultraviolet radiation and stellar winds from the young cluster NGC 2175 embedded within. Hubble Space Telescope imagery of its pillars — evocative of those in the Eagle Nebula — revealed them to be dense columns of gas being slowly photo-evaporated from the outside in."></div>
+
+    <div class="card" data-img="images/NGC 6960 Western Veil Nebula.PNG"
+      data-tag="nebula" data-title="Western Veil Nebula" data-meta="NGC 6960 · Edinburgh"
+      data-desc="The Western Veil is part of the Cygnus Loop supernova remnant, the remains of a massive star that exploded between 10,000 and 20,000 years ago around 2,100 light-years away. The bright star that appears to pierce the nebula — 52 Cygni — is actually a foreground star with no physical connection. The delicate filamentary structure results from the shockwave heating gas to millions of degrees as it expands outward at hundreds of kilometres per second."></div>
+
+    <div class="card" data-img="images/NGC 6960 Western Veil NGC 6992 Eastern Veil IC1340 Pickering's Triangle.JPG"
+      data-tag="nebula" data-title="Veil Nebula Complex" data-meta="NGC 6960 / 6992 / IC 1340 · Edinburgh"
+      data-desc="The full Veil Nebula complex spans about 3 degrees of sky — roughly six full Moon widths — and represents the complete shell of a supernova remnant in Cygnus around 2,100 light-years away. This mosaic captures the Western Veil (NGC 6960), Eastern Veil (NGC 6992), and Pickering&apos;s Triangle (IC 1340), a fainter central section discovered photographically by Williamina Fleming in 1904. The entire structure is still expanding at over 150 km/s."></div>
+
+    <div class="card" data-img="images/NGC 7000 North American Nebula.JPG"
+      data-tag="nebula" data-title="North American Nebula" data-meta="NGC 7000 · Edinburgh"
+      data-desc="The North American Nebula in Cygnus bears an unmistakable resemblance to the North American continent, complete with a Gulf of Mexico-shaped dark bay formed by an intervening dust cloud. It lies roughly 2,590 light-years away and spans over 100 light-years. The identity of the star responsible for ionising it remained uncertain for decades — it is now thought to be Deneb, one of the most luminous stars known, or a hidden cluster of hot stars within the same region."></div>
+
+    <div class="card" data-img="images/NGC 7380 Wizard Nebula.JPG"
+      data-tag="nebula" data-title="Wizard Nebula" data-meta="NGC 7380 · Edinburgh"
+      data-desc="NGC 7380 in Cepheus is an open cluster embedded in a surrounding emission nebula around 7,200 light-years away. The nebula&apos;s distinctive pointed towers of gas — which give it its wizard-like silhouette — are Bok globules and evaporating gaseous globules (EGGs) being sculpted by radiation from the young cluster stars. The whole complex is relatively young at only around 4 million years old."></div>
+
+    <!-- CLUSTERS -->
+    <div class="card" data-img="images/M45 Pleiades.JPG"
+      data-tag="cluster" data-title="Pleiades" data-meta="M45 · Edinburgh"
+      data-desc="The most famous star cluster in the sky, the Pleiades are only 444 light-years away and have been observed by virtually every human culture throughout history. The cluster contains over 1,000 confirmed members, the brightest of which are hot blue B-type stars around 100 million years old. The wispy blue reflection nebulosity visible around the stars is a chance encounter with an unrelated interstellar dust cloud the cluster is passing through, not the remnant of the stars&apos; birth cloud."></div>
+
+    <div class="card" data-img="images/M34 Spiral Cluster.JPG"
+      data-tag="cluster" data-title="Spiral Cluster" data-meta="M34 · Edinburgh"
+      data-desc="M34 in Perseus lies about 1,500 light-years away and contains roughly 400 stars spread across 35 light-years. At around 200 million years old it is a middle-aged open cluster by astronomical standards — young enough that many of its hot blue stars are still on the main sequence, but old enough that the most massive ones have already evolved away. Several double stars within the cluster are resolvable through a small telescope."></div>
+
+    <div class="card" data-img="images/NGC 1245 Patrick Starfish Cluster.JPG"
+      data-tag="cluster" data-title="Patrick Starfish Cluster" data-meta="NGC 1245 · Edinburgh"
+      data-desc="NGC 1245 in Perseus is a rich open cluster around 9,000 light-years away, making it one of the more distant Messier-adjacent clusters visible from northern latitudes. At roughly 1 billion years old it is considerably older than most naked-eye clusters, and its evolved stellar population — including a prominent red giant branch — makes it a useful benchmark for stellar evolution models."></div>
+
+    <div class="card" data-img="images/NGC 2281 Broken Heart Cluster.JPG"
+      data-tag="cluster" data-title="Broken Heart Cluster" data-meta="NGC 2281 · Edinburgh"
+      data-desc="NGC 2281 in Auriga is a loosely scattered open cluster around 1,600 light-years away. Its popular nickname comes from the distinctive heart-shaped arrangement of its brighter members with a dark gap at the centre, giving the impression of a broken heart. The cluster is estimated to be several hundred million years old, and its relative proximity makes individual stars easily resolvable even in small instruments."></div>
+
+    <div class="card" data-img="images/NGC 7789 Carolines Rose Cluster.JPG"
+      data-tag="cluster" data-title="Caroline&apos;s Rose Cluster" data-meta="NGC 7789 · Edinburgh"
+      data-desc="Discovered by Caroline Herschel in 1783 and named in her honour, NGC 7789 in Cassiopeia is one of the richest and oldest open clusters in the Milky Way — containing around 1,000 stars at a distance of 7,600 light-years. At roughly 1.6 billion years old, most of its massive stars have long since evolved into red giants, which give the cluster its characteristically warm-toned appearance. The interlocking loops of stars and dark lanes between them suggest a rose in bloom."></div>
+
+    <div class="card" data-img="images/NGC 869 h Persei.JPG"
+      data-tag="cluster" data-title="h Persei" data-meta="NGC 869 · Edinburgh"
+      data-desc="h Persei (NGC 869) is the western component of the famous Double Cluster in Perseus, one of the finest sights in the northern sky. It lies about 7,500 light-years away and is only around 13 million years old — a stellar infant by any measure. The cluster is dominated by brilliant blue-white supergiant stars, with a sprinkling of contrasting red supergiants that have already evolved off the main sequence. Both clusters likely formed from the same giant molecular cloud."></div>
+
+    <!-- COMETS -->
+    <div class="card" data-img="images/C:2025 R2.jpeg"
+      data-tag="other" data-title="Comet C/2025 R2" data-meta="Edinburgh"
+      data-desc="C/2025 R2 is a long-period comet discovered in 2025 during routine sky surveys. Like all comets it is a primordial relic of the solar system&apos;s formation 4.6 billion years ago — a frozen body of ice and dust from the outer solar system that brightens dramatically as it approaches the Sun and volatile ices sublimate into a glowing coma and tail. Its orbital period suggests it originates in the distant Oort Cloud and may not return for tens of thousands of years."></div>
+
+    <div class="card" data-img="images/C2025 Lemon.JPG"
+      data-tag="other" data-title="Comet C/2025 Lemon" data-meta="Edinburgh"
+      data-desc="Comet C/2025 Lemon is a dynamically new comet making its first recorded passage through the inner solar system, arriving fresh from the Oort Cloud. Its green colouring — visible in longer exposures — is caused by diatomic carbon (C2) molecules in the coma fluorescing under ultraviolet sunlight. First-time visitors from the Oort Cloud often produce dramatic displays as pristine, volatile-rich ices encounter solar radiation for the first time."></div>
+
+    <!-- ADD NEW CARDS ABOVE THIS LINE -->
+
+    <div class="card card-add" id="add-card" onclick="openAddModal()">
       <div class="card-add-icon">+</div>
-      <span class="card-add-text">Add card via HTML</span>
+      <span class="card-add-text">Add Photo</span>
     </div>
     <div class="empty-state" id="empty-state">No images in this category yet.</div>
   </div>
@@ -370,17 +455,50 @@
   </div>
 </div>
 
+<!-- ADD PHOTO MODAL -->
+<div class="modal-overlay" id="add-modal" onclick="overlayClick(event,'add-modal')">
+  <div class="modal">
+    <div class="modal-title">// Add New Photo</div>
+
+    <label>Image filename</label>
+    <input type="text" id="add-img" placeholder="images/filename.jpg">
+    <p class="input-hint">Drop your image in <code>images/</code> first, then enter the path here — e.g. <code>images/horsehead.jpg</code></p>
+    <div class="img-preview-wrap" id="add-preview-wrap"><img id="add-preview-img" src="" alt="preview"></div>
+
+    <label>Title</label>
+    <input type="text" id="add-title" placeholder="e.g. Horsehead Nebula">
+
+    <label>Category</label>
+    <select id="add-tag">
+      <option value="galaxy">Galaxy</option>
+      <option value="nebula">Nebula</option>
+      <option value="cluster">Cluster</option>
+      <option value="planet">Planet</option>
+      <option value="other">Comet / Other</option>
+    </select>
+
+    <label>Date & Location</label>
+    <input type="text" id="add-meta" placeholder="e.g. IC 434 · 2 Jan 2026 · Edinburgh">
+
+    <label>Notes</label>
+    <textarea id="add-desc" rows="3" placeholder="Equipment, integration time, filters used…"></textarea>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeAddModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveAdd()">Add Photo</button>
+    </div>
+  </div>
+</div>
+
 <!-- EDIT MODAL -->
 <div class="modal-overlay" id="edit-modal" onclick="overlayClick(event,'edit-modal')">
   <div class="modal">
-    <div class="modal-title">// Edit Card</div>
+    <div class="modal-title">// Edit Photo</div>
 
     <label>Image filename</label>
     <input type="text" id="edit-img" placeholder="images/filename.jpg">
     <p class="input-hint">Path relative to <code>index.html</code>, e.g. <code>images/andromeda.jpg</code></p>
-    <div class="img-preview-wrap" id="edit-preview-wrap">
-      <img id="edit-preview-img" src="" alt="preview">
-    </div>
+    <div class="img-preview-wrap" id="edit-preview-wrap"><img id="edit-preview-img" src="" alt="preview"></div>
 
     <label>Title</label>
     <input type="text" id="edit-title">
@@ -391,7 +509,7 @@
       <option value="nebula">Nebula</option>
       <option value="cluster">Cluster</option>
       <option value="planet">Planet</option>
-      <option value="other">Other</option>
+      <option value="other">Comet / Other</option>
     </select>
 
     <label>Date & Location</label>
@@ -448,9 +566,7 @@ function toggleTheme() {
   document.getElementById('toggle-label').textContent=goLight?'Dark':'Light';
 }
 
-// ── BUILD CARDS FROM DATA ATTRIBUTES ──
-// Cards are defined purely as <div class="card" data-*> in the HTML.
-// On page load we render them, so images load from the images/ folder.
+// ── CARD RENDERING ──
 function placeholderSVG() {
   return `<div class="card-placeholder">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
@@ -462,13 +578,11 @@ function renderCard(card) {
   const tag   = card.dataset.tag   || 'other';
   const title = card.dataset.title || 'Untitled';
   const meta  = card.dataset.meta  || '';
-  const imgSrc= card.dataset.img   || '';
+  const img   = card.dataset.img   || '';
   const label = tag.charAt(0).toUpperCase()+tag.slice(1);
-
-  const imgHTML = imgSrc
-    ? `<img src="${imgSrc}" alt="${title}" onerror="this.parentElement.innerHTML='${placeholderSVG().replace(/'/g,"\\'").replace(/\n/g,'')}';">`
+  const imgHTML = img
+    ? `<img src="${img}" alt="${title}" onerror="this.parentElement.innerHTML=placeholderSVG();">`
     : placeholderSVG();
-
   card.innerHTML = `
     <div class="card-actions">
       <button class="card-action-btn edit-btn" onclick="openEditModal(event,this.closest('.card'))">Edit</button>
@@ -519,10 +633,64 @@ function closeLightbox(e) {
   document.body.style.overflow='';
 }
 
+// ── ADD PHOTO ──
+document.getElementById('add-img').addEventListener('input', function() {
+  const val=this.value.trim();
+  const wrap=document.getElementById('add-preview-wrap');
+  const prev=document.getElementById('add-preview-img');
+  if(val){prev.src=val;wrap.style.display='block';}
+  else{wrap.style.display='none';}
+});
+
+function openAddModal() {
+  ['add-img','add-title','add-meta','add-desc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('add-tag').value='galaxy';
+  document.getElementById('add-preview-wrap').style.display='none';
+  document.getElementById('add-preview-img').src='';
+  document.getElementById('add-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeAddModal() {
+  document.getElementById('add-modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function saveAdd() {
+  const img  =document.getElementById('add-img').value.trim();
+  const title=document.getElementById('add-title').value.trim()||'Untitled';
+  const tag  =document.getElementById('add-tag').value;
+  const meta =document.getElementById('add-meta').value.trim()||'';
+  const desc =document.getElementById('add-desc').value.trim()||'';
+  const label=tag.charAt(0).toUpperCase()+tag.slice(1);
+  const imgHTML=img?`<img src="${img}" alt="${title}" onerror="this.parentElement.innerHTML=placeholderSVG();">`:placeholderSVG();
+
+  const card=document.createElement('div');
+  card.className='card';
+  card.dataset.img=img; card.dataset.tag=tag; card.dataset.title=title;
+  card.dataset.meta=meta; card.dataset.desc=desc;
+  card.style.animationDelay='0s';
+  card.innerHTML=`
+    <div class="card-actions">
+      <button class="card-action-btn edit-btn" onclick="openEditModal(event,this.closest('.card'))">Edit</button>
+      <button class="card-action-btn delete-btn" onclick="triggerDelete(event,this.closest('.card'))">Delete</button>
+    </div>
+    <div class="card-img-wrap">${imgHTML}</div>
+    <div class="card-info">
+      <div>
+        <div class="card-title">${title}</div>
+        <div class="card-meta">${meta}</div>
+      </div>
+      <span class="card-tag">${label}</span>
+    </div>`;
+
+  document.getElementById('add-card').before(card);
+  closeAddModal();
+}
+
 // ── EDIT / DELETE ──
 let editingCard=null;
 
-// Live preview image as filename is typed
 document.getElementById('edit-img').addEventListener('input', function() {
   const val=this.value.trim();
   const wrap=document.getElementById('edit-preview-wrap');
@@ -534,17 +702,15 @@ document.getElementById('edit-img').addEventListener('input', function() {
 function openEditModal(e,card) {
   e.stopPropagation();
   editingCard=card;
-  document.getElementById('edit-img').value   = card.dataset.img  ||'';
-  document.getElementById('edit-title').value = card.dataset.title||'';
-  document.getElementById('edit-tag').value   = card.dataset.tag  ||'galaxy';
-  document.getElementById('edit-meta').value  = card.dataset.meta ||'';
-  document.getElementById('edit-desc').value  = card.dataset.desc ||'';
-
+  document.getElementById('edit-img').value   =card.dataset.img  ||'';
+  document.getElementById('edit-title').value =card.dataset.title||'';
+  document.getElementById('edit-tag').value   =card.dataset.tag  ||'galaxy';
+  document.getElementById('edit-meta').value  =card.dataset.meta ||'';
+  document.getElementById('edit-desc').value  =card.dataset.desc ||'';
   const wrap=document.getElementById('edit-preview-wrap');
   const prev=document.getElementById('edit-preview-img');
   if(card.dataset.img){prev.src=card.dataset.img;wrap.style.display='block';}
   else{wrap.style.display='none';}
-
   document.getElementById('delete-confirm').classList.remove('visible');
   document.getElementById('edit-modal').classList.add('open');
   document.body.style.overflow='hidden';
@@ -566,13 +732,8 @@ function saveEdit() {
   const tag  =document.getElementById('edit-tag').value;
   const meta =document.getElementById('edit-meta').value.trim()||'';
   const desc =document.getElementById('edit-desc').value.trim()||'';
-
-  editingCard.dataset.img   = img;
-  editingCard.dataset.title = title;
-  editingCard.dataset.tag   = tag;
-  editingCard.dataset.meta  = meta;
-  editingCard.dataset.desc  = desc;
-
+  editingCard.dataset.img=img; editingCard.dataset.title=title;
+  editingCard.dataset.tag=tag; editingCard.dataset.meta=meta; editingCard.dataset.desc=desc;
   renderCard(editingCard);
   closeEditModal();
 }
@@ -594,11 +755,17 @@ function closeEditModal() {
 }
 
 function overlayClick(e,id) {
-  if(e.target===document.getElementById(id)) closeEditModal();
+  if(e.target===document.getElementById(id)){
+    if(id==='add-modal') closeAddModal(); else closeEditModal();
+  }
 }
 
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeLightbox({target:document.getElementById('lightbox')});closeEditModal();}
+  if(e.key==='Escape'){
+    closeLightbox({target:document.getElementById('lightbox')});
+    closeAddModal();
+    closeEditModal();
+  }
 });
 </script>
 </body>
