@@ -622,7 +622,7 @@ function renderCard(card) {
   const img   = card.dataset.img   || '';
   const label = tag.charAt(0).toUpperCase()+tag.slice(1);
   const imgHTML = img
-    ? `<img src="${img}" alt="${title}" onerror="this.parentElement.innerHTML=placeholderSVG();">`
+    ? `<img src="${img}" alt="${title}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML=placeholderSVG();">`
     : placeholderSVG();
   card.innerHTML = `
     <div class="card-actions">
@@ -776,7 +776,7 @@ function saveAdd() {
   const meta =document.getElementById('add-meta').value.trim()||'';
   const desc =document.getElementById('add-desc').value.trim()||'';
   const label=tag.charAt(0).toUpperCase()+tag.slice(1);
-  const imgHTML=img?`<img src="${img}" alt="${title}" onerror="this.parentElement.innerHTML=placeholderSVG();">`:placeholderSVG();
+  const imgHTML=img?`<img src="${img}" alt="${title}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML=placeholderSVG();">`:placeholderSVG();
 
   const card=document.createElement('div');
   card.className='card';
