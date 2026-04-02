@@ -95,10 +95,42 @@
   .hero p { font-size: 1.1rem; line-height: 1.75; color: var(--dim); font-style: italic; max-width: 480px; }
 
   /* ── FILTER BAR ── */
-  .filter-bar { position: relative; z-index: 5; padding: 0 4rem 2.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+  .filter-bar { position: relative; z-index: 5; padding: 0 4rem 2.5rem; }
+  .filter-bar-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
   .filter-label { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); margin-right: 0.5rem; }
   .filter-btn { font-family: 'Inconsolata', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; background: transparent; border: 1px solid var(--border); color: var(--dim); padding: 0.4rem 1rem; cursor: pointer; transition: all 0.2s; border-radius: 0; }
   .filter-btn:hover, .filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(200,169,110,0.06); }
+
+  /* ── SEARCH ── */
+  .search-wrap { position: relative; margin-left: auto; display: flex; align-items: center; }
+  .search-input {
+    font-family: 'Inconsolata', monospace; font-size: 0.68rem; letter-spacing: 0.1em;
+    background: transparent; border: 1px solid var(--border); color: var(--ink);
+    padding: 0.4rem 2.2rem 0.4rem 0.9rem; outline: none; width: 200px;
+    transition: border-color 0.2s, width 0.3s, background 0.35s, color 0.35s;
+    text-transform: uppercase;
+  }
+  .search-input::placeholder { color: var(--dim); letter-spacing: 0.1em; }
+  .search-input:focus { border-color: var(--accent); width: 260px; }
+  .search-clear {
+    position: absolute; right: 0.55rem; top: 50%; transform: translateY(-50%);
+    font-family: 'Inconsolata', monospace; font-size: 0.7rem; color: var(--dim);
+    background: none; border: none; cursor: pointer; padding: 0; line-height: 1;
+    opacity: 0; transition: opacity 0.15s, color 0.15s; pointer-events: none;
+  }
+  .search-clear.visible { opacity: 1; pointer-events: all; }
+  .search-clear:hover { color: var(--accent); }
+  .search-result-count {
+    font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--dim); white-space: nowrap;
+    transition: opacity 0.2s; opacity: 0;
+  }
+  .search-result-count.visible { opacity: 1; }
+
+  .card mark {
+    background: rgba(200,169,110,0.22); color: var(--accent);
+    border-radius: 0; padding: 0 1px;
+  }
 
   /* ── GALLERY GRID ── */
   .gallery-section { position: relative; z-index: 5; padding: 0 4rem 5rem; }
@@ -219,6 +251,8 @@
     .header-right { flex-direction: column; align-items: flex-start; gap: 1rem; }
     .hero { padding: 3rem 2rem 2rem; }
     .filter-bar { padding: 0 2rem 2rem; }
+    .search-input { width: 160px; }
+    .search-input:focus { width: 200px; }
     .gallery-section { padding: 0 2rem 4rem; }
     footer { padding: 1.5rem 2rem; flex-direction: column; gap: 1rem; text-align: center; }
     .lightbox-inner { flex-direction: column; }
@@ -262,12 +296,19 @@
 
 <!-- FILTER BAR -->
 <div class="filter-bar">
-  <span class="filter-label">Filter —</span>
-  <button class="filter-btn active" onclick="filterGallery('all',this)">All</button>
-  <button class="filter-btn" onclick="filterGallery('galaxy',this)">Galaxies</button>
-  <button class="filter-btn" onclick="filterGallery('nebula',this)">Nebulae</button>
-  <button class="filter-btn" onclick="filterGallery('cluster',this)">Clusters</button>
-  <button class="filter-btn" onclick="filterGallery('other',this)">Comets</button>
+  <div class="filter-bar-row">
+    <span class="filter-label">Filter —</span>
+    <button class="filter-btn active" onclick="filterGallery('all',this)">All</button>
+    <button class="filter-btn" onclick="filterGallery('galaxy',this)">Galaxies</button>
+    <button class="filter-btn" onclick="filterGallery('nebula',this)">Nebulae</button>
+    <button class="filter-btn" onclick="filterGallery('cluster',this)">Clusters</button>
+    <button class="filter-btn" onclick="filterGallery('other',this)">Comets</button>
+    <div class="search-wrap">
+      <input class="search-input" id="search-input" type="text" placeholder="Search targets…" oninput="onSearch()" autocomplete="off" spellcheck="false">
+      <button class="search-clear" id="search-clear" onclick="clearSearch()" title="Clear search">✕</button>
+    </div>
+    <span class="search-result-count" id="result-count"></span>
+  </div>
 </div>
 
 <!--
@@ -601,14 +642,86 @@ function renderCard(card) {
 // Render all data-defined cards on load
 document.querySelectorAll('.card:not(.card-add)').forEach(renderCard);
 
-// ── FILTER ──
+// ── FILTER + SEARCH ──
+let activeTag = 'all';
+
 function filterGallery(tag, btn) {
+  activeTag = tag;
   if(btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
-  const cards=document.querySelectorAll('.card:not(.card-add)');
-  let vis=0;
-  cards.forEach(c=>{const show=tag==='all'||c.dataset.tag===tag;c.style.display=show?'':'none';if(show)vis++;});
-  document.getElementById('empty-state').style.display=vis===0?'block':'none';
+  applyFilters();
 }
+
+function onSearch() {
+  const q = document.getElementById('search-input').value;
+  const clearBtn = document.getElementById('search-clear');
+  clearBtn.classList.toggle('visible', q.length > 0);
+  applyFilters();
+}
+
+function clearSearch() {
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-clear').classList.remove('visible');
+  applyFilters();
+  document.getElementById('search-input').focus();
+}
+
+function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+
+function highlightText(text, query) {
+  if(!query) return text;
+  const re = new RegExp(`(${escapeRegex(query)})`, 'gi');
+  return text.replace(re, '<mark>$1</mark>');
+}
+
+function applyFilters() {
+  const raw = document.getElementById('search-input').value.trim();
+  const q = raw.toLowerCase();
+  const cards = document.querySelectorAll('.card:not(.card-add)');
+  const countEl = document.getElementById('result-count');
+  let vis = 0;
+
+  cards.forEach(c => {
+    const tagMatch = activeTag === 'all' || c.dataset.tag === activeTag;
+    const searchFields = [
+      c.dataset.title || '',
+      c.dataset.meta  || '',
+      c.dataset.desc  || '',
+      c.dataset.tag   || ''
+    ].join(' ').toLowerCase();
+    const searchMatch = !q || searchFields.includes(q);
+    const show = tagMatch && searchMatch;
+    c.style.display = show ? '' : 'none';
+    if(show) vis++;
+
+    // Apply highlights to visible cards
+    if(show) {
+      const titleEl = c.querySelector('.card-title');
+      const metaEl  = c.querySelector('.card-meta');
+      if(titleEl) titleEl.innerHTML = highlightText(c.dataset.title || '', raw);
+      if(metaEl)  metaEl.innerHTML  = highlightText(c.dataset.meta  || '', raw);
+    }
+  });
+
+  document.getElementById('empty-state').style.display = vis === 0 ? 'block' : 'none';
+
+  if(q) {
+    countEl.textContent = `${vis} result${vis !== 1 ? 's' : ''}`;
+    countEl.classList.add('visible');
+  } else {
+    countEl.classList.remove('visible');
+  }
+}
+
+// Keyboard shortcut: press / to focus search
+document.addEventListener('keydown', e => {
+  if(e.key === '/' &&
+     document.activeElement !== document.getElementById('search-input') &&
+     !document.getElementById('add-modal').classList.contains('open') &&
+     !document.getElementById('edit-modal').classList.contains('open')) {
+    e.preventDefault();
+    document.getElementById('search-input').focus();
+  }
+});
 
 // ── LIGHTBOX ──
 document.getElementById('gallery').addEventListener('click',e=>{
@@ -765,6 +878,10 @@ document.addEventListener('keydown',e=>{
     closeLightbox({target:document.getElementById('lightbox')});
     closeAddModal();
     closeEditModal();
+    if(document.activeElement===document.getElementById('search-input')){
+      clearSearch();
+      document.getElementById('search-input').blur();
+    }
   }
 });
 </script>
