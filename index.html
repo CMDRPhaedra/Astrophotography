@@ -132,19 +132,20 @@
     border-radius: 0; padding: 0 1px;
   }
 
-  /* ── GALLERY GRID ── */
+  /* ── GALLERY GRID — MASONRY ── */
   .gallery-section { position: relative; z-index: 5; padding: 0 4rem 5rem; }
-  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
-  .card:nth-child(5) { grid-column: span 2; }
-  .card:nth-child(8) { grid-column: span 2; }
-  @media (max-width: 900px) {
-    .card:nth-child(5), .card:nth-child(8) { grid-column: span 1; }
+  .gallery-grid {
+    columns: 3;
+    column-gap: 1.5rem;
   }
+  .card { display: inline-block; width: 100%; margin-bottom: 1.5rem; }
+  @media (max-width: 1100px) { .gallery-grid { columns: 2; } }
+  @media (max-width: 650px)  { .gallery-grid { columns: 1; } }
 
   /* ── CARD ── */
   .card {
     background: var(--card-bg); border: 1px solid var(--border);
-    overflow: hidden; cursor: pointer;
+    overflow: hidden; cursor: pointer; break-inside: avoid;
     transition: border-color 0.3s, transform 0.3s, background 0.35s;
     animation: fadeUp 0.6s ease both; position: relative;
   }
@@ -162,12 +163,10 @@
   .delete-btn:hover { border-color: #c04040; color: #e05050; background: rgba(200,50,50,0.12); }
 
   /* ── CARD IMAGE ── */
-  .card-img-wrap { position: relative; overflow: hidden; aspect-ratio: 4/3; background: var(--placeholder-a); transition: background 0.35s; }
-  .card:nth-child(5) .card-img-wrap, .card:nth-child(8) .card-img-wrap { aspect-ratio: 16/7; }
-  .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease, filter 0.4s; filter: saturate(0.85) brightness(0.95); }
+  .card-img-wrap { position: relative; overflow: hidden; background: var(--placeholder-a); transition: background 0.35s; }
+  .card-img-wrap img { width: 100%; height: auto; display: block; transition: transform 0.6s ease, filter 0.4s; filter: saturate(0.85) brightness(0.95); }
   .card:hover .card-img-wrap img { transform: scale(1.04); filter: saturate(1) brightness(1); }
-
-  .card-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background: linear-gradient(135deg, var(--placeholder-a) 0%, var(--placeholder-b) 100%); color: var(--dim); font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
+  .card-placeholder { width: 100%; aspect-ratio: 4/3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background: linear-gradient(135deg, var(--placeholder-a) 0%, var(--placeholder-b) 100%); color: var(--dim); font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
   .card:hover .card-placeholder { background: linear-gradient(135deg, var(--placeholder-hover-a) 0%, var(--placeholder-hover-b) 100%); color: var(--accent); }
   .card-placeholder svg { opacity: 0.3; transition: opacity 0.3s; }
   .card:hover .card-placeholder svg { opacity: 0.6; }
@@ -184,6 +183,41 @@
   .card-add:hover .card-add-icon { border-color: var(--accent); color: var(--accent); }
   .card-add-text { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); transition: color 0.3s; }
   .card-add:hover .card-add-text { color: var(--accent); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    position: relative; z-index: 5;
+    padding: 0.9rem 4rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 0;
+    transition: border-color 0.35s;
+    overflow-x: auto;
+  }
+  .stat-item {
+    display: flex; flex-direction: column;
+    padding-right: 2rem; margin-right: 2rem;
+    border-right: 1px solid var(--border);
+    flex-shrink: 0; transition: border-color 0.35s;
+  }
+  .stat-item:last-of-type { border-right: none; }
+  .stat-num {
+    font-size: 1.6rem; font-weight: 300; color: var(--ink); line-height: 1;
+    margin-bottom: 0.25rem; letter-spacing: -0.01em;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label {
+    font-family: 'Inconsolata', monospace; font-size: 0.58rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim);
+  }
+  .stat-dots { display: flex; gap: 3px; margin-top: 0.4rem; flex-wrap: wrap; max-width: 80px; }
+  .stat-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border); transition: background 0.35s; flex-shrink: 0; }
+  .stat-dot.filled { background: var(--accent); }
+  .stats-location {
+    margin-left: auto; font-family: 'Inconsolata', monospace; font-size: 0.58rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim);
+    opacity: 0.5; flex-shrink: 0; padding-left: 2rem;
+  }
+  @media (max-width: 768px) { .stats-bar { padding: 0.9rem 2rem; } .stats-location { display: none; } }
 
   /* ── LIGHTBOX ── */
   .lightbox { display: none; position: fixed; inset: 0; z-index: 100; background: var(--lightbox-bg); align-items: center; justify-content: center; padding: 2rem; }
@@ -239,12 +273,6 @@
 
   /* ── ANIMATIONS ── */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-  .card:nth-child(1) { animation-delay: 0.05s; }
-  .card:nth-child(2) { animation-delay: 0.12s; }
-  .card:nth-child(3) { animation-delay: 0.19s; }
-  .card:nth-child(4) { animation-delay: 0.26s; }
-  .card:nth-child(5) { animation-delay: 0.33s; }
-  .card:nth-child(6) { animation-delay: 0.40s; }
 
   @media (max-width: 768px) {
     header { padding: 2rem; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
@@ -309,6 +337,11 @@
     </div>
     <span class="search-result-count" id="result-count"></span>
   </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <!-- populated by JS -->
 </div>
 
 <!--
@@ -642,6 +675,44 @@ function renderCard(card) {
 // Render all data-defined cards on load
 document.querySelectorAll('.card:not(.card-add)').forEach(renderCard);
 
+// ── STATS BAR ──
+function buildStats() {
+  const cards = [...document.querySelectorAll('.card:not(.card-add)')];
+  const counts = { galaxy:0, nebula:0, cluster:0, other:0 };
+  cards.forEach(c => { const t = c.dataset.tag; if(counts[t]!==undefined) counts[t]++; });
+  const total = cards.length;
+  const DOT_COUNT = 10;
+
+  function dots(n, total) {
+    const filled = total > 0 ? Math.round((n / total) * DOT_COUNT) : 0;
+    return Array.from({length: DOT_COUNT}, (_,i) =>
+      `<div class="stat-dot${i < filled ? ' filled' : ''}"></div>`
+    ).join('');
+  }
+
+  const categories = [
+    { key:'galaxy',  label:'Galaxies' },
+    { key:'nebula',  label:'Nebulae'  },
+    { key:'cluster', label:'Clusters' },
+    { key:'other',   label:'Comets'   },
+  ];
+
+  document.getElementById('stats-bar').innerHTML = `
+    <div class="stat-item">
+      <div class="stat-num">${total}</div>
+      <div class="stat-label">Total images</div>
+    </div>
+    ${categories.map(cat => `
+    <div class="stat-item">
+      <div class="stat-num"><span>${counts[cat.key]}</span></div>
+      <div class="stat-label">${cat.label}</div>
+      <div class="stat-dots">${dots(counts[cat.key], total)}</div>
+    </div>`).join('')}
+    <div class="stats-location">Edinburgh · Dwarf 3</div>
+  `;
+}
+buildStats();
+
 // ── FILTER + SEARCH ──
 let activeTag = 'all';
 
@@ -799,6 +870,7 @@ function saveAdd() {
 
   document.getElementById('add-card').before(card);
   closeAddModal();
+  buildStats();
 }
 
 // ── EDIT / DELETE ──
@@ -856,7 +928,7 @@ function confirmDelete() {
   const c=editingCard;
   c.style.transition='opacity 0.28s, transform 0.28s';
   c.style.opacity='0'; c.style.transform='scale(0.94)';
-  setTimeout(()=>{c.remove();closeEditModal();},300);
+  setTimeout(()=>{c.remove();closeEditModal();buildStats();},300);
 }
 
 function closeEditModal() {
