@@ -95,57 +95,24 @@
   .hero p { font-size: 1.1rem; line-height: 1.75; color: var(--dim); font-style: italic; max-width: 480px; }
 
   /* ── FILTER BAR ── */
-  .filter-bar { position: relative; z-index: 5; padding: 0 4rem 2.5rem; }
-  .filter-bar-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+  .filter-bar { position: relative; z-index: 5; padding: 0 4rem 2.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
   .filter-label { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); margin-right: 0.5rem; }
   .filter-btn { font-family: 'Inconsolata', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; background: transparent; border: 1px solid var(--border); color: var(--dim); padding: 0.4rem 1rem; cursor: pointer; transition: all 0.2s; border-radius: 0; }
   .filter-btn:hover, .filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(200,169,110,0.06); }
 
-  /* ── SEARCH ── */
-  .search-wrap { position: relative; margin-left: auto; display: flex; align-items: center; }
-  .search-input {
-    font-family: 'Inconsolata', monospace; font-size: 0.68rem; letter-spacing: 0.1em;
-    background: transparent; border: 1px solid var(--border); color: var(--ink);
-    padding: 0.4rem 2.2rem 0.4rem 0.9rem; outline: none; width: 200px;
-    transition: border-color 0.2s, width 0.3s, background 0.35s, color 0.35s;
-    text-transform: uppercase;
-  }
-  .search-input::placeholder { color: var(--dim); letter-spacing: 0.1em; }
-  .search-input:focus { border-color: var(--accent); width: 260px; }
-  .search-clear {
-    position: absolute; right: 0.55rem; top: 50%; transform: translateY(-50%);
-    font-family: 'Inconsolata', monospace; font-size: 0.7rem; color: var(--dim);
-    background: none; border: none; cursor: pointer; padding: 0; line-height: 1;
-    opacity: 0; transition: opacity 0.15s, color 0.15s; pointer-events: none;
-  }
-  .search-clear.visible { opacity: 1; pointer-events: all; }
-  .search-clear:hover { color: var(--accent); }
-  .search-result-count {
-    font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--dim); white-space: nowrap;
-    transition: opacity 0.2s; opacity: 0;
-  }
-  .search-result-count.visible { opacity: 1; }
-
-  .card mark {
-    background: rgba(200,169,110,0.22); color: var(--accent);
-    border-radius: 0; padding: 0 1px;
-  }
-
-  /* ── GALLERY GRID — MASONRY ── */
+  /* ── GALLERY GRID ── */
   .gallery-section { position: relative; z-index: 5; padding: 0 4rem 5rem; }
-  .gallery-grid {
-    columns: 3;
-    column-gap: 1.5rem;
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+  .card:nth-child(5) { grid-column: span 2; }
+  .card:nth-child(8) { grid-column: span 2; }
+  @media (max-width: 900px) {
+    .card:nth-child(5), .card:nth-child(8) { grid-column: span 1; }
   }
-  .card { display: inline-block; width: 100%; margin-bottom: 1.5rem; }
-  @media (max-width: 1100px) { .gallery-grid { columns: 2; } }
-  @media (max-width: 650px)  { .gallery-grid { columns: 1; } }
 
   /* ── CARD ── */
   .card {
     background: var(--card-bg); border: 1px solid var(--border);
-    overflow: hidden; cursor: pointer; break-inside: avoid;
+    overflow: hidden; cursor: pointer;
     transition: border-color 0.3s, transform 0.3s, background 0.35s;
     animation: fadeUp 0.6s ease both; position: relative;
   }
@@ -163,10 +130,12 @@
   .delete-btn:hover { border-color: #c04040; color: #e05050; background: rgba(200,50,50,0.12); }
 
   /* ── CARD IMAGE ── */
-  .card-img-wrap { position: relative; overflow: hidden; background: var(--placeholder-a); transition: background 0.35s; }
-  .card-img-wrap img { width: 100%; height: auto; display: block; transition: transform 0.6s ease, filter 0.4s; filter: saturate(0.85) brightness(0.95); }
+  .card-img-wrap { position: relative; overflow: hidden; aspect-ratio: 4/3; background: var(--placeholder-a); transition: background 0.35s; }
+  .card:nth-child(5) .card-img-wrap, .card:nth-child(8) .card-img-wrap { aspect-ratio: 16/7; }
+  .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease, filter 0.4s; filter: saturate(0.85) brightness(0.95); }
   .card:hover .card-img-wrap img { transform: scale(1.04); filter: saturate(1) brightness(1); }
-  .card-placeholder { width: 100%; aspect-ratio: 4/3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background: linear-gradient(135deg, var(--placeholder-a) 0%, var(--placeholder-b) 100%); color: var(--dim); font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
+
+  .card-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background: linear-gradient(135deg, var(--placeholder-a) 0%, var(--placeholder-b) 100%); color: var(--dim); font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; transition: background 0.3s, color 0.3s; }
   .card:hover .card-placeholder { background: linear-gradient(135deg, var(--placeholder-hover-a) 0%, var(--placeholder-hover-b) 100%); color: var(--accent); }
   .card-placeholder svg { opacity: 0.3; transition: opacity 0.3s; }
   .card:hover .card-placeholder svg { opacity: 0.6; }
@@ -184,47 +153,15 @@
   .card-add-text { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); transition: color 0.3s; }
   .card-add:hover .card-add-text { color: var(--accent); }
 
-  /* ── STATS BAR ── */
-  .stats-bar {
-    position: relative; z-index: 5;
-    padding: 0.9rem 4rem;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 0;
-    transition: border-color 0.35s;
-    overflow-x: auto;
-  }
-  .stat-item {
-    display: flex; flex-direction: column;
-    padding-right: 2rem; margin-right: 2rem;
-    border-right: 1px solid var(--border);
-    flex-shrink: 0; transition: border-color 0.35s;
-  }
-  .stat-item:last-of-type { border-right: none; }
-  .stat-num {
-    font-size: 1.6rem; font-weight: 300; color: var(--ink); line-height: 1;
-    margin-bottom: 0.25rem; letter-spacing: -0.01em;
-  }
-  .stat-num span { color: var(--accent); }
-  .stat-label {
-    font-family: 'Inconsolata', monospace; font-size: 0.58rem;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim);
-  }
-  .stat-dots { display: flex; gap: 3px; margin-top: 0.4rem; flex-wrap: wrap; max-width: 80px; }
-  .stat-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border); transition: background 0.35s; flex-shrink: 0; }
-  .stat-dot.filled { background: var(--accent); }
-  .stats-location {
-    margin-left: auto; font-family: 'Inconsolata', monospace; font-size: 0.58rem;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim);
-    opacity: 0.5; flex-shrink: 0; padding-left: 2rem;
-  }
-  @media (max-width: 768px) { .stats-bar { padding: 0.9rem 2rem; } .stats-location { display: none; } }
-
   /* ── LIGHTBOX ── */
   .lightbox { display: none; position: fixed; inset: 0; z-index: 100; background: var(--lightbox-bg); align-items: center; justify-content: center; padding: 2rem; }
   .lightbox.open { display: flex; }
   .lightbox-inner { max-width: 1100px; width: 100%; display: flex; gap: 3rem; align-items: center; }
-  .lightbox-img-wrap { flex: 1; max-height: 80vh; overflow: hidden; }
-  .lightbox-img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .lightbox-img-wrap { flex: 1; max-height: 80vh; overflow: hidden; position: relative; cursor: crosshair; }
+  .lightbox-img-wrap.zoomed { cursor: grab; }
+  .lightbox-img-wrap.dragging { cursor: grabbing !important; }
+  .lightbox-img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; transform-origin: center center; transition: transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94); will-change: transform; }
+  .lightbox-img-wrap img.no-transition { transition: none; }
   .lightbox-details { width: 240px; flex-shrink: 0; }
   .lightbox-tag { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
   .lightbox-title { font-size: 2rem; font-weight: 300; font-style: italic; line-height: 1.2; margin-bottom: 1rem; }
@@ -232,6 +169,12 @@
   .lightbox-desc { font-size: 0.95rem; line-height: 1.7; color: var(--dim); font-style: italic; }
   .lightbox-close { position: absolute; top: 2rem; right: 2.5rem; font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); background: none; border: 1px solid var(--border); padding: 0.4rem 0.8rem; cursor: pointer; transition: all 0.2s; }
   .lightbox-close:hover { color: var(--ink); border-color: var(--ink); }
+  .lightbox-zoom-controls { display: flex; gap: 0.4rem; margin-bottom: 1.2rem; align-items: center; }
+  .lightbox-zoom-btn { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; background: transparent; border: 1px solid var(--border); color: var(--dim); padding: 0.28rem 0.65rem; cursor: pointer; transition: all 0.2s; }
+  .lightbox-zoom-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .lightbox-zoom-btn:disabled { opacity: 0.3; pointer-events: none; }
+  .lightbox-zoom-level { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.1em; color: var(--accent); min-width: 2.4rem; text-align: center; }
+  .lightbox-zoom-hint { font-family: 'Inconsolata', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-top: 0.6rem; opacity: 0.7; transition: opacity 0.3s; }
 
   /* ── MODAL ── */
   .modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: var(--overlay-bg); align-items: center; justify-content: center; padding: 2rem; }
@@ -273,14 +216,18 @@
 
   /* ── ANIMATIONS ── */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.12s; }
+  .card:nth-child(3) { animation-delay: 0.19s; }
+  .card:nth-child(4) { animation-delay: 0.26s; }
+  .card:nth-child(5) { animation-delay: 0.33s; }
+  .card:nth-child(6) { animation-delay: 0.40s; }
 
   @media (max-width: 768px) {
     header { padding: 2rem; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
     .header-right { flex-direction: column; align-items: flex-start; gap: 1rem; }
     .hero { padding: 3rem 2rem 2rem; }
     .filter-bar { padding: 0 2rem 2rem; }
-    .search-input { width: 160px; }
-    .search-input:focus { width: 200px; }
     .gallery-section { padding: 0 2rem 4rem; }
     footer { padding: 1.5rem 2rem; flex-direction: column; gap: 1rem; text-align: center; }
     .lightbox-inner { flex-direction: column; }
@@ -324,24 +271,12 @@
 
 <!-- FILTER BAR -->
 <div class="filter-bar">
-  <div class="filter-bar-row">
-    <span class="filter-label">Filter —</span>
-    <button class="filter-btn active" onclick="filterGallery('all',this)">All</button>
-    <button class="filter-btn" onclick="filterGallery('galaxy',this)">Galaxies</button>
-    <button class="filter-btn" onclick="filterGallery('nebula',this)">Nebulae</button>
-    <button class="filter-btn" onclick="filterGallery('cluster',this)">Clusters</button>
-    <button class="filter-btn" onclick="filterGallery('other',this)">Comets</button>
-    <div class="search-wrap">
-      <input class="search-input" id="search-input" type="text" placeholder="Search targets…" oninput="onSearch()" autocomplete="off" spellcheck="false">
-      <button class="search-clear" id="search-clear" onclick="clearSearch()" title="Clear search">✕</button>
-    </div>
-    <span class="search-result-count" id="result-count"></span>
-  </div>
-</div>
-
-<!-- STATS BAR -->
-<div class="stats-bar" id="stats-bar">
-  <!-- populated by JS -->
+  <span class="filter-label">Filter —</span>
+  <button class="filter-btn active" onclick="filterGallery('all',this)">All</button>
+  <button class="filter-btn" onclick="filterGallery('galaxy',this)">Galaxies</button>
+  <button class="filter-btn" onclick="filterGallery('nebula',this)">Nebulae</button>
+  <button class="filter-btn" onclick="filterGallery('cluster',this)">Clusters</button>
+  <button class="filter-btn" onclick="filterGallery('other',this)">Comets</button>
 </div>
 
 <!--
@@ -499,10 +434,6 @@
       data-tag="other" data-title="Comet C/2025 Lemon" data-meta="Edinburgh"
       data-desc="Comet C/2025 Lemon is a dynamically new comet making its first recorded passage through the inner solar system, arriving fresh from the Oort Cloud. Its green colouring — visible in longer exposures — is caused by diatomic carbon (C2) molecules in the coma fluorescing under ultraviolet sunlight. First-time visitors from the Oort Cloud often produce dramatic displays as pristine, volatile-rich ices encounter solar radiation for the first time."></div>
 
-    <div class="card" data-img="Images/m97_owl_nebula.png"
-  data-tag="nebula" data-title="Owl Nebula" data-meta="M97 · Edinburgh"
-  data-desc="Located 2,030 light-years away in Ursa Major, the Owl Nebula is one of the larger planetary nebulae in the sky, spanning roughly 3 light-years across. It was formed when a Sun-like star shed its outer layers at the end of its life, leaving behind a hot white dwarf at its centre whose ultraviolet radiation causes the surrounding gas to glow. The two dark circular patches that give it its owl-like appearance are cavities of lower gas density aligned along the polar axis of the original star. At magnitude 9.9 it is a challenging but rewarding target from a light-polluted city sky, and the Dwarf 3's narrowband capability helps cut through Edinburgh's glow to reveal the subtle structure within the disc."></div>
-    
     <!-- ADD NEW CARDS ABOVE THIS LINE -->
 
     <div class="card card-add" id="add-card" onclick="openAddModal()">
@@ -523,11 +454,18 @@
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
   <div class="lightbox-inner">
-    <div class="lightbox-img-wrap"><img id="lightbox-img" src="" alt=""></div>
+    <div class="lightbox-img-wrap" id="lightbox-img-wrap"><img id="lightbox-img" src="" alt=""></div>
     <div class="lightbox-details">
       <div class="lightbox-tag" id="lightbox-tag"></div>
       <h3 class="lightbox-title" id="lightbox-title"></h3>
       <div class="lightbox-meta" id="lightbox-meta"></div>
+      <div class="lightbox-zoom-controls">
+        <button class="lightbox-zoom-btn" onclick="lbZoom(true)">+ In</button>
+        <span class="lightbox-zoom-level" id="lb-zoom-level">1×</span>
+        <button class="lightbox-zoom-btn" onclick="lbZoom(false)">− Out</button>
+        <button class="lightbox-zoom-btn" id="lb-reset-btn" onclick="lbReset()" style="opacity:0.35;pointer-events:none;">⌂ Reset</button>
+      </div>
+      <p class="lightbox-zoom-hint" id="lb-zoom-hint">Scroll to zoom · drag to pan · double-click to reset</p>
       <p class="lightbox-desc" id="lightbox-desc"></p>
     </div>
   </div>
@@ -659,7 +597,7 @@ function renderCard(card) {
   const img   = card.dataset.img   || '';
   const label = tag.charAt(0).toUpperCase()+tag.slice(1);
   const imgHTML = img
-    ? `<img src="${img}" alt="${title}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML=placeholderSVG();">`
+    ? `<img src="${img}" alt="${title}" onerror="this.parentElement.innerHTML=placeholderSVG();">`
     : placeholderSVG();
   card.innerHTML = `
     <div class="card-actions">
@@ -679,124 +617,14 @@ function renderCard(card) {
 // Render all data-defined cards on load
 document.querySelectorAll('.card:not(.card-add)').forEach(renderCard);
 
-// ── STATS BAR ──
-function buildStats() {
-  const cards = [...document.querySelectorAll('.card:not(.card-add)')];
-  const counts = { galaxy:0, nebula:0, cluster:0, other:0 };
-  cards.forEach(c => { const t = c.dataset.tag; if(counts[t]!==undefined) counts[t]++; });
-  const total = cards.length;
-  const DOT_COUNT = 10;
-
-  function dots(n, total) {
-    const filled = total > 0 ? Math.round((n / total) * DOT_COUNT) : 0;
-    return Array.from({length: DOT_COUNT}, (_,i) =>
-      `<div class="stat-dot${i < filled ? ' filled' : ''}"></div>`
-    ).join('');
-  }
-
-  const categories = [
-    { key:'galaxy',  label:'Galaxies' },
-    { key:'nebula',  label:'Nebulae'  },
-    { key:'cluster', label:'Clusters' },
-    { key:'other',   label:'Comets'   },
-  ];
-
-  document.getElementById('stats-bar').innerHTML = `
-    <div class="stat-item">
-      <div class="stat-num">${total}</div>
-      <div class="stat-label">Total images</div>
-    </div>
-    ${categories.map(cat => `
-    <div class="stat-item">
-      <div class="stat-num"><span>${counts[cat.key]}</span></div>
-      <div class="stat-label">${cat.label}</div>
-      <div class="stat-dots">${dots(counts[cat.key], total)}</div>
-    </div>`).join('')}
-    <div class="stats-location">Edinburgh · Dwarf 3</div>
-  `;
-}
-buildStats();
-
-// ── FILTER + SEARCH ──
-let activeTag = 'all';
-
+// ── FILTER ──
 function filterGallery(tag, btn) {
-  activeTag = tag;
   if(btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
-  applyFilters();
+  const cards=document.querySelectorAll('.card:not(.card-add)');
+  let vis=0;
+  cards.forEach(c=>{const show=tag==='all'||c.dataset.tag===tag;c.style.display=show?'':'none';if(show)vis++;});
+  document.getElementById('empty-state').style.display=vis===0?'block':'none';
 }
-
-function onSearch() {
-  const q = document.getElementById('search-input').value;
-  const clearBtn = document.getElementById('search-clear');
-  clearBtn.classList.toggle('visible', q.length > 0);
-  applyFilters();
-}
-
-function clearSearch() {
-  document.getElementById('search-input').value = '';
-  document.getElementById('search-clear').classList.remove('visible');
-  applyFilters();
-  document.getElementById('search-input').focus();
-}
-
-function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
-
-function highlightText(text, query) {
-  if(!query) return text;
-  const re = new RegExp(`(${escapeRegex(query)})`, 'gi');
-  return text.replace(re, '<mark>$1</mark>');
-}
-
-function applyFilters() {
-  const raw = document.getElementById('search-input').value.trim();
-  const q = raw.toLowerCase();
-  const cards = document.querySelectorAll('.card:not(.card-add)');
-  const countEl = document.getElementById('result-count');
-  let vis = 0;
-
-  cards.forEach(c => {
-    const tagMatch = activeTag === 'all' || c.dataset.tag === activeTag;
-    const searchFields = [
-      c.dataset.title || '',
-      c.dataset.meta  || '',
-      c.dataset.desc  || '',
-      c.dataset.tag   || ''
-    ].join(' ').toLowerCase();
-    const searchMatch = !q || searchFields.includes(q);
-    const show = tagMatch && searchMatch;
-    c.style.display = show ? '' : 'none';
-    if(show) vis++;
-
-    // Apply highlights to visible cards
-    if(show) {
-      const titleEl = c.querySelector('.card-title');
-      const metaEl  = c.querySelector('.card-meta');
-      if(titleEl) titleEl.innerHTML = highlightText(c.dataset.title || '', raw);
-      if(metaEl)  metaEl.innerHTML  = highlightText(c.dataset.meta  || '', raw);
-    }
-  });
-
-  document.getElementById('empty-state').style.display = vis === 0 ? 'block' : 'none';
-
-  if(q) {
-    countEl.textContent = `${vis} result${vis !== 1 ? 's' : ''}`;
-    countEl.classList.add('visible');
-  } else {
-    countEl.classList.remove('visible');
-  }
-}
-
-// Keyboard shortcut: press / to focus search
-document.addEventListener('keydown', e => {
-  if(e.key === '/' &&
-     document.activeElement !== document.getElementById('search-input') &&
-     !document.getElementById('add-modal').classList.contains('open') &&
-     !document.getElementById('edit-modal').classList.contains('open')) {
-    e.preventDefault();
-    document.getElementById('search-input').focus();
-  }
-});
 
 // ── LIGHTBOX ──
 document.getElementById('gallery').addEventListener('click',e=>{
@@ -813,13 +641,110 @@ document.getElementById('gallery').addEventListener('click',e=>{
   document.getElementById('lightbox-desc').textContent=card.dataset.desc||'';
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow='hidden';
+  lbReset();
 });
 
 function closeLightbox(e) {
   if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('lightbox-close')) return;
   document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow='';
+  lbReset();
 }
+
+// ── LIGHTBOX ZOOM & PAN ──
+(function(){
+  const MIN=1, MAX=6;
+  let scale=1, tx=0, ty=0;
+  let dragging=false, startX, startY, startTX, startTY;
+
+  const wrap=document.getElementById('lightbox-img-wrap');
+  const img=document.getElementById('lightbox-img');
+
+  function clamp(){
+    const sw=wrap.offsetWidth, sh=wrap.offsetHeight;
+    const iw=img.offsetWidth*scale, ih=img.offsetHeight*scale;
+    const mx=Math.max(0,(iw-sw)/2), my=Math.max(0,(ih-sh)/2);
+    tx=Math.max(-mx,Math.min(mx,tx));
+    ty=Math.max(-my,Math.min(my,ty));
+  }
+
+  function apply(animate){
+    img.classList.toggle('no-transition',!animate);
+    img.style.transform=`scale(${scale}) translate(${tx/scale}px,${ty/scale}px)`;
+    document.getElementById('lb-zoom-level').textContent=scale.toFixed(1)+'×';
+    const resetBtn=document.getElementById('lb-reset-btn');
+    resetBtn.style.opacity=scale>1?'1':'0.35';
+    resetBtn.style.pointerEvents=scale>1?'auto':'none';
+    wrap.classList.toggle('zoomed',scale>1);
+    document.getElementById('lb-zoom-hint').style.opacity=scale>1?'0':'0.7';
+  }
+
+  window.lbZoom=function(inward){
+    scale=Math.max(MIN,Math.min(MAX,scale+(inward?0.8:-0.8)));
+    if(scale===MIN){tx=0;ty=0;}
+    clamp(); apply(true);
+  };
+
+  window.lbReset=function(){
+    scale=1;tx=0;ty=0;
+    if(img) apply(true);
+  };
+
+  wrap.addEventListener('wheel',e=>{
+    e.preventDefault();
+    scale=Math.max(MIN,Math.min(MAX,scale+(e.deltaY<0?0.3:-0.3)));
+    if(scale===MIN){tx=0;ty=0;}
+    clamp(); apply(false);
+  },{passive:false});
+
+  wrap.addEventListener('dblclick',()=>lbReset());
+
+  wrap.addEventListener('mousedown',e=>{
+    if(scale<=1) return;
+    dragging=true; startX=e.clientX; startY=e.clientY; startTX=tx; startTY=ty;
+    wrap.classList.add('dragging');
+    e.preventDefault();
+  });
+
+  window.addEventListener('mousemove',e=>{
+    if(!dragging) return;
+    tx=startTX+(e.clientX-startX);
+    ty=startTY+(e.clientY-startY);
+    clamp(); apply(false);
+  });
+
+  window.addEventListener('mouseup',()=>{
+    if(!dragging) return;
+    dragging=false; wrap.classList.remove('dragging');
+  });
+
+  // Touch: pinch to zoom + drag to pan
+  let lastDist=null, lastTouchTX, lastTouchTY, touchStartX, touchStartY;
+  wrap.addEventListener('touchstart',e=>{
+    if(e.touches.length===2){
+      lastDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    } else if(e.touches.length===1&&scale>1){
+      touchStartX=e.touches[0].clientX; touchStartY=e.touches[0].clientY;
+      lastTouchTX=tx; lastTouchTY=ty;
+    }
+  },{passive:true});
+
+  wrap.addEventListener('touchmove',e=>{
+    if(e.touches.length===2){
+      e.preventDefault();
+      const dist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+      if(lastDist) scale=Math.max(MIN,Math.min(MAX,scale*(dist/lastDist)));
+      lastDist=dist; clamp(); apply(false);
+    } else if(e.touches.length===1&&scale>1){
+      e.preventDefault();
+      tx=lastTouchTX+(e.touches[0].clientX-touchStartX);
+      ty=lastTouchTY+(e.touches[0].clientY-touchStartY);
+      clamp(); apply(false);
+    }
+  },{passive:false});
+
+  wrap.addEventListener('touchend',()=>{ lastDist=null; });
+})();
 
 // ── ADD PHOTO ──
 document.getElementById('add-img').addEventListener('input', function() {
@@ -851,7 +776,7 @@ function saveAdd() {
   const meta =document.getElementById('add-meta').value.trim()||'';
   const desc =document.getElementById('add-desc').value.trim()||'';
   const label=tag.charAt(0).toUpperCase()+tag.slice(1);
-  const imgHTML=img?`<img src="${img}" alt="${title}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML=placeholderSVG();">`:placeholderSVG();
+  const imgHTML=img?`<img src="${img}" alt="${title}" onerror="this.parentElement.innerHTML=placeholderSVG();">`:placeholderSVG();
 
   const card=document.createElement('div');
   card.className='card';
@@ -874,7 +799,6 @@ function saveAdd() {
 
   document.getElementById('add-card').before(card);
   closeAddModal();
-  buildStats();
 }
 
 // ── EDIT / DELETE ──
@@ -932,7 +856,7 @@ function confirmDelete() {
   const c=editingCard;
   c.style.transition='opacity 0.28s, transform 0.28s';
   c.style.opacity='0'; c.style.transform='scale(0.94)';
-  setTimeout(()=>{c.remove();closeEditModal();buildStats();},300);
+  setTimeout(()=>{c.remove();closeEditModal();},300);
 }
 
 function closeEditModal() {
@@ -954,10 +878,6 @@ document.addEventListener('keydown',e=>{
     closeLightbox({target:document.getElementById('lightbox')});
     closeAddModal();
     closeEditModal();
-    if(document.activeElement===document.getElementById('search-input')){
-      clearSearch();
-      document.getElementById('search-input').blur();
-    }
   }
 });
 </script>
