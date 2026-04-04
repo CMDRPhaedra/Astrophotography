@@ -153,16 +153,51 @@
   .card-add-text { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); transition: color 0.3s; }
   .card-add:hover .card-add-text { color: var(--accent); }
 
+  /* ── STATS BAR ── */
+  .stats-bar {
+    position: relative; z-index: 5;
+    padding: 0.9rem 4rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 0;
+    transition: border-color 0.35s;
+    overflow-x: auto;
+  }
+  .stat-item {
+    display: flex; flex-direction: column;
+    padding-right: 2rem; margin-right: 2rem;
+    border-right: 1px solid var(--border);
+    flex-shrink: 0; transition: border-color 0.35s;
+  }
+  .stat-item:last-of-type { border-right: none; }
+  .stat-num {
+    font-size: 1.6rem; font-weight: 300; color: var(--ink); line-height: 1;
+    margin-bottom: 0.25rem; letter-spacing: -0.01em;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label {
+    font-family: 'Inconsolata', monospace; font-size: 0.58rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim);
+  }
+  .stat-dots { display: flex; gap: 3px; margin-top: 0.4rem; flex-wrap: wrap; max-width: 80px; }
+  .stat-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border); transition: background 0.35s; flex-shrink: 0; }
+  .stat-dot.filled { background: var(--accent); }
+  .stats-location {
+    margin-left: auto; font-family: 'Inconsolata', monospace; font-size: 0.58rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim);
+    opacity: 0.5; flex-shrink: 0; padding-left: 2rem;
+  }
+  @media (max-width: 768px) { .stats-bar { padding: 0.9rem 2rem; } .stats-location { display: none; } }
+
   /* ── LIGHTBOX ── */
   .lightbox { display: none; position: fixed; inset: 0; z-index: 100; background: var(--lightbox-bg); align-items: center; justify-content: center; padding: 2rem; }
   .lightbox.open { display: flex; }
-  .lightbox-inner { max-width: 1100px; width: 100%; display: flex; gap: 3rem; align-items: center; }
-  .lightbox-img-wrap { flex: 1; max-height: 80vh; overflow: hidden; position: relative; cursor: crosshair; }
+  .lightbox-inner { width: 100%; height: 100%; display: flex; gap: 2.5rem; align-items: stretch; }
+  .lightbox-img-wrap { flex: 1; min-width: 0; overflow: hidden; position: relative; cursor: crosshair; display: flex; align-items: center; justify-content: center; }
   .lightbox-img-wrap.zoomed { cursor: grab; }
   .lightbox-img-wrap.dragging { cursor: grabbing !important; }
-  .lightbox-img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; transform-origin: center center; transition: transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94); will-change: transform; }
+  .lightbox-img-wrap img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; transform-origin: center center; transition: transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94); will-change: transform; }
   .lightbox-img-wrap img.no-transition { transition: none; }
-  .lightbox-details { width: 240px; flex-shrink: 0; }
+  .lightbox-details { width: 260px; flex-shrink: 0; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; }
   .lightbox-tag { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
   .lightbox-title { font-size: 2rem; font-weight: 300; font-style: italic; line-height: 1.2; margin-bottom: 1rem; }
   .lightbox-meta { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--dim); line-height: 2; margin-bottom: 1.5rem; }
@@ -277,6 +312,11 @@
   <button class="filter-btn" onclick="filterGallery('nebula',this)">Nebulae</button>
   <button class="filter-btn" onclick="filterGallery('cluster',this)">Clusters</button>
   <button class="filter-btn" onclick="filterGallery('other',this)">Comets</button>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="stats-bar">
+  <!-- populated by JS -->
 </div>
 
 <!--
@@ -617,6 +657,41 @@ function renderCard(card) {
 // Render all data-defined cards on load
 document.querySelectorAll('.card:not(.card-add)').forEach(renderCard);
 
+// ── STATS BAR ──
+function buildStats() {
+  const cards = [...document.querySelectorAll('.card:not(.card-add)')];
+  const counts = { galaxy:0, nebula:0, cluster:0, other:0 };
+  cards.forEach(c => { const t = c.dataset.tag; if(counts[t]!==undefined) counts[t]++; });
+  const total = cards.length;
+  const DOT_COUNT = 10;
+  function dots(n, total) {
+    const filled = total > 0 ? Math.round((n / total) * DOT_COUNT) : 0;
+    return Array.from({length: DOT_COUNT}, (_,i) =>
+      `<div class="stat-dot${i < filled ? ' filled' : ''}"></div>`
+    ).join('');
+  }
+  const categories = [
+    { key:'galaxy',  label:'Galaxies' },
+    { key:'nebula',  label:'Nebulae'  },
+    { key:'cluster', label:'Clusters' },
+    { key:'other',   label:'Comets'   },
+  ];
+  document.getElementById('stats-bar').innerHTML = `
+    <div class="stat-item">
+      <div class="stat-num">${total}</div>
+      <div class="stat-label">Total images</div>
+    </div>
+    ${categories.map(cat => `
+    <div class="stat-item">
+      <div class="stat-num"><span>${counts[cat.key]}</span></div>
+      <div class="stat-label">${cat.label}</div>
+      <div class="stat-dots">${dots(counts[cat.key], total)}</div>
+    </div>`).join('')}
+    <div class="stats-location">Edinburgh · Dwarf 3</div>
+  `;
+}
+buildStats();
+
 // ── FILTER ──
 function filterGallery(tag, btn) {
   if(btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
@@ -627,30 +702,6 @@ function filterGallery(tag, btn) {
 }
 
 // ── LIGHTBOX ──
-document.getElementById('gallery').addEventListener('click',e=>{
-  if(e.target.classList.contains('card-action-btn')) return;
-  if(e.target.closest('.card-add')) return;
-  const card=e.target.closest('.card:not(.card-add)');
-  if(!card) return;
-  const img=card.querySelector('img');
-  if(!img) return;
-  document.getElementById('lightbox-img').src=img.src;
-  document.getElementById('lightbox-title').textContent=card.dataset.title||'';
-  document.getElementById('lightbox-tag').textContent=(card.dataset.tag||'').toUpperCase();
-  document.getElementById('lightbox-meta').textContent=card.dataset.meta||'';
-  document.getElementById('lightbox-desc').textContent=card.dataset.desc||'';
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow='hidden';
-  lbReset();
-});
-
-function closeLightbox(e) {
-  if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('lightbox-close')) return;
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow='';
-  lbReset();
-}
-
 // ── LIGHTBOX ZOOM & PAN ──
 (function(){
   const MIN=1, MAX=6;
@@ -746,6 +797,31 @@ function closeLightbox(e) {
   wrap.addEventListener('touchend',()=>{ lastDist=null; });
 })();
 
+// ── LIGHTBOX OPEN / CLOSE ──
+document.getElementById('gallery').addEventListener('click',e=>{
+  if(e.target.classList.contains('card-action-btn')) return;
+  if(e.target.closest('.card-add')) return;
+  const card=e.target.closest('.card:not(.card-add)');
+  if(!card) return;
+  const img=card.querySelector('img');
+  if(!img) return;
+  document.getElementById('lightbox-img').src=img.src;
+  document.getElementById('lightbox-title').textContent=card.dataset.title||'';
+  document.getElementById('lightbox-tag').textContent=(card.dataset.tag||'').toUpperCase();
+  document.getElementById('lightbox-meta').textContent=card.dataset.meta||'';
+  document.getElementById('lightbox-desc').textContent=card.dataset.desc||'';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+  lbReset();
+});
+
+function closeLightbox(e) {
+  if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('lightbox-close')) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+  lbReset();
+}
+
 // ── ADD PHOTO ──
 document.getElementById('add-img').addEventListener('input', function() {
   const val=this.value.trim();
@@ -799,6 +875,7 @@ function saveAdd() {
 
   document.getElementById('add-card').before(card);
   closeAddModal();
+  buildStats();
 }
 
 // ── EDIT / DELETE ──
@@ -856,7 +933,7 @@ function confirmDelete() {
   const c=editingCard;
   c.style.transition='opacity 0.28s, transform 0.28s';
   c.style.opacity='0'; c.style.transform='scale(0.94)';
-  setTimeout(()=>{c.remove();closeEditModal();},300);
+  setTimeout(()=>{c.remove();closeEditModal();buildStats();},300);
 }
 
 function closeEditModal() {
