@@ -297,6 +297,10 @@
   #lightbox-img { opacity: 0; transition: opacity 0.3s ease, transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94); }
   #lightbox-img.lb-loaded { opacity: 1; }
 
+  .lb-copy-wrap { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.2rem; }
+  .lb-copy-confirm { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); opacity: 0; transition: opacity 0.2s; }
+  .lb-copy-confirm.visible { opacity: 1; }
+
   /* ── LIGHTBOX COUNTER ── */
   .lightbox-counter { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.6rem; }
 
@@ -471,6 +475,10 @@
       <div class="lightbox-tag" id="lightbox-tag"></div>
       <h3 class="lightbox-title" id="lightbox-title"></h3>
       <div class="lightbox-meta" id="lightbox-meta"></div>
+      <div class="lb-copy-wrap">
+        <button class="lightbox-zoom-btn" id="lb-copy-btn" onclick="copyLightboxLink()">&#x29C9; Copy link</button>
+        <span class="lb-copy-confirm" id="lb-copy-confirm">Copied</span>
+      </div>
       <div class="lightbox-zoom-controls">
         <button class="lightbox-zoom-btn" onclick="lbZoom(true)">+ In</button>
         <span class="lightbox-zoom-level" id="lb-zoom-level">1×</span>
@@ -1385,6 +1393,14 @@ document.getElementById('gallery').addEventListener('click',e=>{
   const idx=cards.indexOf(card); if(idx===-1) return;
   openLightboxCard(cards,idx);
 });
+function copyLightboxLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const confirm = document.getElementById('lb-copy-confirm');
+    confirm.classList.add('visible');
+    setTimeout(() => confirm.classList.remove('visible'), 2000);
+  });
+}
+
 function closeLightbox(e) {
   if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('lightbox-close')) return;
   document.getElementById('lightbox').classList.remove('open');
