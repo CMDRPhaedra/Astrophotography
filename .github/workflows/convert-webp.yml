@@ -1,0 +1,53 @@
+# .github/workflows/convert-webp.yml
+#
+# Automatically converts new images to WebP whenever you push to main.
+# The converted images and updated index.html are committed back to the branch
+# by the workflow itself — you don't need to do anything extra.
+
+name: Convert images to WebP
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'images/**'      # only trigger when something in images/ changes
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write    # needed so the action can commit back to the repo
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Pillow
+        run: pip install Pillow
+
+      - name: Run WebP conversion
+        run: python convert_to_webp.py --quality 85 --delete
+        # Remove --delete if you want to keep originals alongside the WebP files.
+        # Increase --quality (max 100) if you notice visible quality loss on your images.
+
+      - name: Commit converted images
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stage everything that changed (new .webp files, deleted originals, index.html)
+          git add images/ index.html
+
+          # Only commit if there's actually something to commit
+          if git diff --cached --quiet; then
+            echo "Nothing to commit — images were already WebP."
+          else
+            git commit -m "chore: convert new images to WebP [skip ci]"
+            git push
+          fi
