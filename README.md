@@ -12,7 +12,7 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **Sort bar** — sort the gallery by Date, Distance, or Name, each reversible with a second click
 - **Latest capture strip** — always shows the first entry in the `CAPTURES` array with a pulsing indicator
 - **Search** — press `/` to focus the search bar; searches target names, catalogue numbers, and descriptions; works alongside the category filter
-- **Stats bar** — live count of total images and per-category breakdown with dot visualisation
+- **Stats bar** — live count of total images, per-category breakdown with dot visualisation, and total integration time observed
 - **Lightbox** with scroll-to-zoom, drag-to-pan, double-click to reset, pinch on mobile, arrow key navigation, and image counter
 - **3D depth view** per card — hover any deep-sky card and click **⬡ 3D** to open an interactive Plotly scene at the card's real distance from Earth
 - **⬡ 3D Distance** — all targets on a single stretched-log distance axis with a built-in explainer
@@ -57,6 +57,8 @@ Open `index.html` and find the `CAPTURES` array near the top of the script block
 ```
 
 **`tag` values:** `galaxy` · `nebula` · `cluster` · `other`
+
+**`wide: true`** is optional. Adding it makes the card span two columns and switches its image to a 16:7 aspect ratio. Use it for your best or widest-field captures — it persists correctly across all sort orders and filters.
 
 **`depth`** is optional but enables the per-card ⬡ 3D button and includes the target in the 3D Distance and 3D Map views. Omit it for comets or any target without a meaningful distance. The primary (first) entry **must include `l` and `b`** (galactic longitude and latitude in degrees) — without these the target won't appear on the 3D Map. Companion objects don't need `l`/`b`. Include multiple objects for cards that show more than one target:
 
