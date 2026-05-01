@@ -51,18 +51,18 @@ Open `index.html` and find the `CAPTURES` array near the top of the script block
   tag:   'nebula',
   title: 'Whatever Nebula',
   meta:  'NGC 1234 · 01 May 2026 · Edinburgh · 45m',
-  depth: [{ name: 'Whatever Nebula (NGC 1234)', type: 'nebula', ly: 5000 }],
+  depth: [{ name: 'Whatever Nebula (NGC 1234)', type: 'nebula', ly: 5000, l: 123.4, b: -5.6 }],
   desc:  "Free text description. Apostrophes work fine here.",
 },
 ```
 
 **`tag` values:** `galaxy` · `nebula` · `cluster` · `other`
 
-**`depth`** is optional but enables the per-card ⬡ 3D button and includes the target in the 3D Distance and 3D Map views. Omit it for comets or any target without a meaningful distance. Include multiple objects for cards that show more than one target:
+**`depth`** is optional but enables the per-card ⬡ 3D button and includes the target in the 3D Distance and 3D Map views. Omit it for comets or any target without a meaningful distance. The primary (first) entry **must include `l` and `b`** (galactic longitude and latitude in degrees) — without these the target won't appear on the 3D Map. Companion objects don't need `l`/`b`. Include multiple objects for cards that show more than one target:
 
 ```js
 depth: [
-  { name: 'Heart Nebula (IC 805)',       type: 'nebula',  ly: 7500 },
+  { name: 'Heart Nebula (IC 805)',        type: 'nebula',  ly: 7500, l: 134.7, b: 1.2 },
   { name: 'Melotte 15 (central cluster)', type: 'cluster', ly: 7500 },
 ],
 ```
@@ -218,5 +218,6 @@ While the lightbox is open:
 
 - **← →** arrow keys or on-screen buttons step through images in the current filtered/sorted view
 - The detail panel shows a counter e.g. **3 of 47**
+- **⧉ Copy link** button copies a direct shareable URL to the clipboard — the link opens the site with that image's lightbox already open
 - Images fade in once loaded
 - The counter and arrows respect the active category filter, search, and sort order
