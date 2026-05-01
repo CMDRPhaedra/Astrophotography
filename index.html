@@ -139,10 +139,9 @@
   /* ── GALLERY GRID ── */
   .gallery-section { position: relative; z-index: 5; padding: 0 4rem 5rem; border-top: 1px solid var(--border); }
   .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
-  .card:nth-child(5) { grid-column: span 2; }
-  .card:nth-child(8) { grid-column: span 2; }
+  .card[data-wide="true"] { grid-column: span 2; }
   @media (max-width: 900px) {
-    .card:nth-child(5), .card:nth-child(8) { grid-column: span 1; }
+    .card[data-wide="true"] { grid-column: span 1; }
   }
 
   /* ── CARD ── */
@@ -156,7 +155,7 @@
 
   /* ── CARD IMAGE ── */
   .card-img-wrap { position: relative; overflow: hidden; aspect-ratio: 4/3; background: var(--placeholder-a); transition: background 0.35s; }
-  .card:nth-child(5) .card-img-wrap, .card:nth-child(8) .card-img-wrap { aspect-ratio: 16/7; }
+  .card[data-wide="true"] .card-img-wrap { aspect-ratio: 16/7; }
   .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease, filter 0.4s; filter: saturate(0.85) brightness(0.95); }
   .card:hover .card-img-wrap img { transform: scale(1.04); filter: saturate(1) brightness(1); }
 
@@ -547,6 +546,7 @@ const CAPTURES = [
     tag:   'galaxy',
     title: 'Pinwheel Galaxy',
     meta:  'M101 · 30 Apr 2026 · Edinburgh · 7h',
+    wide:  true,
     depth: [
       { name: 'Pinwheel Galaxy (M101)', type: 'galaxy', ly: 20900000, l: 102.0, b: 59.8 },
       { name: 'NGC 5474 (satellite)',   type: 'galaxy', ly: 21000000 },
@@ -861,6 +861,7 @@ const CAPTURES = [
     tag:   'nebula',
     title: 'Veil Nebula Complex',
     meta:  'NGC 6960 / 6992 / IC 1340 · 29 Nov 2025 · Edinburgh',
+    wide:  true,
     depth: [
       { name: 'Western Veil (NGC 6960)',         type: 'nebula', ly: 2100, l: 74.3, b: -7.9 },
       { name: 'Eastern Veil (NGC 6992)',         type: 'nebula', ly: 2100 },
@@ -1053,6 +1054,7 @@ function renderAll() {
     card.dataset.meta  = data.meta;
     card.dataset.desc  = data.desc;
     if(data.depth) card.dataset.depth = JSON.stringify(data.depth);
+    if(data.wide)  card.dataset.wide  = 'true';
     renderCard(card);
     gallery.appendChild(card);
   });
@@ -1078,11 +1080,26 @@ function buildLatestCapture() {
 }
 
 // ── STATS BAR ──
+function parseIntegrationMins(meta) {
+  const seg = (meta || '').split('·').map(s => s.trim()).pop();
+  const h = seg.match(/(\d+)\s*h/);
+  const m = seg.match(/(\d+)\s*m/);
+  return (h ? parseInt(h[1]) * 60 : 0) + (m ? parseInt(m[1]) : 0);
+}
+
 function buildStats() {
   const cards = [...document.querySelectorAll('.card')];
   const counts = { galaxy:0, nebula:0, cluster:0, other:0 };
   cards.forEach(c => { const t = c.dataset.tag; if(counts[t]!==undefined) counts[t]++; });
   const total = cards.length;
+
+  const totalMins = cards.reduce((sum, c) => sum + parseIntegrationMins(c.dataset.meta || ''), 0);
+  const totalHrs  = Math.floor(totalMins / 60);
+  const remMins   = totalMins % 60;
+  const totalTime = totalHrs > 0
+    ? (remMins > 0 ? `${totalHrs}h ${remMins}m` : `${totalHrs}h`)
+    : (totalMins > 0 ? `${totalMins}m` : '—');
+
   const DOT_COUNT = 10;
   function dots(n, total) {
     const filled = total > 0 ? Math.round((n / total) * DOT_COUNT) : 0;
@@ -1107,6 +1124,10 @@ function buildStats() {
       <div class="stat-label">${cat.label}</div>
       <div class="stat-dots">${dots(counts[cat.key], total)}</div>
     </div>`).join('')}
+    <div class="stat-item">
+      <div class="stat-num" style="font-size:1.2rem;">${totalTime}</div>
+      <div class="stat-label">Total observed</div>
+    </div>
     <div class="stats-location">Edinburgh · Dwarf 3</div>
   `;
 }
