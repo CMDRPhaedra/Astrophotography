@@ -18,6 +18,7 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **⬡ 3D Distance** — all targets on a single stretched-log distance axis with a built-in explainer
 - **⬡ 3D Map** — all targets in real galactic coordinates with type filters (All / Galaxies / Nebulae / Clusters) and a built-in explainer. Pure canvas, no external libraries.
 - **Deep linking** — opening a lightbox updates the URL hash (e.g. `#veil-nebula-complex`); sharing that URL opens the site with that image already in the lightbox
+- **Automatic WebP conversion** — a GitHub Action converts new images to WebP on every push and updates `index.html` automatically
 - **Open Graph / Twitter card meta tags** for rich link previews
 - **Light / dark theme** toggle — choice is remembered across visits
 - Animated starfield background
@@ -32,18 +33,20 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 Astrophotography/
 ├── index.html
 └── images/
-    ├── m31_andromeda_galaxy.png
-    ├── m42_orion_nebula.jpeg
+    ├── m31_andromeda_galaxy.webp
+    ├── m42_orion_nebula.webp
     └── ...
 ```
 
 Follow the naming convention: all lowercase, underscores not spaces, no special characters, catalogue number first. For example: `ngc1234_whatever_nebula.jpg`.
 
-Any common format works: `.jpg`, `.jpeg`, `.png`, `.webp`.
+Drop the file in any common format — `.jpg`, `.jpeg`, `.png`. The GitHub Action will convert it to `.webp` automatically on push.
 
 ### 2. Add an entry to the `CAPTURES` array in `index.html`
 
-Open `index.html` and find the `CAPTURES` array near the top of the script block. Add a new object **at the very top** (latest capture first):
+Open `index.html` and find the `CAPTURES` array near the top of the script block. Add a new object **at the very top** (latest capture first).
+
+Use the **original filename** (before WebP conversion) — the Action will update it automatically:
 
 ```js
 {
@@ -58,7 +61,7 @@ Open `index.html` and find the `CAPTURES` array near the top of the script block
 
 **`tag` values:** `galaxy` · `nebula` · `cluster` · `other`
 
-**`wide: true`** is optional. Adding it makes the card span two columns and switches its image to a 16:7 aspect ratio. Use it for your best or widest-field captures — it persists correctly across all sort orders and filters.
+**`wide: true`** is optional. Adding it makes the card span two columns and switches its image to a 16:7 aspect ratio. Use it for your best or widest-field captures.
 
 **`depth`** is optional but enables the per-card ⬡ 3D button and includes the target in the 3D Distance and 3D Map views. Omit it for comets or any target without a meaningful distance. The primary (first) entry **must include `l` and `b`** (galactic longitude and latitude in degrees) — without these the target won't appear on the 3D Map. Companion objects don't need `l`/`b`. Include multiple objects for cards that show more than one target:
 
@@ -81,7 +84,42 @@ git commit -m "Add Whatever Nebula"
 git push
 ```
 
-The site updates within ~30 seconds.
+The GitHub Action fires within seconds, converts the image to WebP, updates the filename reference in `index.html`, and commits back. The live site updates within ~30 seconds of the Action completing.
+
+---
+
+## WebP conversion
+
+All images are stored and served as WebP for fast load times. Conversion is handled automatically — you never need to think about it.
+
+### How it works
+
+A GitHub Action (`.github/workflows/convert-webp.yml`) triggers whenever images are pushed to `main`. It runs `convert_to_webp.py` at quality 85, deletes the originals, updates `index.html` with the new filenames, and commits everything back to the repo.
+
+### Manual conversion (one-off or bulk)
+
+To convert images locally without waiting for the Action — useful if you want to check file sizes first:
+
+```bash
+# Preview what would happen without making any changes
+python3 convert_to_webp.py --dry-run
+
+# Convert and update index.html, keep originals
+python3 convert_to_webp.py --quality 85
+
+# Convert, update index.html, and delete originals
+python3 convert_to_webp.py --quality 85 --delete
+```
+
+Requires Pillow: `pip3 install Pillow --break-system-packages`
+
+### Quality setting
+
+The default quality is **85**, which is roughly equivalent to JPEG 90–92 in perceived sharpness. Typical savings on astrophotography images are 60–99% compared to the original PNGs and JPEGs. To adjust, edit line 28 of `convert-webp.yml`:
+
+```yaml
+run: python convert_to_webp.py --quality 85 --delete
+```
 
 ---
 
@@ -93,9 +131,9 @@ All image files live in `images/` (lowercase) and follow this pattern:
 - Underscores instead of spaces
 - No special characters (no apostrophes, ampersands, brackets)
 - Catalogue number first: `m42_`, `ngc6960_`, `ic443_`, `b33_`
-- Extension lowercase: `.jpg`, `.png`, `.jpeg`
+- Push in any format — the Action converts to `.webp` automatically
 
-Examples: `m42_orion_nebula.jpeg` · `ngc6960_western_veil_nebula.png` · `c32_whale_galaxy.png`
+Examples: `m42_orion_nebula.jpeg` → `m42_orion_nebula.webp` · `ngc6960_western_veil_nebula.png` → `ngc6960_western_veil_nebula.webp`
 
 ---
 
@@ -141,7 +179,7 @@ Controls: drag to rotate and tilt · scroll to zoom (up to 8×) · hover markers
 ## First-time setup on GitHub
 
 1. Create a new repository at https://github.com/new
-2. Upload `index.html` and the `images/` folder (or use `git push`)
+2. Upload `index.html`, `convert_to_webp.py`, `.github/`, and the `images/` folder (or use `git push`)
 3. Go to **Settings → Pages**
 4. Under *Source*, select **Deploy from a branch**, choose `main`, folder `/root`
 5. Click Save — your site will be live at `https://yourusername.github.io/astrophotography`
@@ -178,8 +216,8 @@ The strip between the hero text and the gallery always reflects `CAPTURES[0]` �
 The `<head>` includes Open Graph and Twitter card meta tags for rich previews in iMessage, Discord, Slack, and social media. To update the preview image:
 
 ```html
-<meta property="og:image" content="images/your-filename.png">
-<meta name="twitter:image" content="images/your-filename.png">
+<meta property="og:image" content="images/your-filename.webp">
+<meta name="twitter:image" content="images/your-filename.webp">
 ```
 
 The `og:image` should be at least 1200 × 630 px for best results.
@@ -190,11 +228,10 @@ The `og:image` should be at least 1200 × 630 px for best results.
 
 | Use | Size |
 |-----|------|
-| Wide cards (5th, 8th position) | 1800 × 800 px |
+| Wide cards | 1800 × 800 px |
 | Standard cards | 1200 × 900 px |
-| Max file size | ~500 KB (use [Squoosh](https://squoosh.app) to compress) |
 
-Keeping images compressed matters on GitHub Pages where there is no server-side compression.
+Push in any format — the Action handles compression to WebP automatically. No need to pre-process images before pushing.
 
 ---
 
