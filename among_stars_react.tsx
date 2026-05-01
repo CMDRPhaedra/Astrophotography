@@ -65,19 +65,23 @@ For the astronomical object "${catalog.trim()}", return exactly this structure:
   "title": "common name of the object",
   "tag": "one of: galaxy | nebula | cluster | comet | other",
   "desc": "3 to 5 sentences, scientifically precise and elegantly written, no apostrophes, no markdown, no contractions",
-  "depth": [array of {"name": "Full Name (Catalog)", "type": "galaxy|nebula|cluster|star|other", "ly": distance_as_number} for the primary object and any notable companions],
-  "gal_l": galactic_longitude_as_number,
-  "gal_b": galactic_latitude_as_number,
-  "ly": distance_in_light_years_as_number
+  "depth": [
+    {"name": "Full Name (Catalog)", "type": "galaxy|nebula|cluster|star|other", "ly": distance_as_number, "l": galactic_longitude_as_number, "b": galactic_latitude_as_number},
+    {"name": "Companion Name (if any)", "type": "galaxy|nebula|cluster|star|other", "ly": distance_as_number}
+  ]
 }
 
-Return only the JSON. No backticks. No markdown. No text before or after.`;
+Rules:
+- depth[0] is the primary object and MUST include "l" and "b" (galactic coordinates in degrees)
+- Additional depth entries for companions/associated objects do NOT include l or b
+- Omit depth entirely for comets and solar system objects
+- No backticks. No markdown. No text before or after.`;
 
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "claude-sonnet-4-5",
+          model: "claude-sonnet-4-6",
           max_tokens: 1000,
           messages: [{ role: "user", content: prompt }]
         })
@@ -89,23 +93,40 @@ Return only the JSON. No backticks. No markdown. No text before or after.`;
       const raw = data.content.map(b => b.text || "").join("").replace(/```json|```/g, "").trim();
       const d = JSON.parse(raw);
 
-      const tag = (d.tag || "other").toLowerCase();
+      const tag   = (d.tag || "other").toLowerCase();
       const title = d.title || catalog.trim();
-      const meta = `${catalog.trim().toUpperCase()} · ${date.trim()} · Edinburgh · ${integration.trim()}`;
-      const depthStr = JSON.stringify(d.depth || []);
-      const imgPath = `images/${filename.trim()}`;
-      const primary = (d.depth && d.depth[0]) ? d.depth[0] : { name: `${title} (${catalog.trim()})`, type: tag, ly: d.ly };
-      const shortName = title.split(" ").slice(0, 3).join(" ");
+      const meta  = `${catalog.trim().toUpperCase()} · ${date.trim()} · Edinburgh · ${integration.trim()}`;
+      const img   = `images/${filename.trim()}`;
+      const depth = d.depth || [];
 
-      const htmlSnippet =
-`<div class="card" data-img="${imgPath}"
-  data-tag="${tag}" data-title="${title}" data-meta="${meta}"
-  data-depth='${depthStr}'
-  data-desc="${d.desc || ''}"></div>`;
+      // Format depth array — l/b on primary only, companions without
+      function fmtDepth(entries) {
+        if (!entries.length) return null;
+        if (entries.length === 1) {
+          const o = entries[0];
+          const lb = o.l !== undefined ? `, l: ${o.l}, b: ${o.b}` : '';
+          return `[{ name: '${o.name}', type: '${o.type}', ly: ${o.ly}${lb} }]`;
+        }
+        const lines = entries.map((o, i) => {
+          const lb = (i === 0 && o.l !== undefined) ? `, l: ${o.l}, b: ${o.b}` : '';
+          return `    { name: '${o.name}', type: '${o.type}', ly: ${o.ly}${lb} },`;
+        });
+        return '[\n' + lines.join('\n') + '\n  ]';
+      }
 
-      const jsSnippet = `  {name:"${shortName} (${catalog.trim()})", type:"${tag}", ly:${d.ly}, l:${d.gal_l}, b:${d.gal_b}},`;
+      const depthFormatted = fmtDepth(depth);
+      const depthLine = depthFormatted ? `  depth: ${depthFormatted},\n` : '';
 
-      setResult({ title, meta, tag, desc: d.desc, htmlSnippet, jsSnippet });
+      const capturesSnippet =
+`{
+  img:   '${img}',
+  tag:   '${tag}',
+  title: '${title}',
+  meta:  '${meta}',
+${depthLine}  desc:  "${d.desc || ''}",
+},`;
+
+      setResult({ title, meta, tag, desc: d.desc, capturesSnippet });
     } catch(e) {
       setErr("Error: " + e.message);
     } finally {
@@ -136,7 +157,7 @@ Return only the JSON. No backticks. No markdown. No text before or after.`;
 
       <div style={s.grid}>
         {field("Catalog ID / Name", "catalog", catalog, setCatalog, "M13, NGC 891, C32…")}
-        {field("Image Filename", "fn", filename, setFilename, "m13_rgb.jpg", "Images/ prepended automatically · case-sensitive")}
+        {field("Image Filename", "fn", filename, setFilename, "m13_rgb.jpg", "images/ prepended automatically · case-sensitive")}
         {field("Integration Time", "int", integration, setIntegration, "1h 30m")}
         {field("Capture Date", "date", date, setDate, "29 Apr 2026")}
       </div>
@@ -159,22 +180,12 @@ Return only the JSON. No backticks. No markdown. No text before or after.`;
 
         <div style={s.blockWrap}>
           <div style={s.blockLabel}>
-            Card HTML
-            <button style={s.copyBtn} onClick={() => copyBlock(result.htmlSnippet, "html")}>
-              {copied.html ? "Copied" : "Copy"}
+            CAPTURES entry — paste at top of array in index.html
+            <button style={s.copyBtn} onClick={() => copyBlock(result.capturesSnippet, "captures")}>
+              {copied.captures ? "Copied" : "Copy"}
             </button>
           </div>
-          <pre style={s.pre}>{result.htmlSnippet}</pre>
-        </div>
-
-        <div style={s.blockWrap}>
-          <div style={s.blockLabel}>
-            GALACTIC_TARGETS entry
-            <button style={s.copyBtn} onClick={() => copyBlock(result.jsSnippet, "js")}>
-              {copied.js ? "Copied" : "Copy"}
-            </button>
-          </div>
-          <pre style={s.pre}>{result.jsSnippet}</pre>
+          <pre style={s.pre}>{result.capturesSnippet}</pre>
         </div>
       </>}
     </div>
