@@ -7,13 +7,13 @@
 <meta name="description" content="Astrophotography from Edinburgh, Scotland. Deep-sky images captured with a Dwarf 3 smart telescope — galaxies, nebulae, clusters and comets.">
 <meta property="og:title" content="Dale — Among Stars">
 <meta property="og:description" content="Deep-sky astrophotography from Edinburgh, Scotland. Galaxies, nebulae, clusters and comets captured with a Dwarf 3 smart telescope.">
-<meta property="og:image" content="images/m109_vacuum_cleaner_galaxy.png">
+<meta property="og:image" content="images/m101_pinwheel_galaxy_v3.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://cmdrphaedra.github.io/Astrophotography/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Dale — Among Stars">
 <meta name="twitter:description" content="Deep-sky astrophotography from Edinburgh, Scotland.">
-<meta name="twitter:image" content="images/m109_vacuum_cleaner_galaxy.png">
+<meta name="twitter:image" content="images/m101_pinwheel_galaxy_v3.png">
 <script>
   (function(){
     var t=localStorage.getItem('theme');
@@ -21,6 +21,7 @@
   })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inconsolata:wght@300;400&display=swap" rel="stylesheet">
 <style>
   :root,
@@ -390,7 +391,7 @@
 </head>
 <body>
 
-<canvas id="stars"></canvas>
+<canvas id="stars" aria-hidden="true"></canvas>
 
 <!-- HEADER -->
 <header>
@@ -1063,7 +1064,7 @@ function buildLatestCapture() {
   const data = CAPTURES[0];
   if(!data) return;
   const label = data.tag.charAt(0).toUpperCase() + data.tag.slice(1);
-  const imgHTML = data.img ? `<img src="${data.img}" alt="${data.title}" loading="lazy" decoding="async">` : '';
+  const imgHTML = data.img ? `<img src="${data.img}" alt="${data.title}" loading="eager" decoding="async">` : '';
   document.getElementById('latest-capture').innerHTML = `
     <div class="latest-inner" onclick="(function(){const all=[...document.querySelectorAll('#gallery .card')];const idx=all.findIndex(c=>c.dataset.title===${JSON.stringify(data.title)});openLightboxCard(all,idx===-1?0:idx);})()">
       <div class="latest-img-wrap">${imgHTML}</div>
@@ -1373,6 +1374,7 @@ function openLightboxCard(cards,idx){
   document.getElementById('lightbox-tag').textContent=(card.dataset.tag||'').toUpperCase();
   document.getElementById('lightbox-meta').textContent=card.dataset.meta||'';
   document.getElementById('lightbox-desc').textContent=card.dataset.desc||'';
+  lbImg.alt=card.dataset.title||'';
   document.getElementById('lb-counter').textContent=`${lbIndex+1} of ${lbCards.length}`;
   document.getElementById('lb-prev').style.opacity=lbIndex===0?'0.25':'1';
   document.getElementById('lb-next').style.opacity=lbIndex===lbCards.length-1?'0.25':'1';
