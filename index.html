@@ -17,6 +17,8 @@
 <meta name="google-site-verification" content="vSYAwgk5-JmMlJQDaNknA6qAGKHYYc0ULsWRI5so-ag">
 <link rel="canonical" href="https://chryse.co.uk/">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="stylesheet" href="https://aladin.u-strasbg.fr/AladinLite/api/v3/latest/aladin.min.css">
+<script src="https://aladin.u-strasbg.fr/AladinLite/api/v3/latest/aladin.min.js" charset="utf-8"></script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon.png" type="image/png">
 <script>
@@ -245,6 +247,13 @@
   .lightbox-title { font-size: 2rem; font-weight: 300; font-style: italic; line-height: 1.2; margin-bottom: 1rem; }
   .lightbox-meta { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--dim); line-height: 2; margin-bottom: 1.5rem; }
   .lightbox-desc { font-size: 0.95rem; line-height: 1.7; color: var(--dim); font-style: italic; }
+  .lb-skyview-wrap { margin-top: 1.2rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+  .lb-skyview-label { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.5rem; }
+  .lb-skyview-container { width: 100%; height: 160px; background: #060504; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; position: relative; }
+  .lb-skyview-surveys { display: flex; gap: 5px; margin-top: 6px; }
+  .lb-skyview-survey-btn { font-family: 'Inconsolata', monospace; font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; background: transparent; border: 1px solid var(--border); color: var(--dim); padding: 0.2rem 0.5rem; cursor: pointer; border-radius: 2px; transition: all 0.2s; }
+  .lb-skyview-survey-btn.active { border-color: var(--accent); color: var(--accent); }
+  .lb-skyview-survey-btn:hover { border-color: var(--accent); color: var(--accent); }
   .lightbox-close { position: absolute; top: 2rem; right: 2.5rem; font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); background: none; border: 1px solid var(--border); padding: 0.4rem 0.8rem; cursor: pointer; transition: all 0.2s; }
   .lightbox-close:hover { color: var(--ink); border-color: var(--ink); }
   .lightbox-zoom-controls { display: flex; gap: 0.4rem; margin-bottom: 1.2rem; align-items: center; }
@@ -492,6 +501,15 @@
       </div>
       <p class="lightbox-zoom-hint" id="lb-zoom-hint">Scroll to zoom · drag to pan · double-click to reset</p>
       <p class="lightbox-desc" id="lightbox-desc"></p>
+      <div class="lb-skyview-wrap" id="lb-skyview-wrap">
+        <div class="lb-skyview-label">Sky view</div>
+        <div class="lb-skyview-container" id="lb-skyview-container"></div>
+        <div class="lb-skyview-surveys">
+          <button class="lb-skyview-survey-btn active" onclick="lbSkyViewSurvey('P/DSS2/color',this)">DSS2</button>
+          <button class="lb-skyview-survey-btn" onclick="lbSkyViewSurvey('P/2MASS/color',this)">2MASS</button>
+          <button class="lb-skyview-survey-btn" onclick="lbSkyViewSurvey('P/DSS2/red',this)">Hα</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1409,6 +1427,14 @@ function openLightboxCard(cards,idx){
   document.body.style.overflow='hidden';
   history.replaceState(null,'','?photo='+slugify(card.dataset.title||''));
   lbReset();
+  // Sky view: extract catalogue ID from meta (first segment before ·)
+  const meta = card.dataset.meta || '';
+  const skyTarget = meta.split('·')[0].trim() || card.dataset.title || '';
+  // Hide sky view panel for objects without a useful sky position
+  const noSky = ['luna','moon'].some(k => skyTarget.toLowerCase().includes(k));
+  const skyWrap = document.getElementById('lb-skyview-wrap');
+  if(skyWrap) skyWrap.style.display = noSky ? 'none' : '';
+  if(!noSky) lbSkyViewInit(skyTarget);
 }
 function lbNavigate(dir){
   const next=lbIndex+dir;
@@ -1436,6 +1462,45 @@ function closeLightbox(e) {
   document.body.style.overflow='';
   history.replaceState(null,'',window.location.pathname);
   lbReset();
+}
+
+// ── SKY VIEW (ALADIN LITE) ──
+let lbAladin = null;
+let lbAladinTarget = null;
+
+function lbSkyViewInit(target) {
+  if(!target) return;
+  const container = document.getElementById('lb-skyview-container');
+  if(!container) return;
+  // If same target already loaded, do nothing
+  if(lbAladin && lbAladinTarget === target) return;
+  lbAladinTarget = target;
+  container.innerHTML = '';
+  if(typeof A === 'undefined') {
+    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:monospace;font-size:0.6rem;letter-spacing:0.1em;color:#5a5248;">Sky view unavailable</div>';
+    return;
+  }
+  lbAladin = A.aladin('#lb-skyview-container', {
+    survey: 'P/DSS2/color',
+    target: target,
+    fov: 1.0,
+    showReticle: false,
+    showZoomControl: false,
+    showFullscreenControl: false,
+    showLayersControl: false,
+    showGotoControl: false,
+    showShareControl: false,
+    showCooGridControl: false,
+    showProjectionControl: false,
+    showContextMenu: false,
+    showFrame: false,
+  });
+}
+
+function lbSkyViewSurvey(survey, btn) {
+  if(lbAladin) lbAladin.setImageSurvey(survey);
+  document.querySelectorAll('.lb-skyview-survey-btn').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
 }
 
 
