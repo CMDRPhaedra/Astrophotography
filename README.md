@@ -17,7 +17,7 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **3D depth view** per card — hover any deep-sky card and click **⬡ 3D** to open an interactive Plotly scene at the card's real distance from Earth
 - **⬡ 3D Distance** — all targets on a single stretched-log distance axis with a built-in explainer
 - **⬡ 3D Map** — all targets in real galactic coordinates with type filters (All / Galaxies / Nebulae / Clusters) and a built-in explainer. Pure canvas, no external libraries.
-- **Deep linking** — opening a lightbox updates the URL hash (e.g. `#veil-nebula-complex`); sharing that URL opens the site with that image already in the lightbox
+- **Deep linking** — opening a lightbox updates the URL to `?photo=slug` (e.g. `?photo=veil-nebula-complex`); sharing that URL opens the site with that image already in the lightbox, including via iMessage, WhatsApp, and Discord
 - **Automatic WebP conversion** — a GitHub Action converts new images to WebP on every push and updates `index.html` automatically
 - **Image compression** — a GitHub Action compresses images via Squoosh on push
 - **Open Graph / Twitter card meta tags** for rich link previews
@@ -244,14 +244,24 @@ Push in any format — the Action handles compression to WebP automatically. No 
 Every time a lightbox opens, the URL updates automatically — for example:
 
 ```
-https://chryse.co.uk/#veil-nebula-complex
-https://chryse.co.uk/#markarians-chain
-https://chryse.co.uk/#horsehead-nebula
+https://chryse.co.uk/?photo=veil-nebula-complex
+https://chryse.co.uk/?photo=markarians-chain
+https://chryse.co.uk/?photo=horsehead-nebula
 ```
+
+Query parameters (`?photo=`) are used rather than hash fragments (`#`) so that links shared via iMessage, WhatsApp, Discord, and other messaging apps open the correct image. Hash fragments are stripped by most apps when generating link previews; query parameters are preserved.
 
 Copying the URL from the address bar always gives a shareable link that opens directly to that image. When someone follows the link they land on the gallery with the correct lightbox already open, regardless of any filter or sort they might have active.
 
 The slug is generated automatically from the `title` field — no extra configuration needed in `CAPTURES`. The rules are: lowercase, apostrophes removed, non-alphanumeric characters replaced with hyphens. Closing the lightbox restores the clean gallery URL.
+
+---
+
+## SEO
+
+The site is verified with Google Search Console and a sitemap submitted at `https://chryse.co.uk/sitemap.xml`. The `<head>` includes a canonical URL tag and a sitemap link for search engine discovery.
+
+To update the sitemap after significant changes (e.g. adding many new captures), update the `<lastmod>` date in `sitemap.xml` and push. Google Search Console will pick it up on its next crawl.
 
 ---
 
