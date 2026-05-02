@@ -1062,7 +1062,6 @@ function renderAll() {
   });
 }
 renderAll();
-openFromHash(); // open lightbox if URL contains a deep link hash
 
 // ── LATEST CAPTURE ──
 function buildLatestCapture() {
@@ -1378,6 +1377,8 @@ function openFromHash() {
 
   wrap.addEventListener('touchend',()=>{ lastDist=null; });
 })();
+
+openFromHash(); // open lightbox if URL contains a deep link hash — must run after lbReset is defined
 
 // ── LIGHTBOX OPEN / CLOSE ──
 let lbCards=[], lbIndex=0;
