@@ -17,8 +17,8 @@
 <meta name="google-site-verification" content="vSYAwgk5-JmMlJQDaNknA6qAGKHYYc0ULsWRI5so-ag">
 <link rel="canonical" href="https://chryse.co.uk/">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
-<link rel="stylesheet" href="https://aladin.u-strasbg.fr/AladinLite/api/v3/latest/aladin.min.css">
-<script src="https://aladin.u-strasbg.fr/AladinLite/api/v3/latest/aladin.min.js" charset="utf-8"></script>
+<link rel="stylesheet" href="https://aladin.cds.unistra.fr/AladinLite/api/v3/latest/aladin.min.css">
+<script src="https://aladin.cds.unistra.fr/AladinLite/api/v3/latest/aladin.js" charset="utf-8"></script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon.png" type="image/png">
 <script>
@@ -1472,28 +1472,33 @@ function lbSkyViewInit(target) {
   if(!target) return;
   const container = document.getElementById('lb-skyview-container');
   if(!container) return;
-  // If same target already loaded, do nothing
   if(lbAladin && lbAladinTarget === target) return;
   lbAladinTarget = target;
   container.innerHTML = '';
-  if(typeof A === 'undefined') {
+  if(typeof A === 'undefined' || !A.init) {
     container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:monospace;font-size:0.6rem;letter-spacing:0.1em;color:#5a5248;">Sky view unavailable</div>';
     return;
   }
-  lbAladin = A.aladin('#lb-skyview-container', {
-    survey: 'P/DSS2/color',
-    target: target,
-    fov: 1.0,
-    showReticle: false,
-    showZoomControl: false,
-    showFullscreenControl: false,
-    showLayersControl: false,
-    showGotoControl: false,
-    showShareControl: false,
-    showCooGridControl: false,
-    showProjectionControl: false,
-    showContextMenu: false,
-    showFrame: false,
+  A.init.then(() => {
+    if(lbAladinTarget !== target) return; // user navigated away before init
+    container.innerHTML = '';
+    lbAladin = A.aladin('#lb-skyview-container', {
+      survey: 'P/DSS2/color',
+      target: target,
+      fov: 1.0,
+      showReticle: false,
+      showZoomControl: false,
+      showFullscreenControl: false,
+      showLayersControl: false,
+      showGotoControl: false,
+      showShareControl: false,
+      showCooGridControl: false,
+      showProjectionControl: false,
+      showContextMenu: false,
+      showFrame: false,
+    });
+  }).catch(() => {
+    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:monospace;font-size:0.6rem;letter-spacing:0.1em;color:#5a5248;">Sky view unavailable</div>';
   });
 }
 
