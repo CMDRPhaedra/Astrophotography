@@ -2,7 +2,7 @@
 
 Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub Pages.
 
-**Live site:** https://cmdrphaedra.github.io/Astrophotography/
+**Live site:** https://chryse.co.uk
 
 ---
 
@@ -19,7 +19,9 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **⬡ 3D Map** — all targets in real galactic coordinates with type filters (All / Galaxies / Nebulae / Clusters) and a built-in explainer. Pure canvas, no external libraries.
 - **Deep linking** — opening a lightbox updates the URL hash (e.g. `#veil-nebula-complex`); sharing that URL opens the site with that image already in the lightbox
 - **Automatic WebP conversion** — a GitHub Action converts new images to WebP on every push and updates `index.html` automatically
+- **Image compression** — a GitHub Action compresses images via Squoosh on push
 - **Open Graph / Twitter card meta tags** for rich link previews
+- **Favicon** — black hole event horizon icon (SVG for Chrome/Firefox, PNG fallback for Safari)
 - **Light / dark theme** toggle — choice is remembered across visits
 - Animated starfield background
 
@@ -184,18 +186,20 @@ Controls: drag to rotate and tilt · scroll to zoom (up to 8×) · hover markers
 4. Under *Source*, select **Deploy from a branch**, choose `main`, folder `/root`
 5. Click Save — your site will be live at `https://yourusername.github.io/astrophotography`
 
-### Custom domain (optional)
+### Custom domain
 
-1. Buy a domain from any registrar (Namecheap, Porkbun, Cloudflare, etc.)
-2. Add these A records at your registrar pointing to GitHub's servers:
-   ```
-   185.199.108.153
-   185.199.109.153
-   185.199.110.153
-   185.199.111.153
-   ```
-3. Go to your repo → **Settings → Pages → Custom domain**, enter your domain and save
-4. Tick **Enforce HTTPS** once DNS propagates (can take a few minutes to 48 hours)
+The site is live at **chryse.co.uk**, registered via IONOS with DNS pointing to GitHub Pages.
+
+DNS A records (all four required):
+```
+185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+```
+CNAME: `www` → `cmdrphaedra.github.io`
+
+HTTPS is handled automatically by GitHub Pages via Let's Encrypt.
 
 ---
 
@@ -240,9 +244,9 @@ Push in any format — the Action handles compression to WebP automatically. No 
 Every time a lightbox opens, the URL updates automatically — for example:
 
 ```
-https://cmdrphaedra.github.io/Astrophotography/#veil-nebula-complex
-https://cmdrphaedra.github.io/Astrophotography/#markarians-chain
-https://cmdrphaedra.github.io/Astrophotography/#horsehead-nebula
+https://chryse.co.uk/#veil-nebula-complex
+https://chryse.co.uk/#markarians-chain
+https://chryse.co.uk/#horsehead-nebula
 ```
 
 Copying the URL from the address bar always gives a shareable link that opens directly to that image. When someone follows the link they land on the gallery with the correct lightbox already open, regardless of any filter or sort they might have active.
