@@ -79,13 +79,23 @@ Valid `type` values: `galaxy` · `nebula` · `cluster` · `star`
 
 **`meta` format:** `Catalogue · DD Mon YYYY · Location · Integration time` — the date is used by the Date sort, so keep it consistent.
 
-### 3. Push to GitHub
+### 3. Add an entry to the noscript list in `index.html`
+
+Find the `<noscript>` block just before the footer and add a matching `<li>` at the **top** of the list. This makes the capture visible to search engine crawlers that don't execute JavaScript:
+
+```html
+<li><h3>Whatever Nebula (NGC 1234)</h3><p>NGC 1234 · 01 May 2026 · Edinburgh · 45m</p><p>Your description here.</p></li>
+```
+
+### 4. Push to GitHub
 
 ```bash
 git add images/ngc1234_whatever_nebula.jpg index.html
 git commit -m "Add Whatever Nebula"
 git push
 ```
+
+The GitHub Action fires within seconds, converts the image to WebP, updates the filename reference in `index.html`, and commits back. The live site updates within ~30 seconds of the Action completing.
 
 The GitHub Action fires within seconds, converts the image to WebP, updates the filename reference in `index.html`, and commits back. The live site updates within ~30 seconds of the Action completing.
 
@@ -218,11 +228,11 @@ The strip between the hero text and the gallery always reflects `CAPTURES[0]` �
 
 ## Open Graph tags
 
-The `<head>` includes Open Graph and Twitter card meta tags for rich previews in iMessage, Discord, Slack, and social media. To update the preview image:
+The `<head>` includes Open Graph and Twitter card meta tags for rich previews in iMessage, Discord, Slack, and social media. To update the preview image, use **absolute URLs**:
 
 ```html
-<meta property="og:image" content="images/your-filename.webp">
-<meta name="twitter:image" content="images/your-filename.webp">
+<meta property="og:image" content="https://chryse.co.uk/images/your-filename.webp">
+<meta name="twitter:image" content="https://chryse.co.uk/images/your-filename.webp">
 ```
 
 The `og:image` should be at least 1200 × 630 px for best results.
@@ -260,7 +270,9 @@ The slug is generated automatically from the `title` field — no extra configur
 
 ## SEO
 
-The site is verified with Google Search Console and a sitemap submitted at `https://chryse.co.uk/sitemap.xml`. The `<head>` includes a canonical URL tag and a sitemap link for search engine discovery.
+The site is verified with Google Search Console and a sitemap submitted at `https://chryse.co.uk/sitemap.xml`. The `<head>` includes a canonical URL tag and a sitemap link for search engine discovery. A `robots.txt` in the repo root allows all crawlers and points to the sitemap.
+
+A `<noscript>` block in `index.html` contains static HTML versions of all captures so search engine crawlers that don't execute JavaScript can index the gallery content and descriptions.
 
 To update the sitemap after significant changes (e.g. adding many new captures), update the `<lastmod>` date in `sitemap.xml` and push. Google Search Console will pick it up on its next crawl.
 
