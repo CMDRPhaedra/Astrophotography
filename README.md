@@ -13,7 +13,8 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **Latest capture strip** — always shows the first entry in the `CAPTURES` array with a pulsing indicator
 - **Search** — press `/` to focus the search bar; searches target names, catalogue numbers, and descriptions; works alongside the category filter
 - **Stats bar** — live count of total images, per-category breakdown with dot visualisation, and total integration time observed
-- **Lightbox** with scroll-to-zoom, drag-to-pan, double-click to reset, pinch on mobile, arrow key navigation, and image counter
+- **Lightbox** with scroll-to-zoom, drag-to-pan, double-click to reset, pinch on mobile, arrow key navigation, and image counter; includes Copy link, Sky view, and theme toggle buttons
+- **Sky view** — a ⛶ Sky view button in the lightbox opens a full-screen interactive sky atlas (Aladin Lite, CDS Strasbourg) centred on the target, with DSS2 optical, 2MASS near-infrared, and Hα survey options
 - **3D depth view** per card — hover any deep-sky card and click **⬡ 3D** to open an interactive Plotly scene at the card's real distance from Earth
 - **⬡ 3D Distance** — all targets on a single stretched-log distance axis with a built-in explainer
 - **⬡ 3D Map** — all targets in real galactic coordinates with type filters (All / Galaxies / Nebulae / Clusters) and a built-in explainer. Pure canvas, no external libraries.
@@ -22,7 +23,7 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **Image compression** — a GitHub Action compresses images via Squoosh on push
 - **Open Graph / Twitter card meta tags** for rich link previews
 - **Favicon** — black hole event horizon icon (SVG for Chrome/Firefox, PNG fallback for Safari)
-- **Light / dark theme** toggle — choice is remembered across visits
+- **Light / dark theme** toggle — available in the main header, lightbox, and sky view modal; choice is remembered across visits
 - Animated starfield background
 
 ---
@@ -262,6 +263,22 @@ The slug is generated automatically from the `title` field — no extra configur
 The site is verified with Google Search Console and a sitemap submitted at `https://chryse.co.uk/sitemap.xml`. The `<head>` includes a canonical URL tag and a sitemap link for search engine discovery.
 
 To update the sitemap after significant changes (e.g. adding many new captures), update the `<lastmod>` date in `sitemap.xml` and push. Google Search Console will pick it up on its next crawl.
+
+---
+
+## Sky view
+
+Every lightbox (except The Moon and Sol) shows a **⛶ Sky view** button next to the Copy link button. Clicking it opens a full-screen modal powered by [Aladin Lite](https://aladin.cds.unistra.fr/AladinLite/) from the Centre de Données astronomiques de Strasbourg (CDS).
+
+The viewer is centred automatically on the target using the catalogue ID extracted from the `meta` field (e.g. `NGC 6960`). Three survey layers are available:
+
+- **DSS2** — Digitized Sky Survey optical colour imagery
+- **2MASS** — near-infrared survey, useful for seeing through dust
+- **Hα** — hydrogen-alpha emission, highlights ionised gas regions
+
+Controls: scroll to zoom · drag to pan · use the Goto control to jump to any object · Escape or click outside to close.
+
+The Aladin logo and attribution link are preserved in the bottom-right corner of the viewer as required by CDS terms of use.
 
 ---
 
