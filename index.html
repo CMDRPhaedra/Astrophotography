@@ -511,6 +511,10 @@
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+  <button class="theme-toggle" onclick="toggleTheme()" style="position:absolute;top:2rem;right:8rem;">
+    <span class="toggle-icon" id="toggle-icon-lb">☀</span>
+    <span id="toggle-label-lb">Light</span>
+  </button>
   <button class="lightbox-nav prev" id="lb-prev" onclick="lbNavigate(-1)">&#8592;</button>
   <button class="lightbox-nav next" id="lb-next" onclick="lbNavigate(1)">&#8594;</button>
   <div class="lightbox-inner">
@@ -1044,10 +1048,14 @@ window.addEventListener('resize',()=>{resizeCanvas();generateStars();});
 // ── THEME TOGGLE ──
 function applyThemeUI() {
   const light = document.documentElement.dataset.theme === 'light';
-  const icon  = document.getElementById('toggle-icon');
-  const label = document.getElementById('toggle-label');
-  if(icon)  icon.textContent  = light ? '☾' : '☀';
-  if(label) label.textContent = light ? 'Dark' : 'Light';
+  const iconTxt  = light ? '☾' : '☀';
+  const labelTxt = light ? 'Dark' : 'Light';
+  [['toggle-icon','toggle-label'],['toggle-icon-lb','toggle-label-lb'],['toggle-icon-sv','toggle-label-sv']].forEach(([i,l]) => {
+    const icon = document.getElementById(i);
+    const label = document.getElementById(l);
+    if(icon)  icon.textContent  = iconTxt;
+    if(label) label.textContent = labelTxt;
+  });
 }
 function toggleTheme() {
   const html = document.documentElement;
@@ -2281,7 +2289,13 @@ openFromHash(); // deep link — must run after lbCards/lbIndex are declared and
           <span class="depth-modal-sub" style="margin-left:0.5rem;">Real sky imagery · CDS Strasbourg · Scroll to zoom · drag to pan &nbsp;|&nbsp; <b>DSS2</b> optical colour &nbsp;<b>2MASS</b> near-infrared &nbsp;<b>H&alpha;</b> hydrogen-alpha emission</span>
         </div>
       </div>
-      <button class="skyview-modal-close" onclick="closeSkyViewModal()">&#x2715; Close</button>
+      <div style="display:flex;align-items:center;gap:0.6rem;">
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <span class="toggle-icon" id="toggle-icon-sv">☀</span>
+          <span id="toggle-label-sv">Light</span>
+        </button>
+        <button class="skyview-modal-close" onclick="closeSkyViewModal()">&#x2715; Close</button>
+      </div>
     </div>
     <div id="skyview-modal-aladin"></div>
   </div>
