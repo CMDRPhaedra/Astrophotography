@@ -522,6 +522,7 @@
       <div class="lightbox-meta" id="lightbox-meta"></div>
       <div class="lb-copy-wrap">
         <button class="lightbox-zoom-btn" id="lb-copy-btn" onclick="copyLightboxLink()">&#x29C9; Copy link</button>
+        <button class="lightbox-zoom-btn" id="lb-skyview-btn" onclick="openSkyViewModal()">&#x26F6; Sky view</button>
         <span class="lb-copy-confirm" id="lb-copy-confirm">Copied</span>
       </div>
       <div class="lightbox-zoom-controls">
@@ -531,19 +532,8 @@
         <button class="lightbox-zoom-btn" id="lb-reset-btn" onclick="lbReset()" style="opacity:0.35;pointer-events:none;">⌂ Reset</button>
       </div>
       <p class="lightbox-zoom-hint" id="lb-zoom-hint">Scroll to zoom · drag to pan · double-click to reset</p>
+      <p class="lightbox-zoom-hint" id="lb-skyview-hint" style="display:none;">Sky view shows real DSS survey imagery of this field from the CDS astronomical database</p>
       <p class="lightbox-desc" id="lightbox-desc"></p>
-      <div class="lb-skyview-wrap" id="lb-skyview-wrap">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
-          <div class="lb-skyview-label" style="margin-bottom:0;">Sky view</div>
-          <button class="lb-skyview-survey-btn" onclick="openSkyViewModal()" id="lb-skyview-expand-btn">&#x26F6; Full view</button>
-        </div>
-        <div class="lb-skyview-container" id="lb-skyview-container"></div>
-        <div class="lb-skyview-surveys">
-          <button class="lb-skyview-survey-btn active" onclick="lbSkyViewSurvey('P/DSS2/color',this)">DSS2</button>
-          <button class="lb-skyview-survey-btn" onclick="lbSkyViewSurvey('P/2MASS/color',this)">2MASS</button>
-          <button class="lb-skyview-survey-btn" onclick="lbSkyViewSurvey('P/DSS2/red',this)">Hα</button>
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -1461,19 +1451,15 @@ function openLightboxCard(cards,idx){
   document.body.style.overflow='hidden';
   history.replaceState(null,'','?photo='+slugify(card.dataset.title||''));
   lbReset();
-  // Sky view: extract catalogue ID from meta (first segment before ·)
+  // Sky view: show/hide button based on whether object has a useful sky position
   const meta = card.dataset.meta || '';
   const skyTarget = meta.split('·')[0].trim() || card.dataset.title || '';
-  // Hide sky view panel for objects without a useful sky position
-  const noSky = ['luna','moon'].some(k => skyTarget.toLowerCase().includes(k));
-  const skyWrap = document.getElementById('lb-skyview-wrap');
-  if(skyWrap) skyWrap.style.display = noSky ? 'none' : '';
-  // Reset expand state on navigation
-  const skyContainer = document.getElementById('lb-skyview-container');
-  const expandBtn = document.getElementById('lb-skyview-expand-btn');
-  if(skyContainer) skyContainer.classList.remove('expanded');
-  if(expandBtn) expandBtn.textContent = '⛶ Expand';
-  if(!noSky) lbSkyViewInit(skyTarget);
+  const noSky = ['luna','moon','sun','sol'].some(k => skyTarget.toLowerCase().includes(k));
+  lbAladinTarget = noSky ? null : skyTarget;
+  const skyBtn = document.getElementById('lb-skyview-btn');
+  const skyHint = document.getElementById('lb-skyview-hint');
+  if(skyBtn) skyBtn.style.display = noSky ? 'none' : '';
+  if(skyHint) skyHint.style.display = noSky ? 'none' : '';
 }
 function lbNavigate(dir){
   const next=lbIndex+dir;
@@ -1504,48 +1490,7 @@ function closeLightbox(e) {
 }
 
 // ── SKY VIEW (ALADIN LITE) ──
-let lbAladin = null;
 let lbAladinTarget = null;
-
-function lbSkyViewInit(target) {
-  if(!target) return;
-  const container = document.getElementById('lb-skyview-container');
-  if(!container) return;
-  if(lbAladin && lbAladinTarget === target) return;
-  lbAladinTarget = target;
-  container.innerHTML = '';
-  if(typeof A === 'undefined' || !A.init) {
-    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:monospace;font-size:0.6rem;letter-spacing:0.1em;color:#5a5248;">Sky view unavailable</div>';
-    return;
-  }
-  A.init.then(() => {
-    if(lbAladinTarget !== target) return; // user navigated away before init
-    container.innerHTML = '';
-    lbAladin = A.aladin('#lb-skyview-container', {
-      survey: 'P/DSS2/color',
-      target: target,
-      fov: 1.0,
-      showReticle: false,
-      showZoomControl: false,
-      showFullscreenControl: false,
-      showLayersControl: false,
-      showGotoControl: false,
-      showShareControl: false,
-      showCooGridControl: false,
-      showProjectionControl: false,
-      showContextMenu: false,
-      showFrame: false,
-    });
-  }).catch(() => {
-    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:monospace;font-size:0.6rem;letter-spacing:0.1em;color:#5a5248;">Sky view unavailable</div>';
-  });
-}
-
-function lbSkyViewSurvey(survey, btn) {
-  if(lbAladin) lbAladin.setImageSurvey(survey);
-  document.querySelectorAll('.lb-skyview-survey-btn').forEach(b => b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-}
 
 let lbAladinModal = null;
 
