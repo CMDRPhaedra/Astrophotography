@@ -1273,12 +1273,14 @@ function slugify(title) {
 }
 
 function openFromHash() {
-  const slug = window.location.hash.slice(1);
+  // Read from query param (?photo=slug) first — preserved by messaging apps
+  // Fall back to hash (#slug) for backward compat with old shared links
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('photo') || window.location.hash.slice(1);
   if(!slug) return;
   const cards = [...document.querySelectorAll('#gallery .card')];
   const match = cards.find(c => slugify(c.dataset.title) === slug);
   if(!match) return;
-  // Open in the full unfiltered set so the card is always reachable from a cold link
   openLightboxCard(cards, cards.indexOf(match));
 }
 
@@ -1402,7 +1404,7 @@ function openLightboxCard(cards,idx){
   document.getElementById('lb-next').style.opacity=lbIndex===lbCards.length-1?'0.25':'1';
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow='hidden';
-  history.replaceState(null,'','#'+slugify(card.dataset.title||''));
+  history.replaceState(null,'','?photo='+slugify(card.dataset.title||''));
   lbReset();
 }
 function lbNavigate(dir){
@@ -1429,7 +1431,7 @@ function closeLightbox(e) {
   if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('lightbox-close')) return;
   document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow='';
-  history.replaceState(null,'',window.location.pathname+window.location.search);
+  history.replaceState(null,'',window.location.pathname);
   lbReset();
 }
 
