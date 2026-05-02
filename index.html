@@ -532,7 +532,6 @@
         <button class="lightbox-zoom-btn" id="lb-reset-btn" onclick="lbReset()" style="opacity:0.35;pointer-events:none;">⌂ Reset</button>
       </div>
       <p class="lightbox-zoom-hint" id="lb-zoom-hint">Scroll to zoom · drag to pan · double-click to reset</p>
-      <p class="lightbox-zoom-hint" id="lb-skyview-hint" style="display:none;">Sky view shows real DSS survey imagery of this field from the CDS astronomical database</p>
       <p class="lightbox-desc" id="lightbox-desc"></p>
     </div>
   </div>
@@ -1457,9 +1456,7 @@ function openLightboxCard(cards,idx){
   const noSky = ['luna','moon','sun','sol'].some(k => skyTarget.toLowerCase().includes(k));
   lbAladinTarget = noSky ? null : skyTarget;
   const skyBtn = document.getElementById('lb-skyview-btn');
-  const skyHint = document.getElementById('lb-skyview-hint');
   if(skyBtn) skyBtn.style.display = noSky ? 'none' : '';
-  if(skyHint) skyHint.style.display = noSky ? 'none' : '';
 }
 function lbNavigate(dir){
   const next=lbIndex+dir;
@@ -2281,6 +2278,7 @@ openFromHash(); // deep link — must run after lbCards/lbIndex are declared and
           <button class="lb-skyview-survey-btn active" id="skyview-modal-dss" onclick="skyViewModalSurvey('P/DSS2/color',this)">DSS2</button>
           <button class="lb-skyview-survey-btn" onclick="skyViewModalSurvey('P/2MASS/color',this)">2MASS</button>
           <button class="lb-skyview-survey-btn" onclick="skyViewModalSurvey('P/DSS2/red',this)">H&alpha;</button>
+          <span class="depth-modal-sub" style="margin-left:0.5rem;">Real sky imagery &middot; CDS Strasbourg &middot; Scroll to zoom &middot; drag to pan</span>
         </div>
       </div>
       <button class="skyview-modal-close" onclick="closeSkyViewModal()">&#x2715; Close</button>
