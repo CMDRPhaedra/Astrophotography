@@ -1062,6 +1062,7 @@ function renderAll() {
   });
 }
 renderAll();
+openFromHash(); // open lightbox if URL contains a deep link hash
 
 // ── LATEST CAPTURE ──
 function buildLatestCapture() {
@@ -1135,7 +1136,6 @@ function buildStats() {
 }
 buildStats();
 buildLatestCapture();
-openFromHash(); // open lightbox if URL contains a deep link hash
 
 // ── FILTER + SEARCH ──
 let activeTag = 'all';
