@@ -1378,8 +1378,6 @@ function openFromHash() {
   wrap.addEventListener('touchend',()=>{ lastDist=null; });
 })();
 
-openFromHash(); // open lightbox if URL contains a deep link hash — must run after lbReset is defined
-
 // ── LIGHTBOX OPEN / CLOSE ──
 let lbCards=[], lbIndex=0;
 function getVisibleCards(){
@@ -2165,6 +2163,8 @@ function buildDepthScene(objects, title, imgSrc) {
     document.getElementById('depth-loading').style.display = 'none';
   });
 }
+
+openFromHash(); // deep link — must run after lbCards/lbIndex are declared and all lightbox functions defined
 </script>
 <!-- DEPTH MODAL -->
 <div class="depth-modal" id="depth-modal">
