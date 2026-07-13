@@ -19,6 +19,8 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **⬡ 3D Distance** — all targets on a single stretched-log distance axis with a built-in explainer
 - **⬡ 3D Map** — all targets in real galactic coordinates with type filters (All / Galaxies / Nebulae / Clusters) and a built-in explainer. Pure canvas, no external libraries.
 - **Deep linking** — opening a lightbox updates the URL to `?photo=slug` (e.g. `?photo=veil-nebula-complex`); sharing that URL opens the site with that image already in the lightbox, including via iMessage, WhatsApp, and Discord
+- **Field notes blog** at [/blog/](https://chryse.co.uk/blog/) — Jekyll posts in `_posts/`, built automatically by GitHub Pages, with an RSS feed at `/feed.xml` (jekyll-feed)
+- **Keyboard accessible** — `/` focuses search, Tab reaches every card and control, Enter/Space opens a card, arrows navigate the lightbox, Escape closes
 - **Automatic WebP conversion** — a GitHub Action converts new images to WebP on every push and updates references in `index.html` and `_posts/` automatically
 - **Automatic thumbnails** — the same Action generates 640 px thumbnails in `images/thumbs/`; the gallery grid loads those (~1.4 MB total) instead of the full-resolution files (~20 MB), and the lightbox still opens the full image
 - **Self-updating noscript SEO block** — `scripts/update_noscript.py` regenerates the crawler-visible capture list from the `CAPTURES` array, so the two can't drift; it also runs inside the Action
@@ -128,7 +130,7 @@ Requires Pillow: `pip3 install Pillow --break-system-packages`
 
 ### Quality setting
 
-The default quality is **85**, which is roughly equivalent to JPEG 90–92 in perceived sharpness. Typical savings on astrophotography images are 60–99% compared to the original PNGs and JPEGs. To adjust, edit line 28 of `convert-webp.yml`:
+The default quality is **85**, which is roughly equivalent to JPEG 90–92 in perceived sharpness. Typical savings on astrophotography images are 60–99% compared to the original PNGs and JPEGs. To adjust, edit the `Run WebP conversion` step in `convert-webp.yml`:
 
 ```yaml
 run: python convert_to_webp.py --quality 85 --delete
@@ -155,7 +157,7 @@ Examples: `m42_orion_nebula.jpeg` → `m42_orion_nebula.webp` · `ngc6960_wester
 Three sort options sit below the stats bar:
 
 - **Date** (newest first by default) — reads the date from the `meta` field. Entries without a date sort as oldest.
-- **Distance** (nearest first by default) — reads from the `depth` field. Entries without a `depth` value (comets, Sol) always sort to the bottom.
+- **Distance** (nearest first by default) — reads from the `depth` field. Entries without a `depth` value (solar-system captures) always sort to the bottom.
 - **Name** (A→Z by default) — alphabetical by `title`.
 
 Click the active sort button again to reverse direction. Sort and filter/search work together — the visible order always reflects both.
@@ -192,7 +194,7 @@ Controls: drag to rotate and tilt · scroll to zoom (up to 8×) · hover markers
 ## First-time setup on GitHub
 
 1. Create a new repository at https://github.com/new
-2. Upload `index.html`, `convert_to_webp.py`, `.github/`, and the `images/` folder (or use `git push`)
+2. Push the whole repo — alongside `index.html` and `images/`, the moving parts are `convert_to_webp.py` + `scripts/` (automation), `.github/` (the Action), and `_config.yml` + `_layouts/` + `_posts/` + `blog/` (the Jekyll blog)
 3. Go to **Settings → Pages**
 4. Under *Source*, select **Deploy from a branch**, choose `main`, folder `/root`
 5. Click Save — your site will be live at `https://yourusername.github.io/astrophotography`
@@ -223,6 +225,30 @@ Press `/` from anywhere on the page to focus the search bar. It searches across 
 ## Latest capture strip
 
 The strip between the hero text and the gallery always reflects `CAPTURES[0]` — the first entry in the array. To update it, simply add the new capture object at the top of the `CAPTURES` array.
+
+---
+
+## Blog
+
+Field notes live at [/blog/](https://chryse.co.uk/blog/), built by GitHub Pages' native Jekyll support — no extra Action, no build step. Only files with YAML front matter are processed; `index.html` has none and is served untouched. An RSS feed is generated at `/feed.xml` by jekyll-feed.
+
+To add a post, create `_posts/YYYY-MM-DD-slug.md`:
+
+```markdown
+---
+layout: post
+title: "Sadr's Butterfly: A Trick of Perspective"
+date: 2026-07-13
+target: "IC 1318 · Gamma Cygni Nebula"
+distance: "4,900 light-years"
+integration: "1h 12m"
+image: /images/ic1318_gamma_cygni_nebula.webp
+---
+
+Post body in Markdown…
+```
+
+`target`, `distance`, and `integration` are optional and render in the post's meta line; `image` is the 16:9 cover and the Open Graph preview. Posts are published at `/blog/YYYY/MM/DD/slug/`, and the first paragraph doubles as the excerpt on the blog index and the meta description. To link a post back to its gallery card, use the deep-link form `[gallery card](/?photo=slug)`.
 
 ---
 
