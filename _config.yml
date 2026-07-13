@@ -13,11 +13,21 @@ url: "https://chryse.co.uk"
 markdown: kramdown
 permalink: /blog/:year/:month/:day/:title/
 
+# jekyll-sitemap and jekyll-feed are both on GitHub Pages' approved plugin
+# list, so this works with no Gemfile and no extra build step.
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+
 # Keep Jekyll from trying to process repo files that aren't part of the site.
+# sitemap.xml is excluded because jekyll-sitemap now generates it automatically
+# on every build — the hand-written file in the repo is no longer used and can
+# be deleted whenever you like.
 exclude:
   - convert_to_webp.py
   - among_stars_react.tsx
   - index.html.bak
   - LICENSE
   - README.md
+  - sitemap.xml
   - "*.py"

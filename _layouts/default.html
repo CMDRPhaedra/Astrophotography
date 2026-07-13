@@ -11,6 +11,7 @@
 <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+<link rel="alternate" type="application/rss+xml" title="Among Stars — Blog" href="{{ site.url }}/feed.xml">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.png" type="image/png">
 <script>
@@ -72,6 +73,7 @@
     <nav>
       <a class="nav-btn" href="/">Gallery</a>
       <a class="nav-btn active" href="/blog/">Blog</a>
+      <a class="nav-btn" href="/feed.xml" title="RSS feed">RSS</a>
     </nav>
     <button class="theme-toggle" onclick="toggleTheme()">
       <span class="toggle-icon" id="toggle-icon">☀</span>
