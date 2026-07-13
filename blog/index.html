@@ -1,0 +1,35 @@
+---
+layout: default
+title: Blog
+permalink: /blog/
+---
+<style>
+  .post-list { list-style: none; }
+  .post-list li { border-bottom: 1px solid var(--border); padding: 1.8rem 0; }
+  .post-list li:first-child { padding-top: 0; }
+  .post-list a { color: inherit; text-decoration: none; display: block; }
+  .post-list .p-title { font-size: 1.6rem; font-weight: 300; margin-bottom: 0.4rem; transition: color 0.2s; }
+  .post-list a:hover .p-title { color: var(--accent); }
+  .post-list .p-date { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.6rem; }
+  .post-list .p-excerpt { color: var(--dim); font-style: italic; line-height: 1.6; }
+  .empty-note { color: var(--dim); font-style: italic; }
+</style>
+
+<div class="blog-label">Field notes</div>
+<h2 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:2.5rem;">From the eyepiece</h2>
+
+{% if site.posts.size > 0 %}
+<ul class="post-list">
+  {% for post in site.posts %}
+  <li>
+    <a href="{{ post.url }}">
+      <div class="p-date">{{ post.date | date: "%-d %B %Y" }}{% if post.target %} &middot; {{ post.target }}{% endif %}</div>
+      <div class="p-title">{{ post.title }}</div>
+      <p class="p-excerpt">{{ post.excerpt | strip_html | truncate: 180 }}</p>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty-note">Nothing here yet — the first post is on its way.</p>
+{% endif %}

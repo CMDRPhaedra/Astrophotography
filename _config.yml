@@ -1,0 +1,23 @@
+# Jekyll config for the /blog section.
+#
+# GitHub Pages builds this automatically on every push to main — there is no
+# separate Action, no build step to maintain, and no API cost. index.html and
+# everything else in the repo is untouched: only files with YAML front matter
+# (the --- block at the top) get processed by Jekyll. index.html has none, so
+# it's still served exactly as-is.
+
+title: Among Stars
+description: "Astrophotography from Edinburgh, Scotland — deep-sky notes on galaxies, nebulae, clusters and comets captured with a Dwarf 3 smart telescope."
+url: "https://chryse.co.uk"
+
+markdown: kramdown
+permalink: /blog/:year/:month/:day/:title/
+
+# Keep Jekyll from trying to process repo files that aren't part of the site.
+exclude:
+  - convert_to_webp.py
+  - among_stars_react.tsx
+  - index.html.bak
+  - LICENSE
+  - README.md
+  - "*.py"

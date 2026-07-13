@@ -1,0 +1,35 @@
+---
+layout: default
+---
+<style>
+  .post-back { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); text-decoration: none; }
+  .post-back:hover { color: var(--accent); }
+  .post-header { margin: 1.5rem 0 2.5rem; }
+  .post-title { font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 300; line-height: 1.15; margin: 0.6rem 0 0.8rem; }
+  .post-meta { font-family: 'Inconsolata', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
+  .post-meta span::after { content: '·'; margin-left: 1rem; color: var(--border); }
+  .post-meta span:last-child::after { content: ''; }
+  .post-cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; margin: 2rem 0; border: 1px solid var(--border); }
+  .post-body { font-size: 1.15rem; line-height: 1.85; color: var(--ink); }
+  .post-body p { margin-bottom: 1.4rem; }
+  .post-body p:first-of-type::first-letter { font-size: 3.2rem; float: left; line-height: 0.8; padding: 0.1rem 0.5rem 0 0; color: var(--accent); font-weight: 300; }
+</style>
+
+<a class="post-back" href="/blog/">&larr; Blog</a>
+
+<div class="post-header">
+  <div class="blog-label">Field notes</div>
+  <h1 class="post-title">{{ page.title }}</h1>
+  <div class="post-meta">
+    <span>{{ page.date | date: "%-d %B %Y" }}</span>
+    {% if page.target %}<span>{{ page.target }}</span>{% endif %}
+    {% if page.distance %}<span>{{ page.distance }}</span>{% endif %}
+    {% if page.integration %}<span>{{ page.integration }} integration</span>{% endif %}
+  </div>
+</div>
+
+{% if page.image %}<img class="post-cover" src="{{ page.image }}" alt="{{ page.title }}">{% endif %}
+
+<div class="post-body">
+  {{ content }}
+</div>
