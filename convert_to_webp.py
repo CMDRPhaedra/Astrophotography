@@ -2,10 +2,11 @@
 """
 convert_to_webp.py — Among Stars image optimiser
 ------------------------------------------------
-Converts all images in images/ to WebP and updates references in index.html.
+Converts all images in images/ to WebP, generates gallery thumbnails in
+images/thumbs/, and updates references in index.html and _posts/*.md.
 
 Usage:
-    python convert_to_webp.py              # convert, update HTML, keep originals
+    python convert_to_webp.py              # convert, update references, keep originals
     python convert_to_webp.py --delete     # also remove original files after conversion
     python convert_to_webp.py --dry-run    # show what would happen without doing anything
     python convert_to_webp.py --quality 90 # set WebP quality (default: 85)
@@ -20,10 +21,14 @@ import sys
 from pathlib import Path
 
 IMAGES_DIR   = Path("images")
+THUMBS_DIR   = IMAGES_DIR / "thumbs"
 INDEX_HTML   = Path("index.html")
+POSTS_DIR    = Path("_posts")
 # Extensions to convert (WebP files are skipped automatically)
 CONVERT_EXTS = {".jpg", ".jpeg", ".png", ".gif", ".tiff", ".bmp"}
 DEFAULT_QUALITY = 85
+THUMB_WIDTH   = 640   # gallery cards render at ~320-450 px wide; 640 covers 2x displays
+THUMB_QUALITY = 80
 
 
 def parse_args():
@@ -86,12 +91,16 @@ def convert_images(args):
 
         try:
             with Image.open(src) as img:
-                # Preserve transparency for PNG; otherwise convert to RGB
-                if img.mode in ("RGBA", "LA") or (img.mode == "P" and "transparency" in img.info):
-                    img = img.convert("RGBA")
+                if getattr(img, "is_animated", False):
+                    # Keep every frame — WebP supports animation natively
+                    img.save(dst, "WEBP", save_all=True, quality=args.quality, method=6)
                 else:
-                    img = img.convert("RGB")
-                img.save(dst, "WEBP", quality=args.quality, method=6)
+                    # Preserve transparency for PNG; otherwise convert to RGB
+                    if img.mode in ("RGBA", "LA") or (img.mode == "P" and "transparency" in img.info):
+                        img = img.convert("RGBA")
+                    else:
+                        img = img.convert("RGB")
+                    img.save(dst, "WEBP", quality=args.quality, method=6)
 
             size_after = dst.stat().st_size
             label_after = f"{size_after / 1024:.1f} KB"
@@ -105,39 +114,77 @@ def convert_images(args):
     return renames
 
 
-def update_html(renames, dry_run):
+def update_references(renames, dry_run):
+    """Rewrite image references in index.html and _posts/*.md.
+
+    Filenames are matched with boundary guards so a rename of m31.jpg can
+    never corrupt a reference to new_m31.jpg or m31.jpg2.
+    """
     if not renames:
         return
 
-    if not INDEX_HTML.exists():
-        print(f"\nWarning: '{INDEX_HTML}' not found — skipping HTML update.")
-        return
+    targets = [INDEX_HTML] + sorted(POSTS_DIR.glob("*.md")) if POSTS_DIR.exists() else [INDEX_HTML]
 
-    html = INDEX_HTML.read_text(encoding="utf-8")
-    updated = html
-    changed = 0
+    for target in targets:
+        if not target.exists():
+            print(f"\nWarning: '{target}' not found — skipping.")
+            continue
 
-    for old_name, new_name in renames.items():
-        # Match both single-quoted and double-quoted occurrences of the filename
-        pattern = re.compile(re.escape(old_name), re.IGNORECASE)
-        count = len(pattern.findall(updated))
-        if count:
-            updated = pattern.sub(new_name, updated)
-            changed += count
+        text = target.read_text(encoding="utf-8")
+        updated = text
+        changed = 0
 
-    if changed == 0:
-        print("\nindex.html: no matching references found — nothing to update.")
-        return
+        for old_name, new_name in renames.items():
+            # No filename character directly before/after the match ('/' before is fine)
+            pattern = re.compile(
+                r"(?<![A-Za-z0-9_\-])" + re.escape(old_name) + r"(?![A-Za-z0-9_\-])",
+                re.IGNORECASE,
+            )
+            count = len(pattern.findall(updated))
+            if count:
+                updated = pattern.sub(new_name, updated)
+                changed += count
 
-    if dry_run:
-        print(f"\n[dry-run] Would update {changed} reference(s) in index.html")
-        return
+        if changed == 0:
+            continue
 
-    # Write a backup before touching the file
-    backup = INDEX_HTML.with_suffix(".html.bak")
-    backup.write_text(html, encoding="utf-8")
-    INDEX_HTML.write_text(updated, encoding="utf-8")
-    print(f"\nindex.html: updated {changed} reference(s)  (backup saved as {backup.name})")
+        if dry_run:
+            print(f"[dry-run] Would update {changed} reference(s) in {target}")
+            continue
+
+        target.write_text(updated, encoding="utf-8")
+        print(f"{target}: updated {changed} reference(s)")
+
+
+def generate_thumbnails(dry_run):
+    """Create/refresh images/thumbs/<name>.webp for every full-size WebP.
+
+    The gallery grid loads these instead of the multi-MB originals; the
+    lightbox still uses the full-resolution file.
+    """
+    from PIL import Image
+
+    made = 0
+    for src in sorted(IMAGES_DIR.glob("*.webp")):
+        dst = THUMBS_DIR / src.name
+        if dst.exists() and dst.stat().st_mtime >= src.stat().st_mtime:
+            continue
+        if dry_run:
+            print(f"  [dry-run] Would create thumbnail: {dst}")
+            made += 1
+            continue
+        THUMBS_DIR.mkdir(exist_ok=True)
+        with Image.open(src) as img:
+            if img.width > THUMB_WIDTH:
+                img = img.resize(
+                    (THUMB_WIDTH, round(img.height * THUMB_WIDTH / img.width)),
+                    Image.LANCZOS,
+                )
+            img.save(dst, "WEBP", quality=THUMB_QUALITY, method=6)
+        print(f"  [thumb]   {dst}  ({dst.stat().st_size / 1024:.1f} KB)")
+        made += 1
+    if made:
+        print(f"\nGenerated {made} thumbnail(s).")
 
 
 def delete_originals(renames, dry_run):
@@ -166,7 +213,10 @@ def main():
     renames = convert_images(args)
 
     print()
-    update_html(renames, args.dry_run)
+    update_references(renames, args.dry_run)
+
+    print()
+    generate_thumbnails(args.dry_run)
 
     if args.delete and renames:
         print()
@@ -174,7 +224,7 @@ def main():
 
     print("\nDone.")
     if not args.dry_run and renames:
-        print("Next step:  git add images/ index.html && git commit -m 'Convert images to WebP'")
+        print("Next step:  git add images/ index.html _posts && git commit -m 'Convert images to WebP'")
 
 
 if __name__ == "__main__":

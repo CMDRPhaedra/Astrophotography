@@ -36,13 +36,17 @@ jobs:
         # Remove --delete if you want to keep originals alongside the WebP files.
         # Increase --quality (max 100) if you notice visible quality loss on your images.
 
+      - name: Regenerate noscript SEO block from CAPTURES
+        run: python scripts/update_noscript.py
+
       - name: Commit converted images
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Stage everything that changed (new .webp files, deleted originals, index.html)
-          git add images/ index.html
+          # Stage everything that changed (new .webp files + thumbnails,
+          # deleted originals, updated references in index.html and posts)
+          git add images/ index.html _posts
 
           # Only commit if there's actually something to commit
           if git diff --cached --quiet; then

@@ -1,2 +1,6 @@
 # macOS
 .DS_Store
+
+# Editor/script backups
+*.bak
+__pycache__/

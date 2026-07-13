@@ -20,14 +20,10 @@ plugins:
   - jekyll-feed
 
 # Keep Jekyll from trying to process repo files that aren't part of the site.
-# sitemap.xml is excluded because jekyll-sitemap now generates it automatically
-# on every build — the hand-written file in the repo is no longer used and can
-# be deleted whenever you like.
+# sitemap.xml is generated automatically by jekyll-sitemap on every build.
 exclude:
   - convert_to_webp.py
-  - among_stars_react.tsx
-  - index.html.bak
+  - scripts/
   - LICENSE
   - README.md
-  - sitemap.xml
   - "*.py"

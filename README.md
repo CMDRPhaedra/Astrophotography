@@ -8,7 +8,7 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 
 ## Features
 
-- **Gallery grid** with filterable categories (galaxies, nebulae, clusters, comets)
+- **Gallery grid** with filterable categories (galaxies, nebulae, clusters, solar system)
 - **Sort bar** — sort the gallery by Date, Distance, or Name, each reversible with a second click
 - **Latest capture strip** — always shows the first entry in the `CAPTURES` array with a pulsing indicator
 - **Search** — press `/` to focus the search bar; searches target names, catalogue numbers, and descriptions; works alongside the category filter
@@ -19,8 +19,9 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **⬡ 3D Distance** — all targets on a single stretched-log distance axis with a built-in explainer
 - **⬡ 3D Map** — all targets in real galactic coordinates with type filters (All / Galaxies / Nebulae / Clusters) and a built-in explainer. Pure canvas, no external libraries.
 - **Deep linking** — opening a lightbox updates the URL to `?photo=slug` (e.g. `?photo=veil-nebula-complex`); sharing that URL opens the site with that image already in the lightbox, including via iMessage, WhatsApp, and Discord
-- **Automatic WebP conversion** — a GitHub Action converts new images to WebP on every push and updates `index.html` automatically
-- **Image compression** — a GitHub Action compresses images via Squoosh on push
+- **Automatic WebP conversion** — a GitHub Action converts new images to WebP on every push and updates references in `index.html` and `_posts/` automatically
+- **Automatic thumbnails** — the same Action generates 640 px thumbnails in `images/thumbs/`; the gallery grid loads those (~1.4 MB total) instead of the full-resolution files (~20 MB), and the lightbox still opens the full image
+- **Self-updating noscript SEO block** — `scripts/update_noscript.py` regenerates the crawler-visible capture list from the `CAPTURES` array, so the two can't drift; it also runs inside the Action
 - **Open Graph / Twitter card meta tags** for rich link previews
 - **Favicon** — black hole event horizon icon (SVG for Chrome/Firefox, PNG fallback for Safari)
 - **Light / dark theme** toggle — available in the main header, lightbox, and sky view modal; choice is remembered across visits
@@ -70,7 +71,7 @@ Use the **original filename** (before WebP conversion) — the Action will updat
 
 ```js
 depth: [
-  { name: 'Heart Nebula (IC 805)',        type: 'nebula',  ly: 7500, l: 134.7, b: 1.2 },
+  { name: 'Heart Nebula (IC 1805)',       type: 'nebula',  ly: 7500, l: 134.7, b: 1.2 },
   { name: 'Melotte 15 (central cluster)', type: 'cluster', ly: 7500 },
 ],
 ```
@@ -79,15 +80,16 @@ Valid `type` values: `galaxy` · `nebula` · `cluster` · `star`
 
 **`meta` format:** `Catalogue · DD Mon YYYY · Location · Integration time` — the date is used by the Date sort, so keep it consistent.
 
-### 3. Add an entry to the noscript list in `index.html`
+**`skyTarget`** is optional and overrides the Sky view (Aladin) target. The Sky view normally resolves the first segment of `meta`, but the CDS Sesame resolver doesn't understand Caldwell (`C11`) or Barnard (`B33`) shorthand, or compound metas like `M82 & M81`. In those cases add a resolvable name:
 
-Find the `<noscript>` block just before the footer and add a matching `<li>` at the **top** of the list. This makes the capture visible to search engine crawlers that don't execute JavaScript:
-
-```html
-<li><h3>Whatever Nebula (NGC 1234)</h3><p>NGC 1234 · 01 May 2026 · Edinburgh · 45m</p><p>Your description here.</p></li>
+```js
+meta:      'C11 · 10 Jul 2026 · Edinburgh · 2h 11m',
+skyTarget: 'NGC 7635',
 ```
 
-### 4. Push to GitHub
+Captures tagged `other` (Moon, Sun, comets) never show the Sky view button — they have no fixed sky position.
+
+### 3. Push to GitHub
 
 ```bash
 git add images/ngc1234_whatever_nebula.jpg index.html
@@ -95,9 +97,7 @@ git commit -m "Add Whatever Nebula"
 git push
 ```
 
-The GitHub Action fires within seconds, converts the image to WebP, updates the filename reference in `index.html`, and commits back. The live site updates within ~30 seconds of the Action completing.
-
-The GitHub Action fires within seconds, converts the image to WebP, updates the filename reference in `index.html`, and commits back. The live site updates within ~30 seconds of the Action completing.
+The GitHub Action fires within seconds and does the rest: converts the image to WebP, generates its thumbnail, updates the filename references in `index.html` and `_posts/`, regenerates the noscript SEO block from `CAPTURES`, and commits back. The live site updates within ~30 seconds of the Action completing.
 
 ---
 
@@ -107,7 +107,7 @@ All images are stored and served as WebP for fast load times. Conversion is hand
 
 ### How it works
 
-A GitHub Action (`.github/workflows/convert-webp.yml`) triggers whenever images are pushed to `main`. It runs `convert_to_webp.py` at quality 85, deletes the originals, updates `index.html` with the new filenames, and commits everything back to the repo.
+A GitHub Action (`.github/workflows/convert-webp.yml`) triggers whenever images are pushed to `main`. It runs `convert_to_webp.py` at quality 85, deletes the originals, updates `index.html` and `_posts/` with the new filenames, generates any missing thumbnails in `images/thumbs/` (640 px wide, quality 80 — the gallery grid loads these instead of the full-size files), regenerates the noscript block, and commits everything back to the repo.
 
 ### Manual conversion (one-off or bulk)
 
@@ -270,19 +270,17 @@ The slug is generated automatically from the `title` field — no extra configur
 
 ## SEO
 
-The site is verified with Google Search Console and a sitemap submitted at `https://chryse.co.uk/sitemap.xml`. The `<head>` includes a canonical URL tag and a sitemap link for search engine discovery. A `robots.txt` in the repo root allows all crawlers and points to the sitemap.
+The site is verified with Google Search Console and a sitemap submitted at `https://chryse.co.uk/sitemap.xml`. The sitemap is generated automatically on every build by the `jekyll-sitemap` plugin (see `_config.yml`) — there is nothing to update by hand. The `<head>` includes a canonical URL tag and a sitemap link for search engine discovery. A `robots.txt` in the repo root allows all crawlers and points to the sitemap.
 
-A `<noscript>` block in `index.html` contains static HTML versions of all captures so search engine crawlers that don't execute JavaScript can index the gallery content and descriptions.
-
-To update the sitemap after significant changes (e.g. adding many new captures), update the `<lastmod>` date in `sitemap.xml` and push. Google Search Console will pick it up on its next crawl.
+A `<noscript>` block in `index.html` contains static HTML versions of all captures so search engine crawlers that don't execute JavaScript can index the gallery content and descriptions. It is generated from the `CAPTURES` array by `scripts/update_noscript.py` (run automatically by the convert-webp Action, or manually with `python3 scripts/update_noscript.py`) — never edit it by hand.
 
 ---
 
 ## Sky view
 
-Every lightbox (except The Moon and Sol) shows a **⛶ Sky view** button next to the Copy link button. Clicking it opens a full-screen modal powered by [Aladin Lite](https://aladin.cds.unistra.fr/AladinLite/) from the Centre de Données astronomiques de Strasbourg (CDS).
+Every deep-sky lightbox shows a **⛶ Sky view** button next to the Copy link button (solar-system captures — Moon, Sun, comets — don't, as they have no fixed sky position). Clicking it opens a full-screen modal powered by [Aladin Lite](https://aladin.cds.unistra.fr/AladinLite/) from the Centre de Données astronomiques de Strasbourg (CDS).
 
-The viewer is centred automatically on the target using the catalogue ID extracted from the `meta` field (e.g. `NGC 6960`). Three survey layers are available:
+The viewer is centred automatically on the target using the catalogue ID extracted from the `meta` field (e.g. `NGC 6960`), or the capture's `skyTarget` field where the meta ID isn't resolvable (Caldwell/Barnard designations, compound metas). Three survey layers are available:
 
 - **DSS2** — Digitized Sky Survey optical colour imagery
 - **2MASS** — near-infrared survey, useful for seeing through dust
