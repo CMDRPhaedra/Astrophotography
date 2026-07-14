@@ -39,6 +39,9 @@ jobs:
       - name: Regenerate noscript SEO block from CAPTURES
         run: python scripts/update_noscript.py
 
+      - name: Regenerate gallery stat badges from CAPTURES
+        run: python scripts/generate_badges.py
+
       - name: Commit converted images
         run: |
           git config user.name  "github-actions[bot]"
@@ -46,7 +49,7 @@ jobs:
 
           # Stage everything that changed (new .webp files + thumbnails,
           # deleted originals, updated references in index.html and posts)
-          git add images/ index.html _posts
+          git add images/ index.html _posts badges/
 
           # Only commit if there's actually something to commit
           if git diff --cached --quiet; then

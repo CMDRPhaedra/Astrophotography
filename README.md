@@ -7,6 +7,8 @@
 ![Top language](https://img.shields.io/github/languages/top/CMDRPhaedra/Astrophotography)
 ![Open issues](https://img.shields.io/github/issues/CMDRPhaedra/Astrophotography)
 <!-- BADGES:END -->
+![Images](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/CMDRPhaedra/Astrophotography/main/badges/images-count.json)
+![Integration time](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/CMDRPhaedra/Astrophotography/main/badges/integration-time.json)
 
 Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub Pages.
 
