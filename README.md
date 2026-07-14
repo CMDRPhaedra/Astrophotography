@@ -1,7 +1,7 @@
 # Dale — Astrophotography
 
 <!-- BADGES:START -->
-![License](https://img.shields.io/badge/license-All%20rights%20reserved-blue)
+![license](https://img.shields.io/badge/license-All%20rights%20reserved-blue)
 ![Last commit](https://img.shields.io/github/last-commit/CMDRPhaedra/Astrophotography)
 ![Repo size](https://img.shields.io/github/repo-size/CMDRPhaedra/Astrophotography)
 ![Top language](https://img.shields.io/github/languages/top/CMDRPhaedra/Astrophotography)
