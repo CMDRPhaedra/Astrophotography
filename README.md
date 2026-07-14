@@ -1,11 +1,12 @@
 # Dale — Astrophotography
 
 <!-- BADGES:START -->
-![License](https://img.shields.io/github/license/CMDRPhaedra/Astrophotography)
+![License](https://img.shields.io/badge/license-All%20rights%20reserved-blue)
 ![Last commit](https://img.shields.io/github/last-commit/CMDRPhaedra/Astrophotography)
 ![Repo size](https://img.shields.io/github/repo-size/CMDRPhaedra/Astrophotography)
 ![Top language](https://img.shields.io/github/languages/top/CMDRPhaedra/Astrophotography)
 ![Open issues](https://img.shields.io/github/issues/CMDRPhaedra/Astrophotography)
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
 <!-- BADGES:END -->
 ![Images](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/CMDRPhaedra/Astrophotography/main/badges/images-count.json)
 ![Integration time](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/CMDRPhaedra/Astrophotography/main/badges/integration-time.json)
