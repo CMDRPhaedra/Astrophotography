@@ -1,6 +1,11 @@
 # Dale — Astrophotography
 
 <!-- BADGES:START -->
+![License](https://img.shields.io/github/license/CMDRPhaedra/Astrophotography)
+![Last commit](https://img.shields.io/github/last-commit/CMDRPhaedra/Astrophotography)
+![Repo size](https://img.shields.io/github/repo-size/CMDRPhaedra/Astrophotography)
+![Top language](https://img.shields.io/github/languages/top/CMDRPhaedra/Astrophotography)
+![Open issues](https://img.shields.io/github/issues/CMDRPhaedra/Astrophotography)
 <!-- BADGES:END -->
 
 Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub Pages.
