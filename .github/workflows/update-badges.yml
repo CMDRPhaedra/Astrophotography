@@ -1,0 +1,12 @@
+name: Update README badges
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  badges:
+    uses: CMDRPhaedra/.github/.github/workflows/badges.yml@main
+    permissions:
+      contents: write

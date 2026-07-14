@@ -1,5 +1,8 @@
 # Dale — Astrophotography
 
+<!-- BADGES:START -->
+<!-- BADGES:END -->
+
 Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub Pages.
 
 **Live site:** https://chryse.co.uk
