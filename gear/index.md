@@ -32,12 +32,15 @@ Everything in the [gallery](/) — every galaxy, nebula, cluster and comet — w
 The Dwarf 3 is a fully self-contained robotic observatory about the size of a hardback book. Aperture, mount, camera, filters, guiding, plate-solving, stacking and power all live in one sealed unit weighing around 1.3&nbsp;kg. You set it down, level it, pick a target from a catalogue, and it finds the object, tracks it, and integrates exposure after exposure for as long as you let it run.
 
 <table class="gear-specs">
-  <tr><td>Optics</td><td>35 mm apochromatic triplet, 150 mm focal length (f/4.3)</td></tr>
-  <tr><td>Sensor</td><td>Sony IMX678 Starvis 2, 3840 × 2160</td></tr>
+  <tr><td>Telephoto lens</td><td>35 mm apochromatic triplet, 150 mm focal length (f/4.3) — 737 mm equivalent</td></tr>
+  <tr><td>Telephoto sensor</td><td>Sony IMX678 Starvis 2, 3840 × 2160, ~2.9° × 1.6° field of view</td></tr>
+  <tr><td>Wide-angle lens</td><td>6.7 mm f/2 — 45 mm equivalent, with its own 1920 × 1080 sensor</td></tr>
   <tr><td>Filters</td><td>Built-in filter wheel — VIS, broadband astro, and dual-band (Hα + OIII) for emission nebulae</td></tr>
   <tr><td>Mount</td><td>Motorised alt-azimuth with equatorial mode, automatic plate-solving and tracking</td></tr>
   <tr><td>Weight</td><td>~1.3 kg, battery and everything included</td></tr>
 </table>
+
+It's really two cameras sharing one mount. The telephoto side does all the deep-sky work — every image in the [gallery](/) came through it, with a field of view about six full Moons across: wide enough to swallow the sprawling nebula complexes in Cygnus, tight enough to resolve structure in galaxies tens of millions of light-years out. The wide-angle camera sees a 45&nbsp;mm-equivalent slice of sky and plays the supporting role — helping the telescope orient itself and frame targets, and turning its hand to nightscapes, panoramas and meteor-watching when the deep-sky side is busy.
 
 A 35&nbsp;mm aperture sounds like a toy next to traditional astrophotography rigs — and next to a 10-inch reflector, it is. What makes it work is patience: the telescope takes short exposures continuously and stacks them, so the real aperture is time. A faint nebula that shows almost nothing in a single frame emerges cleanly after an hour or two of integration. The [integration time listed on every photo](/photos/) is that accumulated exposure.
 
