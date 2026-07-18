@@ -1,0 +1,69 @@
+---
+layout: default
+---
+<style>
+  .capture-back { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); text-decoration: none; }
+  .capture-back:hover { color: var(--accent); }
+  .capture-header { margin: 1.5rem 0 2rem; }
+  .capture-title { font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 300; line-height: 1.15; margin: 0.6rem 0 0.8rem; }
+  .capture-meta { font-family: 'Inconsolata', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
+  .capture-meta span::after { content: '·'; margin-left: 1rem; color: var(--border); }
+  .capture-meta span:last-child::after { content: ''; }
+  .capture-image { width: 100%; margin: 2rem 0; border: 1px solid var(--border); display: block; }
+  .capture-body { font-size: 1.15rem; line-height: 1.85; color: var(--ink); }
+  .capture-body p { margin-bottom: 1.4rem; }
+  .capture-actions { margin: 2.5rem 0; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .capture-nav { border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1.5rem; display: flex; justify-content: space-between; gap: 1rem; font-family: 'Inconsolata', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .capture-nav a { color: var(--dim); text-decoration: none; }
+  .capture-nav a:hover { color: var(--accent); }
+</style>
+
+<a class="capture-back" href="/photos/">&larr; All photos</a>
+
+<div class="capture-header">
+  <div class="blog-label">{{ page.tag }}{% if page.catalogue %} &middot; {{ page.catalogue }}{% endif %}</div>
+  <h1 class="capture-title">{{ page.title }}</h1>
+  <div class="capture-meta">
+    {% if page.display_date %}<span>{{ page.display_date }}</span>{% endif %}
+    {% if page.location %}<span>{{ page.location }}</span>{% endif %}
+    {% if page.integration %}<span>{{ page.integration }} integration</span>{% endif %}
+    {% if page.distance %}<span>{{ page.distance }}</span>{% endif %}
+  </div>
+</div>
+
+<a href="{{ page.image }}"><img class="capture-image" src="{{ page.image }}" alt="{{ page.title }}{% if page.catalogue %} ({{ page.catalogue }}){% endif %} — astrophotography from {{ page.location | default: 'Edinburgh' }}"></a>
+
+<div class="capture-body">
+  {{ content }}
+</div>
+
+<div class="capture-actions">
+  <a class="nav-btn" href="{{ page.gallery_link }}">Open in gallery viewer</a>
+  <a class="nav-btn" href="/blog/">Field notes</a>
+</div>
+
+{% assign caps = site.captures | sort: "date" | reverse %}
+{% assign i = -1 %}
+{% for c in caps %}{% if c.url == page.url %}{% assign i = forloop.index0 %}{% endif %}{% endfor %}
+{% if i > -1 %}
+{% assign newer_i = i | minus: 1 %}
+{% assign older_i = i | plus: 1 %}
+<div class="capture-nav">
+  <span>{% if i > 0 %}{% assign newer = caps[newer_i] %}<a href="{{ newer.url }}">&larr; {{ newer.title }}</a>{% endif %}</span>
+  <span>{% assign older = caps[older_i] %}{% if older %}<a href="{{ older.url }}">{{ older.title }} &rarr;</a>{% endif %}</span>
+</div>
+{% endif %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ImageObject",
+  "contentUrl": "{{ site.url }}{{ page.image }}",
+  "thumbnailUrl": "{{ site.url }}{{ page.thumb }}",
+  "name": {{ page.title | jsonify }},
+  "description": {{ content | strip_html | strip_newlines | strip | jsonify }},
+  "creator": { "@type": "Person", "name": "Dale" },
+  "contentLocation": {{ page.location | default: "Edinburgh" | jsonify }},
+  "url": "{{ site.url }}{{ page.url }}"
+}
+</script>

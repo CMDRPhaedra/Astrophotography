@@ -74,7 +74,8 @@
   <div class="header-right">
     <nav>
       <a class="nav-btn" href="/">Gallery</a>
-      <a class="nav-btn active" href="/blog/">Blog</a>
+      <a class="nav-btn{% if page.url contains '/photos/' %} active{% endif %}" href="/photos/">Photos</a>
+      <a class="nav-btn{% unless page.url contains '/photos/' %} active{% endunless %}" href="/blog/">Blog</a>
       <a class="nav-btn" href="/feed.xml" title="RSS feed">RSS</a>
     </nav>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light/dark theme">

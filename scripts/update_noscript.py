@@ -27,6 +27,14 @@ END = "<!-- NOSCRIPT-LIST:END -->"
 FIELD_RE = re.compile(r"""^\s{4}(img|tag|title|meta|desc):\s+(['"])(.*)\2,\s*$""")
 
 
+def slugify(title):
+    """Mirror the gallery's JS slugify() — see generate_capture_pages.py."""
+    slug = title.lower()
+    slug = re.sub(r"['‘’]", "", slug)
+    slug = re.sub(r"[^a-z0-9]+", "-", slug)
+    return slug.strip("-")
+
+
 def parse_captures(text):
     """Parse the CAPTURES array with a line-based reader.
 
@@ -63,7 +71,8 @@ def build_list(captures):
         h3 = htmllib.escape(heading, quote=False)
         p_meta = htmllib.escape(meta, quote=False)
         p_desc = htmllib.escape(desc, quote=False)
-        items.append(f"    <li><h3>{h3}</h3><p>{p_meta}</p><p>{p_desc}</p></li>")
+        url = f"/photos/{slugify(title)}/"
+        items.append(f'    <li><h3><a href="{url}">{h3}</a></h3><p>{p_meta}</p><p>{p_desc}</p></li>')
     return (
         '  <ul style="list-style:none;padding:0;">\n'
         + "\n".join(items)
