@@ -30,14 +30,17 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **⬡ 3D Distance** — all targets on a single stretched-log distance axis with a built-in explainer
 - **⬡ 3D Map** — all targets in real galactic coordinates with type filters (All / Galaxies / Nebulae / Clusters) and a built-in explainer. Pure canvas, no external libraries.
 - **Deep linking** — opening a lightbox updates the URL to `?photo=slug` (e.g. `?photo=veil-nebula-complex`); sharing that URL opens the site with that image already in the lightbox, including via iMessage, WhatsApp, and Discord
+- **Per-photo pages** at [/photos/](https://chryse.co.uk/photos/) — every capture gets its own static, crawlable page at `/photos/<slug>/`, generated from the `CAPTURES` array so it can never drift from the gallery
 - **Field notes blog** at [/blog/](https://chryse.co.uk/blog/) — Jekyll posts in `_posts/`, built automatically by GitHub Pages, with an RSS feed at `/feed.xml` (jekyll-feed)
 - **Keyboard accessible** — `/` focuses search, Tab reaches every card and control, Enter/Space opens a card, arrows navigate the lightbox, Escape closes
 - **Automatic WebP conversion** — a GitHub Action converts new images to WebP on every push and updates references in `index.html` and `_posts/` automatically
 - **Automatic thumbnails** — the same Action generates 640 px thumbnails in `images/thumbs/`; the gallery grid loads those (~1.4 MB total) instead of the full-resolution files (~20 MB), and the lightbox still opens the full image
 - **Self-updating noscript SEO block** — `scripts/update_noscript.py` regenerates the crawler-visible capture list from the `CAPTURES` array, so the two can't drift; it also runs inside the Action
+- **Self-updating README badges** — the Images and Integration time badges above are shields.io endpoint badges fed by `badges/*.json`, regenerated from the `CAPTURES` array by `scripts/generate_badges.py` inside the Action
 - **Open Graph / Twitter card meta tags** for rich link previews
 - **Favicon** — black hole event horizon icon (SVG for Chrome/Firefox, PNG fallback for Safari)
 - **Light / dark theme** toggle — available in the main header, lightbox, and sky view modal; choice is remembered across visits
+- **Privacy policy** at [/privacy/](https://chryse.co.uk/privacy/), linked from both the gallery and blog footers
 - Animated starfield background
 
 ---
@@ -110,7 +113,7 @@ git commit -m "Add Whatever Nebula"
 git push
 ```
 
-The GitHub Action fires within seconds and does the rest: converts the image to WebP, generates its thumbnail, updates the filename references in `index.html` and `_posts/`, regenerates the noscript SEO block from `CAPTURES`, and commits back. The live site updates within ~30 seconds of the Action completing.
+The GitHub Action fires within seconds and does the rest: converts the image to WebP, generates its thumbnail, updates the filename references in `index.html` and `_posts/`, regenerates the noscript SEO block, the per-photo pages in `_captures/`, and the gallery stat badges from `CAPTURES`, and commits back. The live site updates within ~30 seconds of the Action completing.
 
 ---
 
@@ -120,7 +123,7 @@ All images are stored and served as WebP for fast load times. Conversion is hand
 
 ### How it works
 
-A GitHub Action (`.github/workflows/convert-webp.yml`) triggers whenever images are pushed to `main`. It runs `convert_to_webp.py` at quality 85, deletes the originals, updates `index.html` and `_posts/` with the new filenames, generates any missing thumbnails in `images/thumbs/` (640 px wide, quality 80 — the gallery grid loads these instead of the full-size files), regenerates the noscript block, and commits everything back to the repo.
+A GitHub Action (`.github/workflows/convert-webp.yml`) triggers whenever images are pushed to `main`. It runs `convert_to_webp.py` at quality 85, deletes the originals, updates `index.html` and `_posts/` with the new filenames, generates any missing thumbnails in `images/thumbs/` (640 px wide, quality 80 — the gallery grid loads these instead of the full-size files), regenerates the noscript block, the per-photo pages, and the gallery stat badges, and commits everything back to the repo.
 
 ### Manual conversion (one-off or bulk)
 
@@ -205,7 +208,7 @@ Controls: drag to rotate and tilt · scroll to zoom (up to 8×) · hover markers
 ## First-time setup on GitHub
 
 1. Create a new repository at https://github.com/new
-2. Push the whole repo — alongside `index.html` and `images/`, the moving parts are `convert_to_webp.py` + `scripts/` (automation), `.github/` (the Action), and `_config.yml` + `_layouts/` + `_posts/` + `blog/` (the Jekyll blog)
+2. Push the whole repo — alongside `index.html` and `images/`, the moving parts are `convert_to_webp.py` + `scripts/` (automation), `.github/` (the Actions), `_config.yml` + `_layouts/` + `_posts/` + `blog/` (the Jekyll blog), `_captures/` + `photos/` (per-photo pages), and `badges/` (gallery stat badges)
 3. Go to **Settings → Pages**
 4. Under *Source*, select **Deploy from a branch**, choose `main`, folder `/root`
 5. Click Save — your site will be live at `https://yourusername.github.io/astrophotography`
@@ -263,6 +266,14 @@ Post body in Markdown…
 
 ---
 
+## Per-photo pages
+
+Every capture also gets its own static page at `/photos/<slug>/`, with an index of all of them at [/photos/](https://chryse.co.uk/photos/). These are Jekyll collection pages (`_captures/`, published via the `captures` collection in `_config.yml` with the `capture` layout) — fully crawlable HTML with the image, capture details, and description, unlike the JavaScript-rendered gallery.
+
+The files in `_captures/` are generated from the `CAPTURES` array by `scripts/generate_capture_pages.py` — **never edit them by hand**. The slug mirrors the gallery's own `slugify()`, so `/photos/<slug>/` and the `?photo=<slug>` deep links always agree, and each page links back to its gallery card. The script runs automatically in the convert-webp Action, so pushing a new image keeps the pages in sync; to regenerate locally, run `python3 scripts/generate_capture_pages.py` from the repo root.
+
+---
+
 ## Open Graph tags
 
 The `<head>` includes Open Graph and Twitter card meta tags for rich previews in iMessage, Discord, Slack, and social media. To update the preview image, use **absolute URLs**:
@@ -310,6 +321,8 @@ The slug is generated automatically from the `title` field — no extra configur
 The site is verified with Google Search Console and a sitemap submitted at `https://chryse.co.uk/sitemap.xml`. The sitemap is generated automatically on every build by the `jekyll-sitemap` plugin (see `_config.yml`) — there is nothing to update by hand. The `<head>` includes a canonical URL tag and a sitemap link for search engine discovery. A `robots.txt` in the repo root allows all crawlers and points to the sitemap.
 
 A `<noscript>` block in `index.html` contains static HTML versions of all captures so search engine crawlers that don't execute JavaScript can index the gallery content and descriptions. It is generated from the `CAPTURES` array by `scripts/update_noscript.py` (run automatically by the convert-webp Action, or manually with `python3 scripts/update_noscript.py`) — never edit it by hand.
+
+The per-photo pages at `/photos/<slug>/` (see above) give every capture a real, individually indexable URL on top of the noscript block, and are picked up by the sitemap automatically.
 
 ---
 
