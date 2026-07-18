@@ -61,9 +61,27 @@ layout: default
   "contentUrl": "{{ site.url }}{{ page.image }}",
   "thumbnailUrl": "{{ site.url }}{{ page.thumb }}",
   "name": {{ page.title | jsonify }},
-  "description": {{ content | strip_html | strip_newlines | strip | jsonify }},
-  "creator": { "@type": "Person", "name": "Dale" },
-  "contentLocation": {{ page.location | default: "Edinburgh" | jsonify }},
+  {% if page.catalogue %}"alternateName": {{ page.catalogue | jsonify }},
+  {% endif %}"description": {{ content | strip_html | strip_newlines | strip | jsonify }},
+  {% if page.date %}"dateCreated": "{{ page.date | date: '%Y-%m-%d' }}",
+  "datePublished": "{{ page.date | date: '%Y-%m-%d' }}",
+  {% endif %}"encodingFormat": "image/webp",
+  "representativeOfPage": true,
+  "creator": { "@type": "Person", "name": "Dale", "url": "{{ site.url }}/" },
+  "creditText": "Dale — Among Stars",
+  "copyrightNotice": "© Dale. All rights reserved.",
+  "contentLocation": { "@type": "Place", "name": {{ page.location | default: "Edinburgh, Scotland" | jsonify }} },
   "url": "{{ site.url }}{{ page.url }}"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Among Stars", "item": "{{ site.url }}/" },
+    { "@type": "ListItem", "position": 2, "name": "Photos", "item": "{{ site.url }}/photos/" },
+    { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }} }
+  ]
 }
 </script>
