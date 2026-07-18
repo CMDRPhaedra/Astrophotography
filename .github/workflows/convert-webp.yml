@@ -56,5 +56,16 @@ jobs:
             echo "Nothing to commit — images were already WebP."
           else
             git commit -m "chore: convert new images to WebP [skip ci]"
+
+            # Another workflow (e.g. the badge updater) may push to main
+            # between our checkout and our push, so rebase and retry rather
+            # than failing on a non-fast-forward rejection.
+            for i in 1 2 3; do
+              if git push; then
+                exit 0
+              fi
+              echo "Push rejected (attempt $i) — rebasing on latest main and retrying..."
+              git pull --rebase origin main
+            done
             git push
           fi
