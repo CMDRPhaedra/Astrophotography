@@ -1,0 +1,67 @@
+---
+layout: default
+title: Gear & Process
+permalink: /gear/
+---
+
+<div class="blog-label">The instrument</div>
+<h2 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:0.8rem;">One small telescope</h2>
+<p style="font-family:'Inconsolata',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-bottom:2.5rem;">Every image on this site · One rig · Edinburgh, Scotland</p>
+
+<div style="font-size:1.15rem;line-height:1.85;">
+<style>
+  .gear-body h3 { font-size: 1.45rem; font-weight: 400; margin: 2.2rem 0 0.8rem; }
+  .gear-body p, .gear-body ul { margin-bottom: 1.2rem; }
+  .gear-body ul { padding-left: 1.4rem; }
+  .gear-body a { color: var(--accent); }
+  .gear-specs { width: 100%; border-collapse: collapse; margin: 1.5rem 0 2rem; font-family: 'Inconsolata', monospace; font-size: 0.78rem; letter-spacing: 0.05em; }
+  .gear-specs td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .gear-specs td:first-child { color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.65rem; padding-top: 0.7rem; white-space: nowrap; }
+</style>
+<div class="gear-body" markdown="1">
+
+Everything in the [gallery](/) — every galaxy, nebula, cluster and comet — was captured with a single instrument: a **Dwarf 3 smart telescope**, shooting from light-polluted city skies in Edinburgh, Scotland. No observatory, no equatorial pier, no cooled astronomy camera. This page is about what that little telescope is, why it works, and how the images get from photons to the pictures you see here.
+
+<figure id="gear-photo" style="margin:2.5rem 0;">
+  <img src="/images/dwarf3_telescope.webp" alt="The Dwarf 3 smart telescope used for every image on this site" style="width:100%;border:1px solid var(--border);display:block;" onerror="document.getElementById('gear-photo').style.display='none'">
+  <figcaption style="font-family:'Inconsolata',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-top:0.7rem;">The Dwarf 3 — the entire observatory, in one hand.</figcaption>
+</figure>
+
+### The telescope
+
+The Dwarf 3 is a fully self-contained robotic observatory about the size of a hardback book. Aperture, mount, camera, filters, guiding, plate-solving, stacking and power all live in one sealed unit weighing around 1.3&nbsp;kg. You set it down, level it, pick a target from a catalogue, and it finds the object, tracks it, and integrates exposure after exposure for as long as you let it run.
+
+<table class="gear-specs">
+  <tr><td>Optics</td><td>35 mm apochromatic triplet, 150 mm focal length (f/4.3)</td></tr>
+  <tr><td>Sensor</td><td>Sony IMX678 Starvis 2, 3840 × 2160</td></tr>
+  <tr><td>Filters</td><td>Built-in filter wheel — VIS, broadband astro, and dual-band (Hα + OIII) for emission nebulae</td></tr>
+  <tr><td>Mount</td><td>Motorised alt-azimuth with equatorial mode, automatic plate-solving and tracking</td></tr>
+  <tr><td>Weight</td><td>~1.3 kg, battery and everything included</td></tr>
+</table>
+
+A 35&nbsp;mm aperture sounds like a toy next to traditional astrophotography rigs — and next to a 10-inch reflector, it is. What makes it work is patience: the telescope takes short exposures continuously and stacks them, so the real aperture is time. A faint nebula that shows almost nothing in a single frame emerges cleanly after an hour or two of integration. The [integration time listed on every photo](/photos/) is that accumulated exposure.
+
+### The sky it works under
+
+Edinburgh is not an easy place to do this. The city sky drowns faint targets in sodium and LED glow, and at 56° north there is no astronomical darkness at all from mid-May to late July — the sun never gets far enough below the horizon for the sky to fully darken.
+
+Two things make deep-sky imaging possible anyway. The dual-band filter passes only the narrow hydrogen-alpha and oxygen-III wavelengths that emission nebulae actually shine in, rejecting most of the city's light pollution outright. And stacking suppresses the noise that remains — the signal adds up across frames while the noise averages away. Galaxies and clusters, which shine in broadband light a filter can't isolate, are harder from the city and simply demand more integration and clearer nights.
+
+### From photons to pixels
+
+The telescope stacks frames live as it shoots, so a session ends with a usable image straight off the device. But single sessions are rarely where the deep images come from — Scottish weather doesn't hand out four clear hours in a row very often.
+
+That's where **Mega Stack** earns its place. Built into the DWARFLAB app, it re-stacks the raw sub-frames from separate sessions — different nights, even different exposure and gain settings — into one combined image, entirely on the telescope itself. An hour on a target tonight, another next week, more whenever the clouds part: Mega Stack folds them together, and the multi-hour integration times on the [longer captures here](/photos/) were built exactly that way, a clear spell at a time.
+
+From there the image gets its finishing pass. DWARFLAB's **Stellar Studio** handles the astronomy-specific corrections — star correction, denoising and star reduction that know the difference between a star and noise. For deeper manual work the raw sub-frames are archived and re-stacked in [Siril](https://siril.org/), with stretching, colour calibration and noise reduction done by hand — always to pull out faint structure that's really there, never to invent detail that isn't.
+
+The results, along with capture dates and integration times, end up in the [gallery](/) and on the [per-photo pages](/photos/); the occasional longer write-up about a specific target lands in the [field notes](/blog/).
+
+### What it can't do
+
+Honesty matters more than marketing here. A 35&nbsp;mm f/4.3 lens with a small sensor has real limits: planets render as tiny discs a few pixels across, tight double stars don't split, and small faint galaxies stay small and faint. The Dwarf 3 is at its best on the targets this gallery leans into — large nebulae, bright galaxies, star clusters, and comets — where its wide, fast field and tireless tracking count for more than raw aperture ever would.
+
+That trade-off is the point. The best telescope is the one that actually gets used, and a self-contained unit that sets up in two minutes between Scottish weather windows gets used a great deal more than a car-boot full of counterweights.
+
+</div>
+</div>

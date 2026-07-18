@@ -40,6 +40,7 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **Open Graph / Twitter card meta tags** for rich link previews
 - **Favicon** — black hole event horizon icon (SVG for Chrome/Firefox, PNG fallback for Safari)
 - **Light / dark theme** toggle — available in the main header, lightbox, and sky view modal; choice is remembered across visits
+- **Gear & process page** at [/gear/](https://chryse.co.uk/gear/) — the Dwarf 3, shooting conditions in Edinburgh, and the capture/stacking workflow; linked from the nav, the hero, the gallery footer, and every photo page
 - **Privacy policy** at [/privacy/](https://chryse.co.uk/privacy/), linked from both the gallery and blog footers
 - Animated starfield background
 
