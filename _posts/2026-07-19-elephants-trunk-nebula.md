@@ -5,7 +5,7 @@ date: 2026-07-19
 target: "IC 1396A · Elephant's Trunk Nebula"
 distance: "2,400 light-years"
 integration: "3h 12m"
-image: /images/ic1396a_elephants_trunk_nebula.jpeg
+image: /images/ic1396a_elephants_trunk_nebula.webp
 ---
 
 A new target tonight, and a proper sit-down with it — 3 hours 12 minutes of integration, the longest run I've given a nebula since the Bubble. The Elephant's Trunk Nebula, catalogued as IC 1396A, is a winding rope of cold, dusty gas hanging inside the much larger IC 1396 emission complex in Cepheus, around 2,400 light-years away. The parent nebula sprawls across more than three degrees of sky — six full Moon widths — which makes the trunk itself easy to underestimate: that sinuous dark curl is over 20 light-years long.
