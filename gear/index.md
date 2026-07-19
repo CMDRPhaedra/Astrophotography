@@ -24,7 +24,7 @@ Everything in the [gallery](/) — every galaxy, nebula, cluster and comet — w
 
 <figure id="gear-photo" style="margin:2.5rem 0;">
   <img src="/images/dwarf3_telescope.webp" alt="The Dwarf 3 smart telescope used for every image on this site" style="width:100%;border:1px solid var(--border);display:block;" onerror="document.getElementById('gear-photo').style.display='none'">
-  <figcaption style="font-family:'Inconsolata',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-top:0.7rem;">The Dwarf 3 — the entire observatory, in one hand.</figcaption>
+  <figcaption style="font-family:'Inconsolata',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-top:0.7rem;">The Dwarf 3 — the entire observatory, in one hand. Image courtesy of DwarfLab.</figcaption>
 </figure>
 
 ### The telescope

@@ -2,6 +2,7 @@
 layout: post
 title: "The Telescope That Earned Its Successor: Dwarf II to Dwarf 3"
 date: 2026-07-19
+image: /images/dwarf3_telescope.webp
 ---
 
 Every image on this site came through a Dwarf 3, but the story doesn't start there. It starts with its predecessor — a Dwarf II picked up on eBay in early 2024, as an impulse buy, back when the idea of a telescope that fits in one hand and finds galaxies by itself still sounded faintly like a scam.
