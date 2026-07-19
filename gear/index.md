@@ -44,6 +44,8 @@ It's really two cameras sharing one mount. The telephoto side does all the deep-
 
 A 35&nbsp;mm aperture sounds like a toy next to traditional astrophotography rigs — and next to a 10-inch reflector, it is. What makes it work is patience: the telescope takes short exposures continuously and stacks them, so the real aperture is time. A faint nebula that shows almost nothing in a single frame emerges cleanly after an hour or two of integration. The [integration time listed on every photo](/photos/) is that accumulated exposure.
 
+DwarfLab also makes a smaller, cheaper sibling, the Dwarf Mini. It has never been used for anything on this site, so no claims are made about it here — every image in the gallery came through the Dwarf 3.
+
 ### The sky it works under
 
 Edinburgh is not an easy place to do this. The city sky drowns faint targets in sodium and LED glow, and at 56° north there is no astronomical darkness at all from mid-May to late July — the sun never gets far enough below the horizon for the sky to fully darken.
