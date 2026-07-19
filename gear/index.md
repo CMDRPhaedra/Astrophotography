@@ -56,6 +56,8 @@ The telescope stacks frames live as it shoots, so a session ends with a usable i
 
 That's where **Mega Stack** earns its place. Built into the DWARFLAB app, it re-stacks the raw sub-frames from separate sessions — different nights, even different exposure and gain settings — into one combined image, entirely on the telescope itself. An hour on a target tonight, another next week, more whenever the clouds part: Mega Stack folds them together, and the multi-hour integration times on the [longer captures here](/photos/) were built exactly that way, a clear spell at a time.
 
+It also means none of these images is ever really finished. Targets get revisited whenever the sky allows, the new data folded into the old, and the image replaced with a deeper version — so the gallery quietly improves over time, and an integration time listed today is only a running total.
+
 From there the image gets its finishing pass. DWARFLAB's **Stellar Studio** handles the astronomy-specific corrections — star correction, denoising and star reduction that know the difference between a star and noise. For deeper manual work the raw sub-frames are archived and re-stacked in [Siril](https://siril.org/), with stretching, colour calibration and noise reduction done by hand — always to pull out faint structure that's really there, never to invent detail that isn't.
 
 The results, along with capture dates and integration times, end up in the [gallery](/) and on the [per-photo pages](/photos/); the occasional longer write-up about a specific target lands in the [field notes](/blog/).
