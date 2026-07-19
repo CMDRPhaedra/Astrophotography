@@ -44,7 +44,7 @@ It's really two cameras sharing one mount. The telephoto side does all the deep-
 
 A 35&nbsp;mm aperture sounds like a toy next to traditional astrophotography rigs — and next to a 10-inch reflector, it is. What makes it work is patience: the telescope takes short exposures continuously and stacks them, so the real aperture is time. A faint nebula that shows almost nothing in a single frame emerges cleanly after an hour or two of integration. The [integration time listed on every photo](/photos/) is that accumulated exposure.
 
-DwarfLab also makes a smaller, cheaper sibling, the Dwarf Mini, and previously made the Dwarf II that the Dwarf 3 succeeded. Neither has been used for anything on this site, so no claims are made about them here — every image in the gallery came through the Dwarf 3.
+The Dwarf 3 wasn't a leap of faith, either — it's an upgrade. Its predecessor, the Dwarf II, did sterling service here first: a great little telescope that proved the smart-scope concept was worth trusting, and earned its successor. When the Dwarf 3 arrived with better optics, a bigger sensor and the built-in filters, the Dwarf II was sold on to a new home — every image in the gallery came through the Dwarf 3. DwarfLab also makes a smaller, cheaper sibling, the Dwarf Mini; that one has never been used for anything on this site, so no claims are made about it here.
 
 ### The sky it works under
 
