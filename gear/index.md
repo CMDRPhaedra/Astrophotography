@@ -70,3 +70,14 @@ That trade-off is the point. The best telescope is the one that actually gets us
 
 </div>
 </div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Among Stars", "item": "https://chryse.co.uk/" },
+    { "@type": "ListItem", "position": 2, "name": "Gear & Process" }
+  ]
+}
+</script>
