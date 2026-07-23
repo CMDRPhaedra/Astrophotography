@@ -5,7 +5,7 @@ date: 2026-07-23
 target: "C27 · Crescent Nebula"
 distance: "5,000 light-years"
 integration: "1h 10m"
-image: /images/c27_crescent_nebula_v2.png
+image: /images/c27_crescent_nebula_v2.webp
 ---
 
 Back to an old target tonight with a fresh set of subs — an updated take on the Crescent Nebula, NGC 6888, with 1 hour 10 minutes of integration. This wolf-rayet wind nebula in Cygnus is one of the more dramatic shapes in the northern sky: a shell of gas blown off and lit up by WR 136, a massive, rapidly evolving star sitting at its centre, around 5,000 light-years away.

@@ -4,12 +4,13 @@
 layout: "capture"
 title: "Crescent Nebula"
 catalogue: "C27"
-date: "2026-01-10"
-display_date: "10 Jan 2026"
+date: "2026-07-23"
+display_date: "23 Jul 2026"
 location: "Edinburgh"
+integration: "1h 10m"
 tag: "nebula"
-image: "/images/c27_crescent_nebula.webp"
-thumb: "/images/thumbs/c27_crescent_nebula.webp"
+image: "/images/c27_crescent_nebula_v2.webp"
+thumb: "/images/thumbs/c27_crescent_nebula_v2.webp"
 gallery_link: "/?photo=crescent-nebula"
 ---
 
