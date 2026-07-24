@@ -2,7 +2,7 @@
 layout: post
 title: "Revisiting the Crescent: A Deeper Look at NGC 6888"
 date: 2026-07-23
-target: "C27 / NGC 6888 · Crescent Nebula"
+target: "C27 / NGC 6888 / Sh2-105 · Crescent Nebula"
 distance: "5,000 light-years"
 integration: "1h 10m"
 image: /images/c27_crescent_nebula_v2.webp

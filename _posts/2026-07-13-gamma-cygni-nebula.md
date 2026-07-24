@@ -2,7 +2,7 @@
 layout: post
 title: "Sadr's Butterfly: A Trick of Perspective"
 date: 2026-07-13
-target: "IC 1318 · Gamma Cygni Nebula"
+target: "IC 1318 / Sh2-108 · Gamma Cygni Nebula"
 distance: "4,900 light-years"
 integration: "1h 12m"
 image: /images/ic1318_gamma_cygni_nebula.webp

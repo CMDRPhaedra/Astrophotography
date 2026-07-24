@@ -2,7 +2,7 @@
 layout: post
 title: "Chasing the Bubble Nebula"
 date: 2026-07-10
-target: "NGC 7635 · Caldwell 11"
+target: "C11 / NGC 7635 / Sh2-162 · Bubble Nebula"
 distance: "7,100 light-years"
 integration: "2h 11m"
 image: /images/c11_ngc7635_sharpless162_bubble_nebula.webp

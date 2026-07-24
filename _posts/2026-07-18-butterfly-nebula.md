@@ -2,7 +2,7 @@
 layout: post
 title: "Sadr's Chest, Split in Two: The Butterfly Returns"
 date: 2026-07-18
-target: "IC 1318 · Butterfly Nebula"
+target: "IC 1318 / Sh2-108 · Butterfly Nebula"
 distance: "4,900 light-years"
 integration: "1h 17m"
 image: /images/ic1318_butterfly_nebula.webp
