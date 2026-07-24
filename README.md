@@ -97,10 +97,12 @@ Valid `type` values: `galaxy` · `nebula` · `cluster` · `star`
 
 **`meta` format:** `Catalogue · DD Mon YYYY · Location · Integration time` — the date is used by the Date sort, so keep it consistent.
 
-**`skyTarget`** is optional and overrides the Sky view (Aladin) target. The Sky view normally resolves the first segment of `meta`, but the CDS Sesame resolver doesn't understand Caldwell (`C11`) or Barnard (`B33`) shorthand, or compound metas like `M82 & M81`. In those cases add a resolvable name:
+The catalogue segment should list **every well-known designation** for the object, joined with ` / ` — e.g. `C27 / NGC 6888 / Sh2-105`, not just `C27`. Stick to catalogues already used on this site (Messier, NGC, IC, Caldwell, Barnard, Sharpless/`Sh2-`); verify each one (SIMBAD/Wikipedia), don't guess NGC/IC numbers from memory, and skip more obscure catalogues (vdB, LDN, UGC, Collinder, Melotte, etc.) even if they technically exist for that object — they aren't part of this site's vocabulary. Blog posts' `target` front matter (see [Blog](#blog) below) should list the same set, for consistency between a post and its gallery card.
+
+**`skyTarget`** is optional and overrides the Sky view (Aladin) target. The Sky view resolves its target via `card.dataset.skyTarget || meta.split('·')[0].trim() || ...` — if `skyTarget` is omitted, the **entire** first segment of `meta` (everything before the first `·`) is sent to the CDS Sesame name resolver as-is. Sesame handles a single ID fine (`M42`, `NGC 6888`) but cannot parse a joined string, so **any capture whose catalogue segment contains ` / ` or ` & ` needs an explicit `skyTarget`** set to one single resolvable ID (usually the Messier or NGC number) — otherwise Sky View silently fails to centre on the target. This also covers the older case of Caldwell (`C11`) or Barnard (`B33`) shorthand, which Sesame doesn't understand even alone:
 
 ```js
-meta:      'C11 · 10 Jul 2026 · Edinburgh · 2h 11m',
+meta:      'C11 / NGC 7635 / Sh2-162 · 10 Jul 2026 · Edinburgh · 2h 11m',
 skyTarget: 'NGC 7635',
 ```
 
@@ -254,7 +256,7 @@ To add a post, create `_posts/YYYY-MM-DD-slug.md`:
 layout: post
 title: "Sadr's Butterfly: A Trick of Perspective"
 date: 2026-07-13
-target: "IC 1318 · Gamma Cygni Nebula"
+target: "IC 1318 / Sh2-108 · Gamma Cygni Nebula"
 distance: "4,900 light-years"
 integration: "1h 12m"
 image: /images/ic1318_gamma_cygni_nebula.webp
@@ -263,7 +265,7 @@ image: /images/ic1318_gamma_cygni_nebula.webp
 Post body in Markdown…
 ```
 
-`target`, `distance`, and `integration` are optional and render in the post's meta line; `image` is the 16:9 cover and the Open Graph preview. Posts are published at `/blog/YYYY/MM/DD/slug/`, and the first paragraph doubles as the excerpt on the blog index and the meta description. To link a post back to its gallery card, use the deep-link form `[gallery card](/?photo=slug)`.
+`target`, `distance`, and `integration` are optional and render in the post's meta line; `image` is the 16:9 cover and the Open Graph preview. Keep `target`'s catalogue segment (before the ` · `) consistent with the same object's gallery-card `meta` — see the multi-catalogue note above. Posts are published at `/blog/YYYY/MM/DD/slug/`, and the first paragraph doubles as the excerpt on the blog index and the meta description. To link a post back to its gallery card, use the deep-link form `[gallery card](/?photo=slug)`.
 
 ---
 
