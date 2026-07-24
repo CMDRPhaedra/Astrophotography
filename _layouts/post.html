@@ -33,3 +33,33 @@ layout: default
 <div class="post-body">
   {{ content }}
 </div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ page.title | jsonify }},
+  "url": "{{ site.url }}{{ page.url }}",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ site.url }}{{ page.url }}" },
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ page.date | date_to_xmlschema }}",
+  "description": {{ page.excerpt | strip_html | strip_newlines | truncate: 200 | jsonify }},
+  {% if page.image %}"image": "{{ site.url }}{{ page.image }}",
+  {% endif %}{% if page.target %}"about": {{ page.target | jsonify }},
+  {% endif %}"inLanguage": "en-GB",
+  "author": { "@type": "Person", "name": "Dale", "url": "{{ site.url }}/" },
+  "publisher": { "@type": "Person", "name": "Dale", "url": "{{ site.url }}/" },
+  "isPartOf": { "@type": "Blog", "name": "Among Stars — Field notes", "url": "{{ site.url }}/blog/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Among Stars", "item": "{{ site.url }}/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "{{ site.url }}/blog/" },
+    { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }} }
+  ]
+}
+</script>

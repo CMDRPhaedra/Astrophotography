@@ -18,10 +18,45 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3829889623088010" crossorigin="anonymous"></script>
 <link rel="canonical" href="https://chryse.co.uk/">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://chryse.co.uk/#website",
+      "url": "https://chryse.co.uk/",
+      "name": "Among Stars",
+      "description": "Deep-sky astrophotography from Edinburgh, Scotland — galaxies, nebulae, clusters and comets captured with a Dwarf 3 smart telescope.",
+      "inLanguage": "en-GB",
+      "publisher": { "@id": "https://chryse.co.uk/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://chryse.co.uk/#person",
+      "name": "Dale",
+      "url": "https://chryse.co.uk/",
+      "jobTitle": "Astrophotographer"
+    },
+    {
+      "@type": "CollectionPage",
+      "@id": "https://chryse.co.uk/#gallery",
+      "url": "https://chryse.co.uk/",
+      "name": "Among Stars — Astrophotography Gallery",
+      "isPartOf": { "@id": "https://chryse.co.uk/#website" },
+      "about": "Deep-sky astrophotography: galaxies, nebulae, star clusters and comets imaged from Edinburgh, Scotland with a Dwarf 3 smart telescope.",
+      "creator": { "@id": "https://chryse.co.uk/#person" }
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="https://aladin.cds.unistra.fr/AladinLite/api/v3/latest/aladin.min.css">
 <script src="https://aladin.cds.unistra.fr/AladinLite/api/v3/latest/aladin.js" charset="utf-8"></script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0c0b09">
 <script>
   (function(){
     try {
@@ -250,7 +285,10 @@
   .lightbox-details { width: 260px; flex-shrink: 0; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; }
   .lightbox-tag { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
   .lightbox-title { font-size: 2rem; font-weight: 300; font-style: italic; line-height: 1.2; margin-bottom: 1rem; }
-  .lightbox-meta { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--dim); line-height: 2; margin-bottom: 1.5rem; }
+  .lightbox-meta { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--dim); line-height: 2; margin-bottom: 0.6rem; }
+  .lightbox-coords { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.08em; color: var(--dim); opacity: 0.85; margin-bottom: 1.5rem; }
+  .lightbox-coords .lc-label { color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; margin-right: 0.5rem; }
+  .lightbox-coords:empty { display: none; }
   .lightbox-desc { font-size: 0.95rem; line-height: 1.7; color: var(--dim); font-style: italic; }
   .lb-skyview-wrap { margin-top: 1.2rem; border-top: 1px solid var(--border); padding-top: 1rem; }
   .lb-skyview-label { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.5rem; }
@@ -374,6 +412,20 @@
     border: 1px solid var(--border); padding: 0.4rem 0.8rem; cursor: pointer; transition: all 0.2s;
   }
   .skyview-modal-close:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* ── KEYBOARD HELP MODAL ── */
+  .help-modal { display: none; position: fixed; inset: 0; z-index: 300; background: var(--lightbox-bg); align-items: center; justify-content: center; padding: 2rem; }
+  .help-modal.open { display: flex; }
+  .help-inner { width: 100%; max-width: 460px; background: var(--modal-bg); border: 1px solid var(--border); padding: 2rem 2.2rem 2.4rem; position: relative; }
+  .help-inner h3 { font-size: 1.5rem; font-weight: 300; font-style: italic; margin-bottom: 0.3rem; }
+  .help-inner .help-sub { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); margin-bottom: 1.6rem; }
+  .help-list { display: flex; flex-direction: column; gap: 0.7rem; }
+  .help-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .help-row .help-desc { font-size: 1rem; color: var(--ink); }
+  .help-keys { display: flex; gap: 0.3rem; flex-shrink: 0; }
+  .help-key { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.06em; color: var(--dim); background: transparent; border: 1px solid var(--border); border-radius: 3px; padding: 0.22rem 0.5rem; min-width: 1.7rem; text-align: center; }
+  .help-close { position: absolute; top: 1.1rem; right: 1.1rem; font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); background: none; border: 1px solid var(--border); padding: 0.35rem 0.7rem; cursor: pointer; transition: all 0.2s; }
+  .help-close:hover { color: var(--ink); border-color: var(--ink); }
   #skyview-modal-aladin { flex: 1; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; background: #060504; }
   .depth-modal {
     display: none; position: fixed; inset: 0; z-index: 150;
@@ -469,6 +521,9 @@
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light/dark theme">
       <span class="toggle-icon" id="toggle-icon">☀</span>
       <span id="toggle-label">Light</span>
+    </button>
+    <button class="theme-toggle" id="help-btn" onclick="openHelpModal()" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (press ?)">
+      <span style="font-size:0.8rem;line-height:1;">?</span>
     </button>
   </div>
 </header>
@@ -602,6 +657,7 @@
       <div class="lightbox-tag" id="lightbox-tag"></div>
       <h3 class="lightbox-title" id="lightbox-title"></h3>
       <div class="lightbox-meta" id="lightbox-meta"></div>
+      <div class="lightbox-coords" id="lightbox-coords"></div>
       <div class="lb-copy-wrap">
         <button class="lightbox-zoom-btn" id="lb-copy-btn" onclick="copyLightboxLink()">&#x29C9; Copy link</button>
         <button class="lightbox-zoom-btn" id="lb-skyview-btn" onclick="openSkyViewModal()">&#x26F6; Sky view</button>
@@ -1526,11 +1582,24 @@ function applySort() {
 
 // Press / to focus search
 document.addEventListener('keydown', e => {
-  if(e.key === '/' && document.activeElement !== document.getElementById('search-input')) {
+  const inField = document.activeElement === document.getElementById('search-input');
+  if(e.key === '/' && !inField) {
     e.preventDefault();
     document.getElementById('search-input').focus();
+  } else if(e.key === '?' && !inField && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    e.preventDefault();
+    toggleHelpModal();
   }
 });
+// ── KEYBOARD HELP MODAL ──
+function openHelpModal(){ document.getElementById('help-modal').classList.add('open'); }
+function closeHelpModal(e){
+  if(e && e.target !== document.getElementById('help-modal') && !e.target.classList.contains('help-close')) return;
+  document.getElementById('help-modal').classList.remove('open');
+}
+function toggleHelpModal(){
+  document.getElementById('help-modal').classList.toggle('open');
+}
 
 // ── DEEP LINKING ──
 // Slugs are auto-generated from title — no changes needed in CAPTURES.
@@ -1655,6 +1724,43 @@ let lbCards=[], lbIndex=0, lbReturnFocus=null;
 function getVisibleCards(){
   return [...document.querySelectorAll('#gallery .card')].filter(c=>c.style.display!=='none');
 }
+// ── EQUATORIAL COORDINATES ──
+// Convert the galactic (l,b) already stored per target into J2000 RA/Dec.
+// The l/b values drive the 3D Map; deriving RA/Dec from them is an exact
+// astronomical transform, not a guess, so no coordinates are hand-entered.
+const NGP_RA = 192.85948, NGP_DEC = 27.12825, L_NCP = 122.93192; // J2000
+function galacticToEquatorial(l, b){
+  const d2r = Math.PI/180, r2d = 180/Math.PI;
+  l *= d2r; b *= d2r;
+  const decNgp = NGP_DEC*d2r, dLon = L_NCP*d2r - l;
+  const sinDec = Math.sin(decNgp)*Math.sin(b) + Math.cos(decNgp)*Math.cos(b)*Math.cos(dLon);
+  const dec = Math.asin(Math.max(-1, Math.min(1, sinDec)));
+  const y = Math.cos(b)*Math.sin(dLon);
+  const x = Math.cos(decNgp)*Math.sin(b) - Math.sin(decNgp)*Math.cos(b)*Math.cos(dLon);
+  let ra = NGP_RA + Math.atan2(y, x)*r2d;
+  ra = ((ra % 360) + 360) % 360;
+  return { ra, dec: dec*r2d };
+}
+function formatRA(deg){
+  let t = Math.round(deg/15*3600);            // total seconds of time
+  t = ((t % 86400) + 86400) % 86400;
+  const h = Math.floor(t/3600), m = Math.floor((t%3600)/60), s = t%60;
+  return `${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+}
+function formatDec(deg){
+  const sign = deg < 0 ? '−' : '+';
+  let a = Math.round(Math.abs(deg)*3600);      // total arcseconds
+  const d = Math.floor(a/3600), m = Math.floor((a%3600)/60), s = a%60;
+  return `${sign}${String(d).padStart(2,'0')}° ${String(m).padStart(2,'0')}′ ${String(s).padStart(2,'0')}″`;
+}
+function coordsHTML(card){
+  if(!card.dataset.depth) return '';
+  let primary;
+  try { primary = JSON.parse(card.dataset.depth)[0]; } catch(e) { return ''; }
+  if(!primary || typeof primary.l !== 'number' || typeof primary.b !== 'number') return '';
+  const { ra, dec } = galacticToEquatorial(primary.l, primary.b);
+  return `<span class="lc-label">J2000</span>RA ${formatRA(ra)} &middot; Dec ${formatDec(dec)}`;
+}
 function openLightboxCard(cards,idx){
   lbCards=cards; lbIndex=idx;
   const card=lbCards[lbIndex];
@@ -1667,6 +1773,7 @@ function openLightboxCard(cards,idx){
   document.getElementById('lightbox-title').textContent=card.dataset.title||'';
   document.getElementById('lightbox-tag').textContent=(card.dataset.tag||'').toUpperCase();
   document.getElementById('lightbox-meta').textContent=card.dataset.meta||'';
+  document.getElementById('lightbox-coords').innerHTML=coordsHTML(card);
   document.getElementById('lightbox-desc').textContent=card.dataset.desc||'';
   lbImg.alt=card.dataset.title||'';
   document.getElementById('lb-counter').textContent=`${lbIndex+1} of ${lbCards.length}`;
@@ -1788,6 +1895,7 @@ document.addEventListener('keydown',e=>{
     closeDepthModal();
     closeGalacticModal();
     closeSkyViewModal({target:document.getElementById('skyview-modal')});
+    document.getElementById('help-modal').classList.remove('open');
     if(document.activeElement===document.getElementById('search-input')){
       clearSearch();
       document.getElementById('search-input').blur();
@@ -2627,6 +2735,23 @@ openFromHash(); // deep link — must run after lbCards/lbIndex are declared and
       <span style="font-family:Inconsolata,monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);opacity:0.7;">Dashed gold ring = Milky Way edge (100 kly)</span>
     </div>
     <div class="depth-hint">Drag to rotate &amp; tilt &middot; scroll to zoom &middot; hover markers for coordinates &middot; Escape closes</div>
+  </div>
+</div>
+
+<!-- KEYBOARD HELP MODAL -->
+<div class="help-modal" id="help-modal" onclick="closeHelpModal(event)">
+  <div class="help-inner" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
+    <button class="help-close" onclick="closeHelpModal()">Esc</button>
+    <h3>Keyboard shortcuts</h3>
+    <div class="help-sub">Move around without the mouse</div>
+    <div class="help-list">
+      <div class="help-row"><span class="help-desc">Focus search</span><span class="help-keys"><span class="help-key">/</span></span></div>
+      <div class="help-row"><span class="help-desc">Open focused photo</span><span class="help-keys"><span class="help-key">Enter</span><span class="help-key">Space</span></span></div>
+      <div class="help-row"><span class="help-desc">Move between photos in a card</span><span class="help-keys"><span class="help-key">Tab</span></span></div>
+      <div class="help-row"><span class="help-desc">Previous / next in lightbox</span><span class="help-keys"><span class="help-key">←</span><span class="help-key">→</span></span></div>
+      <div class="help-row"><span class="help-desc">Close lightbox / modal / search</span><span class="help-keys"><span class="help-key">Esc</span></span></div>
+      <div class="help-row"><span class="help-desc">Show this help</span><span class="help-keys"><span class="help-key">?</span></span></div>
+    </div>
   </div>
 </div>
 

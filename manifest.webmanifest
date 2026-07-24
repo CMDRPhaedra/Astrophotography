@@ -1,0 +1,15 @@
+{
+  "name": "Among Stars — Astrophotography",
+  "short_name": "Among Stars",
+  "description": "Deep-sky astrophotography from Edinburgh, Scotland — galaxies, nebulae, clusters and comets captured with a Dwarf 3 smart telescope.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0c0b09",
+  "theme_color": "#0c0b09",
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" },
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any maskable" }
+  ]
+}

@@ -27,6 +27,7 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **Stats bar** — live count of total images, per-category breakdown with dot visualisation, and total integration time observed
 - **Lightbox** with scroll-to-zoom, drag-to-pan, double-click to reset, pinch on mobile, arrow key navigation, and image counter; includes Copy link, Sky view, and theme toggle buttons
 - **Sky view** — a ⛶ Sky view button in the lightbox opens a full-screen interactive sky atlas (Aladin Lite, CDS Strasbourg) centred on the target, with DSS2 optical, 2MASS near-infrared, and Hα survey options
+- **Equatorial coordinates** — the lightbox shows each target's J2000 RA/Dec, computed on the fly from the galactic `l`/`b` already stored for the 3D Map (an exact astronomical transform, so no coordinates are hand-entered and none can drift); shown only for cards whose primary depth entry has `l`/`b`
 - **3D depth view** per card — hover any deep-sky card and click **⬡ 3D** to open an interactive Plotly scene at the card's real distance from Earth
 - **⬡ 3D Distance** — all targets on a single stretched-log distance axis with a built-in explainer
 - **⬡ 3D Map** — all targets in real galactic coordinates with type filters (All / Galaxies / Nebulae / Clusters) and a built-in explainer. Pure canvas, no external libraries.
@@ -34,12 +35,15 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **Per-photo pages** at [/photos/](https://chryse.co.uk/photos/) — every capture gets its own static, crawlable page at `/photos/<slug>/`, generated from the `CAPTURES` array so it can never drift from the gallery
 - **Field notes blog** at [/blog/](https://chryse.co.uk/blog/) — Jekyll posts in `_posts/`, built automatically by GitHub Pages, with an RSS feed at `/feed.xml` (jekyll-feed)
 - **Blog search** — the blog index has its own `/`-focused search bar, independent of the gallery's; it matches against the full text of every post, not just the visible excerpt
-- **Keyboard accessible** — `/` focuses search, Tab reaches every card and control, Enter/Space opens a card, arrows navigate the lightbox, Escape closes
+- **Keyboard accessible** — `/` focuses search, `?` opens a shortcut cheatsheet, Tab reaches every card and control, Enter/Space opens a card, arrows navigate the lightbox, Escape closes; a **?** button in the header surfaces the same cheatsheet for mouse users
 - **Automatic WebP conversion** — a GitHub Action converts new images to WebP on every push and updates references in `index.html` and `_posts/` automatically
 - **Automatic thumbnails** — the same Action generates 640 px thumbnails in `images/thumbs/`; the gallery grid loads those (~1.4 MB total) instead of the full-resolution files (~20 MB), and the lightbox still opens the full image
 - **Self-updating noscript SEO block** — `scripts/update_noscript.py` regenerates the crawler-visible capture list from the `CAPTURES` array, so the two can't drift; it also runs inside the Action
 - **Self-updating README badges** — the Images and Integration time badges above are shields.io endpoint badges fed by `badges/*.json`, regenerated from the `CAPTURES` array by `scripts/generate_badges.py` inside the Action
 - **Open Graph / Twitter card meta tags** for rich link previews
+- **Structured data (JSON-LD)** — every photo page emits `ImageObject` + `BreadcrumbList`, blog posts emit `BlogPosting` + `BreadcrumbList`, and the gallery emits a `WebSite`/`Person`/`CollectionPage` graph, so Google Images and rich results have machine-readable context
+- **Installable (PWA)** — a `manifest.webmanifest` with maskable 192/512 px icons (rasterised from `favicon.svg`) lets mobile visitors Add to Home Screen with a proper name and icon; no service worker, so nothing is cached offline
+- **Custom 404 page** — an on-brand `/404.html` (dark theme, nav intact) served by GitHub Pages instead of the generic default
 - **Favicon** — black hole event horizon icon (SVG for Chrome/Firefox, PNG fallback for Safari)
 - **Light / dark theme** toggle — available in the main header, lightbox, and sky view modal; choice is remembered across visits
 - **Gear & process page** at [/gear/](https://chryse.co.uk/gear/) — the Dwarf 3, shooting conditions in Edinburgh, and the capture/stacking workflow; linked from the nav, the hero, the gallery footer, and every photo page. The page has a hidden hardware-photo slot: drop a photo named `dwarf3_telescope.jpg` (any format) into `images/` and push — the Action converts it and the figure appears automatically
@@ -86,7 +90,7 @@ Use the **original filename** (before WebP conversion) — the Action will updat
 
 **`wide: true`** is optional. Adding it makes the card span two columns and switches its image to a 16:7 aspect ratio. Use it for your best or widest-field captures.
 
-**`depth`** is optional but enables the per-card ⬡ 3D button and includes the target in the 3D Distance and 3D Map views. Omit it for comets or any target without a meaningful distance. The primary (first) entry **must include `l` and `b`** (galactic longitude and latitude in degrees) — without these the target won't appear on the 3D Map. Companion objects don't need `l`/`b`. Include multiple objects for cards that show more than one target:
+**`depth`** is optional but enables the per-card ⬡ 3D button and includes the target in the 3D Distance and 3D Map views. Omit it for comets or any target without a meaningful distance. The primary (first) entry **must include `l` and `b`** (galactic longitude and latitude in degrees) — without these the target won't appear on the 3D Map, and the lightbox won't show its J2000 RA/Dec (derived from `l`/`b` at runtime). Companion objects don't need `l`/`b`. Include multiple objects for cards that show more than one target:
 
 ```js
 depth: [
@@ -340,6 +344,10 @@ The site is verified with Google Search Console and a sitemap submitted at `http
 A `<noscript>` block in `index.html` contains static HTML versions of all captures so search engine crawlers that don't execute JavaScript can index the gallery content and descriptions. It is generated from the `CAPTURES` array by `scripts/update_noscript.py` (run automatically by the convert-webp Action, or manually with `python3 scripts/update_noscript.py`) — never edit it by hand.
 
 The per-photo pages at `/photos/<slug>/` (see above) give every capture a real, individually indexable URL on top of the noscript block, and are picked up by the sitemap automatically.
+
+**Structured data (JSON-LD)** is emitted on every page for rich results: photo pages carry `ImageObject` + `BreadcrumbList` (in `_layouts/capture.html`), blog posts carry `BlogPosting` + `BreadcrumbList` (in `_layouts/post.html`), and the gallery head carries a `WebSite` / `Person` / `CollectionPage` `@graph` (in `index.html`). All of it is filled from the same front matter and `CAPTURES` data the pages already use, so it can't drift from what's displayed.
+
+A missing-page request is served by an on-brand `404.html` (uses `layout: default`, `sitemap: false`) rather than the GitHub Pages default, and the site ships a `manifest.webmanifest` (with 192/512 px icons rasterised from `favicon.svg`) so it is installable as a PWA — no service worker, so nothing is cached offline.
 
 ---
 
