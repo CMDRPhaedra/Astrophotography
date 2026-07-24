@@ -12,16 +12,51 @@ permalink: /blog/
   .post-list a:hover .p-title { color: var(--accent); }
   .post-list .p-date { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.6rem; }
   .post-list .p-excerpt { color: var(--dim); font-style: italic; line-height: 1.6; }
+  .post-list mark { background: rgba(200,169,110,0.22); color: var(--accent); border-radius: 0; padding: 0 1px; }
   .empty-note { color: var(--dim); font-style: italic; }
+
+  .blog-header-row { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem 1.5rem; margin-bottom: 2.5rem; }
+  .blog-header-row h2 { font-size: clamp(1.8rem,4vw,2.6rem); font-weight: 300; }
+  .blog-search-wrap { position: relative; display: flex; align-items: center; gap: 1rem; }
+  .blog-search-input {
+    font-family: 'Inconsolata', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+    background: transparent; border: 1px solid var(--border); color: var(--ink);
+    padding: 0.4rem 2.2rem 0.4rem 0.9rem; outline: none; width: 200px;
+    transition: border-color 0.2s, width 0.3s;
+  }
+  .blog-search-input::placeholder { color: var(--dim); letter-spacing: 0.1em; }
+  .blog-search-input::-webkit-search-cancel-button { -webkit-appearance: none; }
+  .blog-search-input:focus { border-color: var(--accent); width: 240px; }
+  .blog-search-clear {
+    position: absolute; right: 4.9rem; top: 50%; transform: translateY(-50%);
+    font-family: 'Inconsolata', monospace; font-size: 0.7rem; color: var(--dim);
+    background: none; border: none; cursor: pointer; padding: 0; line-height: 1;
+    opacity: 0; transition: opacity 0.15s, color 0.15s; pointer-events: none;
+  }
+  .blog-search-clear.visible { opacity: 1; pointer-events: all; }
+  .blog-search-clear:hover { color: var(--accent); }
+  .blog-search-result-count {
+    font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--dim); white-space: nowrap;
+    transition: opacity 0.2s; opacity: 0;
+  }
+  .blog-search-result-count.visible { opacity: 1; }
 </style>
 
 <div class="blog-label">Field notes</div>
-<h2 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:2.5rem;">From the eyepiece</h2>
 
 {% if site.posts.size > 0 %}
-<ul class="post-list">
+<div class="blog-header-row">
+  <h2>From the eyepiece</h2>
+  <div class="blog-search-wrap">
+    <input class="blog-search-input" id="blog-search-input" type="search" aria-label="Search field notes" placeholder="Search…" oninput="onBlogSearch()" autocomplete="off" spellcheck="false">
+    <button class="blog-search-clear" id="blog-search-clear" onclick="clearBlogSearch()" title="Clear search" aria-label="Clear search">&#10005;</button>
+    <span class="blog-search-result-count" id="blog-result-count"></span>
+  </div>
+</div>
+<ul class="post-list" id="post-list">
   {% for post in site.posts %}
-  <li>
+  <li class="post-item" data-title="{{ post.title | strip_html | strip_newlines | escape }}" data-search="{{ post.title | strip_html | strip_newlines | escape }} {{ post.target | strip_html | strip_newlines | escape }} {{ post.content | strip_html | strip_newlines | escape }}">
     <a href="{{ post.url }}">
       <div class="p-date">{{ post.date | date: "%-d %B %Y" }}{% if post.target %} &middot; {{ post.target }}{% endif %}</div>
       <div class="p-title">{{ post.title }}</div>
@@ -30,6 +65,66 @@ permalink: /blog/
   </li>
   {% endfor %}
 </ul>
+<p class="empty-note" id="blog-empty-state" style="display:none;">No field notes match your search.</p>
+
+<script>
+function escapeRegexBlog(s) { return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+
+function highlightBlog(text, q) {
+  if(!q) return text;
+  const re = new RegExp(`(${escapeRegexBlog(q)})`, 'gi');
+  return text.replace(re, '<mark>$1</mark>');
+}
+
+function onBlogSearch() {
+  const input = document.getElementById('blog-search-input');
+  document.getElementById('blog-search-clear').classList.toggle('visible', input.value.length > 0);
+  applyBlogSearch();
+}
+
+function clearBlogSearch() {
+  const input = document.getElementById('blog-search-input');
+  input.value = '';
+  document.getElementById('blog-search-clear').classList.remove('visible');
+  applyBlogSearch();
+  input.focus();
+}
+
+function applyBlogSearch() {
+  const raw = document.getElementById('blog-search-input').value.trim();
+  const q = raw.toLowerCase();
+  const items = document.querySelectorAll('.post-item');
+  const countEl = document.getElementById('blog-result-count');
+  let vis = 0;
+  items.forEach(li => {
+    const hay = (li.dataset.search || '').toLowerCase();
+    const show = !q || hay.includes(q);
+    li.style.display = show ? '' : 'none';
+    if(show) vis++;
+    const titleEl = li.querySelector('.p-title');
+    if(titleEl) titleEl.innerHTML = highlightBlog(li.dataset.title || '', raw);
+  });
+  const emptyEl = document.getElementById('blog-empty-state');
+  if(emptyEl) emptyEl.style.display = vis === 0 ? 'block' : 'none';
+  if(countEl) {
+    if(q) { countEl.textContent = `${vis} result${vis !== 1 ? 's' : ''}`; countEl.classList.add('visible'); }
+    else  { countEl.classList.remove('visible'); }
+  }
+}
+
+document.addEventListener('keydown', function(e) {
+  const input = document.getElementById('blog-search-input');
+  if(!input) return;
+  if(e.key === '/' && document.activeElement !== input) {
+    e.preventDefault();
+    input.focus();
+  } else if(e.key === 'Escape' && document.activeElement === input) {
+    clearBlogSearch();
+    input.blur();
+  }
+});
+</script>
 {% else %}
+<h2 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:2.5rem;">From the eyepiece</h2>
 <p class="empty-note">Nothing here yet — the first post is on its way.</p>
 {% endif %}

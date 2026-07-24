@@ -23,6 +23,7 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **Sort bar** — sort the gallery by Date, Distance, or Name, each reversible with a second click
 - **Latest capture strip** — always shows the first entry in the `CAPTURES` array with a pulsing indicator
 - **Search** — press `/` to focus the search bar; searches target names, catalogue numbers, and descriptions; works alongside the category filter
+- **Descriptive gallery alt text** — grid thumbnails carry an alt combining the title and a snippet of the description (e.g. *"Elephant's Trunk Nebula — IC 1396A is a dense globule of cold gas…"*); the lightbox and latest-capture image keep a plain title alt since their full description is already shown as visible text right next to them, so a richer alt there would just duplicate it for screen readers
 - **Stats bar** — live count of total images, per-category breakdown with dot visualisation, and total integration time observed
 - **Lightbox** with scroll-to-zoom, drag-to-pan, double-click to reset, pinch on mobile, arrow key navigation, and image counter; includes Copy link, Sky view, and theme toggle buttons
 - **Sky view** — a ⛶ Sky view button in the lightbox opens a full-screen interactive sky atlas (Aladin Lite, CDS Strasbourg) centred on the target, with DSS2 optical, 2MASS near-infrared, and Hα survey options
@@ -32,6 +33,7 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **Deep linking** — opening a lightbox updates the URL to `?photo=slug` (e.g. `?photo=veil-nebula-complex`); sharing that URL opens the site with that image already in the lightbox, including via iMessage, WhatsApp, and Discord
 - **Per-photo pages** at [/photos/](https://chryse.co.uk/photos/) — every capture gets its own static, crawlable page at `/photos/<slug>/`, generated from the `CAPTURES` array so it can never drift from the gallery
 - **Field notes blog** at [/blog/](https://chryse.co.uk/blog/) — Jekyll posts in `_posts/`, built automatically by GitHub Pages, with an RSS feed at `/feed.xml` (jekyll-feed)
+- **Blog search** — the blog index has its own `/`-focused search bar, independent of the gallery's; it matches against the full text of every post, not just the visible excerpt
 - **Keyboard accessible** — `/` focuses search, Tab reaches every card and control, Enter/Space opens a card, arrows navigate the lightbox, Escape closes
 - **Automatic WebP conversion** — a GitHub Action converts new images to WebP on every push and updates references in `index.html` and `_posts/` automatically
 - **Automatic thumbnails** — the same Action generates 640 px thumbnails in `images/thumbs/`; the gallery grid loads those (~1.4 MB total) instead of the full-resolution files (~20 MB), and the lightbox still opens the full image
@@ -233,9 +235,11 @@ HTTPS is handled automatically by GitHub Pages via Let's Encrypt.
 
 ---
 
-## Search
+## Search (gallery)
 
-Press `/` from anywhere on the page to focus the search bar. It searches across target names, catalogue numbers, metadata, and description text. Works alongside the category filter — e.g. filter to Nebulae then search "Cygnus" to narrow further. Press Escape to clear and return focus to the page.
+Press `/` from anywhere on the gallery page to focus the search bar. It searches across target names, catalogue numbers, metadata, and description text. Works alongside the category filter — e.g. filter to Nebulae then search "Cygnus" to narrow further. Press Escape to clear and return focus to the page.
+
+This is a separate implementation from the blog's own search (see [Blog search](#blog-search) below) — the gallery is a single JS-rendered page working off the in-memory `CAPTURES` array, while the blog is static Jekyll output with no shared runtime, so each needed its own small filter script.
 
 ---
 
@@ -266,6 +270,16 @@ Post body in Markdown…
 ```
 
 `target`, `distance`, and `integration` are optional and render in the post's meta line; `image` is the 16:9 cover and the Open Graph preview. Keep `target`'s catalogue segment (before the ` · `) consistent with the same object's gallery-card `meta` — see the multi-catalogue note above. Posts are published at `/blog/YYYY/MM/DD/slug/`, and the first paragraph doubles as the excerpt on the blog index and the meta description. To link a post back to its gallery card, use the deep-link form `[gallery card](/?photo=slug)`.
+
+---
+
+## Blog search
+
+The blog index (`blog/index.html`) has its own search bar, built the same way as the gallery's but entirely separately, since the blog has no access to the gallery's `CAPTURES` array or JS runtime.
+
+At build time, Jekyll's `{% for post in site.posts %}` loop stamps each `<li class="post-item">` with a `data-search` attribute containing that post's title, `target`, and full content (via `strip_html | strip_newlines | escape`) — not just the truncated excerpt shown on the page, so a search can match text that never appears in the visible preview. A small inline script filters `.post-item`s by substring match against `data-search`, highlights matches in the title with `<mark>`, shows a live result count, and supports the same `/`-to-focus and Escape-to-clear behaviour as the gallery search.
+
+Because it's plain client-side JS reading attributes already in the rendered HTML, there's no separate index file to keep in sync and no build step beyond what GitHub Pages already does.
 
 ---
 

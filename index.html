@@ -1258,15 +1258,33 @@ function thumbSrc(img) {
   return img.replace(/^images\//, 'images/thumbs/');
 }
 
+function escapeHTML(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function altSnippet(desc, maxLen = 140) {
+  // Word-boundary truncation so the alt text reads as a clean sentence fragment, not a mid-word cut.
+  if(!desc) return '';
+  if(desc.length <= maxLen) return desc;
+  const cut = desc.slice(0, maxLen);
+  const lastSpace = cut.lastIndexOf(' ');
+  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trim() + '…';
+}
+
 function renderCard(card) {
   const tag   = card.dataset.tag   || 'other';
   const title = card.dataset.title || 'Untitled';
   const meta  = card.dataset.meta  || '';
+  const desc  = card.dataset.desc  || '';
   const img   = card.dataset.img   || '';
   const label = tag.charAt(0).toUpperCase()+tag.slice(1);
+  // The grid thumbnail has no adjacent visible description (unlike the lightbox and
+  // latest-capture strip, which both show the full desc as text), so its alt is the
+  // only place a screen-reader user learns what the image actually shows.
+  const altText = escapeHTML(desc ? `${title} — ${altSnippet(desc)}` : title);
   // On thumbnail 404 fall back to the full-size image, then to the placeholder
   const imgHTML = img
-    ? `<img src="${thumbSrc(img)}" alt="${title}" loading="lazy" decoding="async" onerror="if(!this.dataset.fellBack){this.dataset.fellBack='1';this.src=this.closest('.card').dataset.img;}else{this.parentElement.innerHTML=placeholderSVG();}">`
+    ? `<img src="${thumbSrc(img)}" alt="${altText}" loading="lazy" decoding="async" onerror="if(!this.dataset.fellBack){this.dataset.fellBack='1';this.src=this.closest('.card').dataset.img;}else{this.parentElement.innerHTML=placeholderSVG();}">`
     : placeholderSVG();
   const has3d = !!card.dataset.depth;
   card.innerHTML = `
