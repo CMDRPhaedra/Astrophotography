@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Croc's Eye Galaxy"
-catalogue: "M94"
+catalogue: "M94 / NGC 4736"
 date: "2026-04-23"
 display_date: "23 Apr 2026"
 location: "Edinburgh"

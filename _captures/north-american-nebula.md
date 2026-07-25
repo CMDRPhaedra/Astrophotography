@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "North American Nebula"
-catalogue: "NGC 7000"
+catalogue: "NGC 7000 / C20 / Sh2-117"
 date: "2025-10-04"
 display_date: "4 Oct 2025"
 location: "Edinburgh"

@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Bode's Galaxy"
-catalogue: "M81"
+catalogue: "M81 / NGC 3031"
 date: "2026-02-22"
 display_date: "22 Feb 2026"
 location: "Edinburgh"

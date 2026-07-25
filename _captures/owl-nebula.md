@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Owl Nebula"
-catalogue: "M97"
+catalogue: "M97 / NGC 3587"
 date: "2025-11-29"
 display_date: "29 Nov 2025"
 location: "Edinburgh"

@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "The Jellyfish Nebula"
-catalogue: "IC 443"
+catalogue: "IC 443 / Sh2-248"
 date: "2025-09-14"
 display_date: "14 Sep 2025"
 location: "Edinburgh"

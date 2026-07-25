@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Ring Nebula"
-catalogue: "M57"
+catalogue: "M57 / NGC 6720"
 date: "2026-06-25"
 display_date: "25 Jun 2026"
 location: "Edinburgh"

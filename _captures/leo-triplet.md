@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Leo Triplet"
-catalogue: "M65"
+catalogue: "M65 / NGC 3623"
 date: "2026-04-30"
 display_date: "30 Apr 2026"
 location: "Edinburgh"

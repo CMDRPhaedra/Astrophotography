@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Whale Galaxy"
-catalogue: "C32"
+catalogue: "C32 / NGC 4631"
 date: "2026-04-29"
 display_date: "29 Apr 2026"
 location: "Edinburgh"

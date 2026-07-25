@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Spiral Cluster"
-catalogue: "M34"
+catalogue: "M34 / NGC 1039"
 date: "2025-10-03"
 display_date: "3 Oct 2025"
 location: "Edinburgh"

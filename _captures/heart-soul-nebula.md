@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Heart & Soul Nebula"
-catalogue: "IC 1805 & IC 1848"
+catalogue: "IC 1805 / Sh2-190 & IC 1848 / Sh2-199"
 date: "2026-01-11"
 display_date: "11 Jan 2026"
 location: "Edinburgh"

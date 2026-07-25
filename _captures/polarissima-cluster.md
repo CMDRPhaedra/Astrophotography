@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Polarissima Cluster"
-catalogue: "C1"
+catalogue: "C1 / NGC 188"
 date: "2026-04-23"
 display_date: "23 Apr 2026"
 location: "Edinburgh"

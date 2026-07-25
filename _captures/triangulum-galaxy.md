@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Triangulum Galaxy"
-catalogue: "M33"
+catalogue: "M33 / NGC 598"
 date: "2025-11-02"
 display_date: "2 Nov 2025"
 location: "Edinburgh"

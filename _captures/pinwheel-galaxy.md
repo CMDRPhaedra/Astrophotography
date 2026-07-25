@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Pinwheel Galaxy"
-catalogue: "M101"
+catalogue: "M101 / NGC 5457"
 date: "2026-04-30"
 display_date: "30 Apr 2026"
 location: "Edinburgh"

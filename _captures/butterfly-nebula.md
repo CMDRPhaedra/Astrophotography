@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Butterfly Nebula"
-catalogue: "IC 1318"
+catalogue: "IC 1318 / Sh2-108"
 date: "2026-07-18"
 display_date: "18 Jul 2026"
 location: "Edinburgh"

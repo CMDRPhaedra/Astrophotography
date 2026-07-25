@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Bubble Nebula"
-catalogue: "C11"
+catalogue: "C11 / NGC 7635 / Sh2-162"
 date: "2026-07-10"
 display_date: "10 Jul 2026"
 location: "Edinburgh"

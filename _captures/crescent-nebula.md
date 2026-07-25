@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Crescent Nebula"
-catalogue: "C27"
+catalogue: "C27 / NGC 6888 / Sh2-105"
 date: "2026-07-23"
 display_date: "23 Jul 2026"
 location: "Edinburgh"

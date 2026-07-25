@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Splinter Galaxy"
-catalogue: "NGC 5906"
+catalogue: "NGC 5906 / NGC 5907"
 date: "2026-04-29"
 display_date: "29 Apr 2026"
 location: "Edinburgh"

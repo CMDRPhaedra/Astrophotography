@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Sunflower Galaxy"
-catalogue: "M63"
+catalogue: "M63 / NGC 5055"
 date: "2026-04-23"
 display_date: "23 Apr 2026"
 location: "Edinburgh"

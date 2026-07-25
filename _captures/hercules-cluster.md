@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Hercules Cluster"
-catalogue: "M13"
+catalogue: "M13 / NGC 6205"
 date: "2026-04-29"
 display_date: "29 Apr 2026"
 location: "Edinburgh"

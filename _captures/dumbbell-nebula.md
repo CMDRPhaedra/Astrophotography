@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Dumbbell Nebula"
-catalogue: "M27"
+catalogue: "M27 / NGC 6853"
 date: "2025-12-14"
 display_date: "14 Dec 2025"
 location: "Edinburgh"

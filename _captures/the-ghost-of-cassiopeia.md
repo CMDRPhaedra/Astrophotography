@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "The Ghost of Cassiopeia"
-catalogue: "IC 63"
+catalogue: "IC 63 / Sh2-185"
 date: "2025-10-18"
 display_date: "18 Oct 2025"
 location: "Edinburgh"

@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Western Veil Nebula"
-catalogue: "NGC 6960"
+catalogue: "NGC 6960 / C34"
 date: "2026-02-09"
 display_date: "9 Feb 2026"
 location: "Edinburgh"

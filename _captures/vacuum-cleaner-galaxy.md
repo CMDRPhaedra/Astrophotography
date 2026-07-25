@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Vacuum Cleaner Galaxy"
-catalogue: "M109"
+catalogue: "M109 / NGC 3992"
 date: "2026-02-08"
 display_date: "8 Feb 2026"
 location: "Edinburgh"

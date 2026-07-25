@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Whirlpool Galaxy"
-catalogue: "M51"
+catalogue: "M51 / NGC 5194"
 date: "2025-11-01"
 display_date: "1 Nov 2025"
 location: "Edinburgh"

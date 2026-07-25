@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Andromeda Galaxy"
-catalogue: "M31"
+catalogue: "M31 / NGC 224"
 date: "2025-09-14"
 display_date: "14 Sep 2025"
 location: "Edinburgh"

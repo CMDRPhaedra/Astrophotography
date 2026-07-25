@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Rosette Nebula"
-catalogue: "C49"
+catalogue: "C49 / NGC 2237 / Sh2-275"
 date: "2025-11-01"
 display_date: "1 Nov 2025"
 location: "Edinburgh"

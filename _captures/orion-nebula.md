@@ -3,7 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Orion Nebula"
-catalogue: "M42"
+catalogue: "M42 / NGC 1976 / Sh2-281"
 date: "2025-10-03"
 display_date: "3 Oct 2025"
 location: "Edinburgh"
