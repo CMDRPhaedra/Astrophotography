@@ -48,7 +48,7 @@ The Dwarf 3 wasn't a leap of faith, either — it's an upgrade. Its predecessor,
 
 ### The sky it works under
 
-Edinburgh is not an easy place to do this. The city sky drowns faint targets in sodium and LED glow, and at 56° north there is no astronomical darkness at all from mid-May to late July — the sun never gets far enough below the horizon for the sky to fully darken.
+Edinburgh is not an easy place to do this. The city sky drowns faint targets in sodium and LED glow — around [Bortle 8](/bortle/) on the nine-point scale of sky darkness, which in practice means several times the integration time a rural site would need for the same image. And at 56° north there is no astronomical darkness at all from mid-May to late July: the sun never gets far enough below the horizon for the sky to fully darken.
 
 Two things make deep-sky imaging possible anyway. The dual-band filter passes only the narrow hydrogen-alpha and oxygen-III wavelengths that emission nebulae actually shine in, rejecting most of the city's light pollution outright. And stacking suppresses the noise that remains — the signal adds up across frames while the noise averages away. Galaxies and clusters, which shine in broadband light a filter can't isolate, are harder from the city and simply demand more integration and clearer nights.
 
