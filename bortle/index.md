@@ -186,11 +186,11 @@ But it also means the returns are punishing. Doubling your signal-to-noise ratio
 
 ### What this looks like from Edinburgh
 
-Every image in the [gallery](/) was taken from Edinburgh, which sits around Bortle 8 — bright city sky, the far end of that last column. There is no version of this hobby here where a faint target is a quick job, and the [capture times on the photo pages](/photos/) show it plainly.
+Every image in the [gallery](/) was taken from Edinburgh, which sits around Bortle 7 to 8 depending on where in the city you're standing — city skyglow shading into bright city sky, straddling the right-hand two columns above. There is no version of this hobby here where a faint target is a quick job, and the [capture times on the photo pages](/photos/) show it plainly.
 
 The pattern in that data is the useful part. Emission nebulae — the Crescent, the Bubble, the Elephant's Trunk — came in at roughly one to three hours each. Broadband galaxies took far longer: four hours for M33 and M81, seven for Andromeda and the Pinwheel, ten for the Whirlpool. Same telescope, same sky, same city. The difference is entirely what can be filtered.
 
-That's the loophole. Emission nebulae glow at specific wavelengths — hydrogen-alpha and oxygen-III — and a dual-band filter passes those while rejecting most of the sky's broadband glow, so a Bortle 8 sky behaves like a far darker one for that class of target. Galaxies and star clusters shine across the whole visible spectrum, and no filter can separate their light from a streetlight's. For those, the only currency is time.
+That's the loophole. Emission nebulae glow at specific wavelengths — hydrogen-alpha and oxygen-III — and a dual-band filter passes those while rejecting most of the sky's broadband glow, so a heavily light-polluted sky behaves like a far darker one for that class of target. Galaxies and star clusters shine across the whole visible spectrum, and no filter can separate their light from a streetlight's. For those, the only currency is time.
 
 ### Working with the sky you have
 

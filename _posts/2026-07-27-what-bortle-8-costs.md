@@ -1,19 +1,19 @@
 ---
 layout: post
-title: "Ten Hours for One Galaxy: What a Bortle 8 Sky Actually Costs"
+title: "Ten Hours for One Galaxy: What a Bortle 7–8 Sky Actually Costs"
 date: 2026-07-27
 image: /images/m51_whirlpool_galaxy.webp
 ---
 
 The Whirlpool Galaxy took ten hours. Not ten hours of driving somewhere dark, or ten hours of processing — ten hours of shutter time, accumulated an hour or two at a time across a Scottish autumn, pointed at a galaxy bright enough to have been catalogued in 1773. From a properly dark site, a rig like mine would have had something respectable in well under two. The extra eight hours weren't buying detail. They were paying rent to Edinburgh.
 
-That's the part nobody puts on the box. Every discussion of astrophotography gear obsesses over aperture and sensors and focal ratios, and then a nine-point scale you have no control over quietly overrules all of it. The Bortle scale runs from 1 — a genuinely pristine sky where the Milky Way throws a shadow — to 9, an inner-city glow where you can count the surviving stars on your fingers. Edinburgh sits at about 8. I've written up [how the scale works and why it costs what it does](/bortle/) properly on its own page; this is the version with my own numbers attached.
+That's the part nobody puts on the box. Every discussion of astrophotography gear obsesses over aperture and sensors and focal ratios, and then a nine-point scale you have no control over quietly overrules all of it. The Bortle scale runs from 1 — a genuinely pristine sky where the Milky Way throws a shadow — to 9, an inner-city glow where you can count the surviving stars on your fingers. My bit of Edinburgh sits at about 7 to 8. I've written up [how the scale works and why it costs what it does](/bortle/) properly on its own page; this is the version with my own numbers attached.
 
 The mechanism is almost insultingly simple. Light pollution doesn't sit in front of your target like a curtain. It lands on exactly the same pixels, and because photons arrive at random, all that unwanted background brings its own grain along with it. Stacking does beat that grain down — but only with the square root of time. Four times the exposure buys twice the signal-to-noise ratio. So a sky several times brighter doesn't cost you several times as long. It costs you a great deal more than that, and it does it on a curve that gets steeper exactly when you need it not to.
 
 What makes this concrete is that my own gallery contains the controlled experiment, entirely by accident. Same telescope, same city, same sky. The Crescent Nebula came in at an hour and ten minutes. The Bubble took a bit over two hours, the Elephant's Trunk a bit over three. Then the galaxies: four hours each for M33 and Bode's, seven for Andromeda, seven for the Pinwheel, ten for the Whirlpool. That's not a difference in how faint the targets are. Andromeda is the brightest galaxy in the northern sky and it still needed seven hours.
 
-The difference is what can be filtered. Emission nebulae glow at two specific wavelengths — hydrogen-alpha and oxygen-III — and the Dwarf 3's built-in dual-band filter passes those two narrow slices while throwing away nearly everything else, including most of what Edinburgh is pouring into the sky. Point it at a nebula and a Bortle 8 sky starts behaving like a much darker one. It is, genuinely, the single most useful thing I own.
+The difference is what can be filtered. Emission nebulae glow at two specific wavelengths — hydrogen-alpha and oxygen-III — and the Dwarf 3's built-in dual-band filter passes those two narrow slices while throwing away nearly everything else, including most of what Edinburgh is pouring into the sky. Point it at a nebula and a sky like mine starts behaving like a much darker one. It is, genuinely, the single most useful thing I own.
 
 Galaxies get no such loophole. Their light is broadband — a smear across the whole visible spectrum, mixed in with the same wavelengths the streetlights are producing. There is no filter that separates a galaxy's photons from a sodium lamp's, because at the wavelengths that matter they are the same photons. So you pay in the only currency left, which is hours, and the Whirlpool's bill came to ten of them.
 
