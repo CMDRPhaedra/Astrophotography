@@ -77,6 +77,13 @@ image: /images/bortle_scale.webp
   .takeaway { border: 1px solid var(--border); background: var(--card-bg); padding: 1.3rem 1.4rem; margin: 2rem 0; }
   .takeaway h4 { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 400; margin-bottom: 0.9rem; }
   .takeaway p:last-child { margin-bottom: 0; }
+  /* The summary card. Dark-only artwork by design, so it keeps its own
+     background in light mode rather than being tinted to match. */
+  .bortle-figure { margin: 1.8rem 0 0; }
+  .bortle-figure img { width: 100%; height: auto; display: block; border: 1px solid var(--border); }
+  .bortle-figure a { display: block; line-height: 0; }
+  .bortle-figure figcaption { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-top: 0.7rem; line-height: 1.6; }
+
   .caveat { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.06em; line-height: 1.8; color: var(--dim); border-top: 1px solid var(--border); padding-top: 1.2rem; margin-top: 2.5rem; }
 
   @media (max-width: 700px) {
@@ -202,6 +209,18 @@ A few things follow from that, in rough order of how much they help:
 - **Block direct light.** A neighbour's security light or an unshielded streetlamp in the frame does more damage than the general skyglow, and unlike the skyglow you can usually park something between it and the telescope.
 
 None of this makes a city sky into a dark one. It makes a city sky workable, which is a different and more achievable goal — and the [gallery](/) is what that looks like in practice.
+
+### The whole scale on one card
+
+Everything above, on a single sheet — handy for saving or sharing. Click for the full-size version.
+
+<figure class="bortle-figure">
+  <a href="/images/bortle_scale.webp" title="Open the full-size chart">
+    <img src="/images/bortle_scale.webp" width="1536" height="1024" loading="lazy" decoding="async"
+         alt="Chart summarising the Bortle scale. Across the top, the nine classes from 1 (Excellent Dark Sky, remote rural locations) through 5 (Suburban/Urban Transition, city outskirts) to 9 (Inner-City Sky), each with a sky image showing progressively more skyglow. Below, a table of integration time needed for the same signal-to-noise ratio: 0.5–1x at Bortle 1–3, around 1.5–3x at Bortle 4–5, around 3–8x at Bortle 6–7, and around 8–20x or more at Bortle 8–9.">
+  </a>
+  <figcaption>The Bortle scale and what each class costs in integration time.</figcaption>
+</figure>
 
 <p class="caveat">The multipliers above are approximations. Real integration times vary with target brightness, telescope aperture and focal ratio, sensor performance, filter choice, moon phase, transparency and processing. Treat them as the right order of magnitude rather than a formula — the direction and rough scale are reliable, the exact numbers are not.</p>
 
