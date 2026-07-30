@@ -8,8 +8,8 @@ date: "2026-01-25"
 display_date: "25 Jan 2026"
 location: "Edinburgh"
 tag: "nebula"
-image: "/images/b33_horsehead_nebula.webp"
-thumb: "/images/thumbs/b33_horsehead_nebula.webp"
+image: "/images/b33_horsehead_nebula_v2.webp"
+thumb: "/images/thumbs/b33_horsehead_nebula_v2.webp"
 gallery_link: "/?photo=horsehead-nebula"
 ---
 
