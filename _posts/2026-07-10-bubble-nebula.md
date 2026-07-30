@@ -6,6 +6,7 @@ target: "C11 / NGC 7635 / Sh2-162 · Bubble Nebula"
 distance: "7,100 light-years"
 integration: "2h 11m"
 image: /images/c11_ngc7635_sharpless162_bubble_nebula.webp
+photo: bubble-nebula
 ---
 
 Cassiopeia was the target this session, and specifically the object that gives this nebula its name: a shell of gas nearly seven light-years across, blown outward by a single furious star. NGC 7635 — Caldwell 11 to backyard observers, Sharpless 162 in the catalogues — sits around 7,100 light-years away, close enough for the Dwarf 3 to start resolving real structure in just over two hours of integration from here in Edinburgh.
@@ -16,4 +17,4 @@ That same cloud is doing double duty: it confines the bubble, and it glows. SAO 
 
 It won't last. A star this massive burns through its fuel fast, and the current thinking is SAO 20575 has somewhere between ten and twenty million years left before it goes supernova — an eyeblink, astronomically speaking. When it does, the explosion will tear through the very bubble the star spent its life inflating. What we're looking at tonight is a structure actively building toward its own destruction, just on a timescale too slow for any of us to watch it happen.
 
-Worth the 2h 11m. Full details and the 3D distance view are on the [gallery card](/?photo=bubble-nebula).
+Worth the 2h 11m. Full details, and a link through to the 3D distance view, are on the [photo page](/photos/bubble-nebula/).

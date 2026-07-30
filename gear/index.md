@@ -2,10 +2,11 @@
 layout: default
 title: Gear & Process
 permalink: /gear/
+description: "The gear and process behind the images: a Dwarf 3 smart telescope, how the captures are stacked and processed, and what a small scope manages under Edinburgh's skies."
 ---
 
 <div class="blog-label">The instrument</div>
-<h2 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:0.8rem;">One small telescope</h2>
+<h1 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:0.8rem;">One small telescope</h1>
 <p style="font-family:'Inconsolata',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-bottom:2.5rem;">Every image on this site · One rig · Edinburgh, Scotland</p>
 
 <div style="font-size:1.15rem;line-height:1.85;">

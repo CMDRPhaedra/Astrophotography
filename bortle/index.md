@@ -3,10 +3,11 @@ layout: default
 title: The Bortle Scale
 permalink: /bortle/
 image: /images/bortle_scale.webp
+description: "What the Bortle scale measures, what Edinburgh's Bortle 7-8 sky costs in integration time, and how light pollution shapes what a small telescope can reach."
 ---
 
 <div class="blog-label">The sky itself</div>
-<h2 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:0.8rem;">What is Bortle?</h2>
+<h1 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:0.8rem;">What is Bortle?</h1>
 <p style="font-family:'Inconsolata',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-bottom:2.5rem;">Nine classes of darkness · And what each one costs you in time</p>
 
 <style>

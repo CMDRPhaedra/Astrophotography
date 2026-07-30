@@ -6,6 +6,7 @@ target: "C4 / NGC 7023 · Iris Nebula"
 distance: "1,300 light-years"
 integration: "1h 45m"
 image: /images/c4_iris_nebula_v2.webp
+photo: iris-nebula
 ---
 
 Back to the Iris for a second attempt, and this time with something like a proper run behind it — 1 hour 45 minutes of integration against the 40 minutes I gave it in June. The Iris Nebula, Caldwell 4, sits in Cepheus around 1,300 light-years away, and it earns its name honestly: at the right stretch the pale blue structure really does open out like the petals of a flower.
@@ -16,4 +17,4 @@ The dust is also doing chemistry. NGC 7023 is one of the best-studied sources of
 
 One piece of pedantry the catalogues invite: NGC 7023 technically designates the small open cluster embedded in the cloud, not the nebulosity. The bright part everyone photographs is properly LBN 487, and the whole thing sits inside a much larger dark molecular complex — which is really the other half of the picture. The petals are small, but the dust they belong to sprawls well beyond them, and in a deep enough frame you start to see it as a mottled brown haze choking off the star field rather than as anything with an edge.
 
-That surrounding dust is where the extra hour actually went. At 40 minutes I had the bright core and not much else; at 1h 45m the dark cloud around it starts to register, and the Iris stops looking like an isolated blue smudge and starts looking like the brightest spot in something bigger. It is still a small target in a wide, star-choked Cepheus field — the Milky Way is thick through here and the frame is mostly stars — but the petals hold their shape now, and the faint outer scattering is present rather than implied. Full details and the 3D distance view are on the [gallery card](/?photo=iris-nebula).
+That surrounding dust is where the extra hour actually went. At 40 minutes I had the bright core and not much else; at 1h 45m the dark cloud around it starts to register, and the Iris stops looking like an isolated blue smudge and starts looking like the brightest spot in something bigger. It is still a small target in a wide, star-choked Cepheus field — the Milky Way is thick through here and the frame is mostly stars — but the petals hold their shape now, and the faint outer scattering is present rather than implied. Full details, and a link through to the 3D distance view, are on the [photo page](/photos/iris-nebula/).

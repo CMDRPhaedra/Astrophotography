@@ -28,6 +28,11 @@ plugins:
   - jekyll-sitemap
   - jekyll-feed
 
+# jekyll-feed ships 10 posts by default, which silently drops the oldest ones
+# from the RSS feed as the archive grows.
+feed:
+  posts_limit: 50
+
 # Keep Jekyll from trying to process repo files that aren't part of the site.
 # sitemap.xml is generated automatically by jekyll-sitemap on every build.
 exclude:

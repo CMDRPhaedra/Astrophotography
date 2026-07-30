@@ -2,21 +2,41 @@
 layout: default
 title: Blog
 permalink: /blog/
+description: "Field notes from Edinburgh — write-ups of deep-sky targets, integration times and what the extra hours actually reveal, shot with a Dwarf 3 smart telescope."
 ---
 <style>
   .post-list { list-style: none; }
   .post-list li { border-bottom: 1px solid var(--border); padding: 1.8rem 0; }
   .post-list li:first-child { padding-top: 0; }
-  .post-list a { color: inherit; text-decoration: none; display: block; }
+  .post-list a { color: inherit; text-decoration: none; display: flex; gap: 1.5rem; align-items: flex-start; }
+  .post-list .p-thumb {
+    flex: 0 0 180px; width: 180px; aspect-ratio: 3/2; object-fit: cover;
+    border: 1px solid var(--border); background: var(--card-bg);
+    opacity: 0.85; transition: opacity 0.25s, border-color 0.25s;
+  }
+  .post-list a:hover .p-thumb { opacity: 1; border-color: var(--accent); }
+  .post-list .p-text { flex: 1 1 auto; min-width: 0; }
   .post-list .p-title { font-size: 1.6rem; font-weight: 300; margin-bottom: 0.4rem; transition: color 0.2s; }
   .post-list a:hover .p-title { color: var(--accent); }
   .post-list .p-date { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.6rem; }
   .post-list .p-excerpt { color: var(--dim); font-style: italic; line-height: 1.6; }
+  .post-list .p-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+  .post-list .p-chip {
+    font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--dim); border: 1px solid var(--border);
+    padding: 0.22rem 0.6rem; white-space: nowrap; transition: border-color 0.25s, color 0.25s;
+  }
+  .post-list a:hover .p-chip { border-color: var(--accent); color: var(--accent); }
+  @media (max-width: 600px) {
+    .post-list a { flex-direction: column; gap: 0.9rem; }
+    .post-list .p-thumb { flex-basis: auto; width: 100%; aspect-ratio: 16/9; }
+    .post-list .p-title { font-size: 1.35rem; }
+  }
   .post-list mark { background: rgba(200,169,110,0.22); color: var(--accent); border-radius: 0; padding: 0 1px; }
   .empty-note { color: var(--dim); font-style: italic; }
 
   .blog-header-row { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem 1.5rem; margin-bottom: 2.5rem; }
-  .blog-header-row h2 { font-size: clamp(1.8rem,4vw,2.6rem); font-weight: 300; }
+  .blog-header-row h1 { font-size: clamp(1.8rem,4vw,2.6rem); font-weight: 300; }
   .blog-search-wrap { position: relative; display: flex; align-items: center; gap: 1rem; }
   .blog-search-input {
     font-family: 'Inconsolata', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
@@ -47,7 +67,7 @@ permalink: /blog/
 
 {% if site.posts.size > 0 %}
 <div class="blog-header-row">
-  <h2>From the eyepiece</h2>
+  <h1>From the eyepiece</h1>
   <div class="blog-search-wrap">
     <input class="blog-search-input" id="blog-search-input" type="search" aria-label="Search field notes" placeholder="Search…" oninput="onBlogSearch()" autocomplete="off" spellcheck="false">
     <button class="blog-search-clear" id="blog-search-clear" onclick="clearBlogSearch()" title="Clear search" aria-label="Clear search">&#10005;</button>
@@ -58,9 +78,18 @@ permalink: /blog/
   {% for post in site.posts %}
   <li class="post-item" data-title="{{ post.title | strip_html | strip_newlines | escape }}" data-search="{{ post.title | strip_html | strip_newlines | escape }} {{ post.target | strip_html | strip_newlines | escape }} {{ post.content | strip_html | strip_newlines | escape }}">
     <a href="{{ post.url }}">
-      <div class="p-date">{{ post.date | date: "%-d %B %Y" }}{% if post.target %} &middot; {{ post.target }}{% endif %}</div>
-      <div class="p-title">{{ post.title }}</div>
-      <p class="p-excerpt">{{ post.excerpt | strip_html | truncate: 180 }}</p>
+      {% if post.image %}<img class="p-thumb" src="{{ post.image | replace: '/images/', '/images/thumbs/' }}" alt="" loading="lazy" decoding="async">{% endif %}
+      <div class="p-text">
+        <div class="p-date">{{ post.date | date: "%-d %B %Y" }}{% if post.target %} &middot; {{ post.target }}{% endif %}</div>
+        <h2 class="p-title">{{ post.title }}</h2>
+        <p class="p-excerpt">{{ post.excerpt | strip_html | truncate: 180 }}</p>
+        {% if post.integration or post.distance %}
+        <div class="p-chips">
+          {% if post.integration %}<span class="p-chip">{{ post.integration }}</span>{% endif %}
+          {% if post.distance %}<span class="p-chip">{{ post.distance | replace: 'light-years', 'ly' }}</span>{% endif %}
+        </div>
+        {% endif %}
+      </div>
     </a>
   </li>
   {% endfor %}
@@ -125,6 +154,6 @@ document.addEventListener('keydown', function(e) {
 });
 </script>
 {% else %}
-<h2 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:2.5rem;">From the eyepiece</h2>
+<h1 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:2.5rem;">From the eyepiece</h1>
 <p class="empty-note">Nothing here yet — the first post is on its way.</p>
 {% endif %}
