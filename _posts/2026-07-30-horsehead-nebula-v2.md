@@ -4,11 +4,12 @@ title: "The Horse Nobody Credited: B33 Reprocessed"
 date: 2026-07-30
 target: "B33 / IC 434 · Horsehead Nebula"
 distance: "1,375 light-years"
+integration: "2h 27m"
 image: /images/b33_horsehead_nebula_v2.webp
 photo: horsehead-nebula
 ---
 
-Another trip back through the archive, this time to January's Horsehead. Same subs, new stack, and the thing that changed most is the ridge. IC 434 — the wall of red hydrogen the horse's head bites into — is the hardest part of this field to handle, because it is bright, it is smooth, and any clumsiness in the stretch turns it into a flat pink slab with the dark nebula pasted on top. It should read as a surface with depth behind it, and this version finally does.
+Another trip back through the archive, this time to January's Horsehead. Same 2 hours 27 minutes of subs, new stack, and the thing that changed most is the ridge. IC 434 — the wall of red hydrogen the horse's head bites into — is the hardest part of this field to handle, because it is bright, it is smooth, and any clumsiness in the stretch turns it into a flat pink slab with the dark nebula pasted on top. It should read as a surface with depth behind it, and this version finally does.
 
 The Horsehead itself, Barnard 33, is a dense protrusion of cold dust and molecular gas about 1,375 light-years away, part of the vast Orion molecular cloud that fills this whole quarter of the constellation. It emits nothing. What you are looking at is an absence — a lump of opaque material blocking the glow of the ionised hydrogen behind it. The gas is being lit by Sigma Orionis, the multiple star system sitting bright and obvious towards the lower right of the frame, whose ultraviolet output is stripping electrons from the hydrogen along a front that happens to be edge-on to us. That is why the ridge is a ridge rather than a haze: we are seeing an ionisation boundary side-on, like the edge of a sheet of paper.
 
