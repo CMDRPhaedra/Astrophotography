@@ -7,9 +7,10 @@ catalogue: "IC 443 / Sh2-248"
 date: "2025-09-14"
 display_date: "14 Sep 2025"
 location: "Edinburgh"
+integration: "3h 27m"
 tag: "nebula"
-image: "/images/ic443_jellyfish_nebula.webp"
-thumb: "/images/thumbs/ic443_jellyfish_nebula.webp"
+image: "/images/ic443_jellyfish_nebula_v2.webp"
+thumb: "/images/thumbs/ic443_jellyfish_nebula_v2.webp"
 gallery_link: "/?photo=the-jellyfish-nebula"
 ---
 
