@@ -7,10 +7,10 @@ catalogue: "M101 / NGC 5457"
 date: "2026-04-30"
 display_date: "30 Apr 2026"
 location: "Edinburgh"
-integration: "7h"
+integration: "9h 34m"
 tag: "galaxy"
-image: "/images/m101_pinwheel_galaxy_v3.webp"
-thumb: "/images/thumbs/m101_pinwheel_galaxy_v3.webp"
+image: "/images/m101_pinwheel_galaxy_v4.webp"
+thumb: "/images/thumbs/m101_pinwheel_galaxy_v4.webp"
 gallery_link: "/?photo=pinwheel-galaxy"
 ---
 
