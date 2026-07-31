@@ -1,0 +1,31 @@
+{%- comment -%}
+  Descriptive alt text for one capture's image, shared by the capture page and
+  the /photos/ grid so the two can never drift apart.
+
+  Built from the front matter scripts/generate_capture_pages.py already writes,
+  so each of the 56 images gets its own sentence instead of the same template
+  with the title swapped out. Alt text is one of the main things Google Images
+  ranks on, and near-identical strings across the whole gallery give it nothing
+  to tell one capture from another.
+
+  Everything except title, tag and location is optional: the comets have no
+  catalogue, and the Sun and Moon have neither distance nor a meaningful object
+  type, so each clause is conditional.
+
+  Callers should strip the result before putting it in an attribute:
+
+    {%- capture alt %}{% include capture-alt.html capture=page %}{% endcapture -%}
+    <img alt="{{ alt | strip }}">
+{%- endcomment -%}
+{%- assign c = include.capture -%}
+{%- case c.tag -%}
+{%- when 'nebula' -%}{%- assign kind = 'a nebula' -%}
+{%- when 'galaxy' -%}{%- assign kind = 'a galaxy' -%}
+{%- when 'cluster' -%}{%- assign kind = 'a star cluster' -%}
+{%- else -%}{%- assign kind = '' -%}
+{%- endcase -%}
+{{- c.title -}}
+{%- if c.catalogue %} ({{ c.catalogue }}){% endif -%}
+{%- if kind != '' %}, {{ kind }}{% if c.distance %} {{ c.distance }} from Earth{% endif %}
+{%- elsif c.distance %}, {{ c.distance }} from Earth{% endif -%}
+, photographed from {{ c.location | default: 'Edinburgh' }} with a Dwarf 3 smart telescope

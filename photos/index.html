@@ -23,7 +23,8 @@ description: "Every deep-sky capture in the gallery — galaxies, nebulae, clust
   {% for c in caps %}
   <li>
     <a href="{{ c.url }}">
-      <img src="{{ c.thumb }}" alt="{{ c.title }}{% if c.catalogue %} ({{ c.catalogue }}){% endif %}" loading="lazy">
+      {%- capture alt %}{% include capture-alt.html capture=c %}{% endcapture -%}
+      <img src="{{ c.thumb }}" alt="{{ alt | strip }}" loading="lazy">
       <div class="g-title">{{ c.title }}</div>
       <div class="g-meta">{{ c.catalogue }}{% if c.display_date %} &middot; {{ c.display_date }}{% endif %}{% if c.integration %} &middot; {{ c.integration }}{% endif %}</div>
     </a>

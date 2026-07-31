@@ -1,0 +1,35 @@
+---
+# Image sitemap for the gallery.
+#
+# jekyll-sitemap generates sitemap.xml but has no support for the image
+# extension, so the 56 captures — the whole point of the site, and the thing
+# most likely to be found through Google Images — were invisible to image
+# indexing. This adds a second sitemap alongside it; both are listed in
+# robots.txt and both should be submitted in Search Console.
+#
+# One entry per capture page, pointing at that page's full-size image. Blog
+# posts reuse the same files, but each image gets one canonical home and that
+# is the capture page — which is also what its ImageObject schema declares as
+# the image's url, so the two agree.
+#
+# Only <image:loc> is emitted: Google deprecated image:title, image:caption,
+# image:geo_location and image:license and now ignores them. The descriptive
+# text that used to go in those tags lives in the page's alt attribute and
+# ImageObject schema instead.
+#
+# sitemap: false keeps jekyll-sitemap from listing this file inside sitemap.xml.
+sitemap: false
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+{%- assign caps = site.captures | sort: "date" | reverse -%}
+{%- for c in caps %}
+  <url>
+    <loc>{{ site.url }}{{ c.url }}</loc>
+    <image:image>
+      <image:loc>{{ site.url }}{{ c.image }}</image:loc>
+    </image:image>
+  </url>
+{%- endfor %}
+</urlset>

@@ -37,7 +37,8 @@ layout: default
   </div>
 </div>
 
-<a href="{{ page.image }}"><img class="capture-image" src="{{ page.image }}" alt="{{ page.title }}{% if page.catalogue %} ({{ page.catalogue }}){% endif %} — astrophotography from {{ page.location | default: 'Edinburgh' }}"></a>
+{%- capture alt %}{% include capture-alt.html capture=page %}{% endcapture -%}
+<a href="{{ page.image }}"><img class="capture-image" src="{{ page.image }}" alt="{{ alt | strip }}"></a>
 
 <div class="capture-body">
   {{ content }}
