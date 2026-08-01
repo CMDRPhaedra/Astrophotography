@@ -1,11 +1,10 @@
 ---
-layout: default
+layout: app
 title: Anchor — Privacy Policy
 permalink: /anchor/privacy/
 description: "Anchor collects no data. What the app stores, where it stores it, and the permissions it asks for."
 ---
 
-<div class="blog-label">Anchor for macOS</div>
 <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:0.8rem;">Privacy Policy</h1>
 <p style="font-family:'Inconsolata',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-bottom:2.5rem;">Last updated 1 August 2026</p>
 
@@ -56,10 +55,3 @@ Questions about this policy: [support@chryse.co.uk](mailto:support@chryse.co.uk)
 
 </div>
 
-<style>
-  .anchor-body h3 { font-size: 1.45rem; font-weight: 400; margin: 2.6rem 0 0.8rem; }
-  .anchor-body p, .anchor-body ul { margin-bottom: 1.2rem; }
-  .anchor-body ul { padding-left: 1.4rem; }
-  .anchor-body li { margin-bottom: 0.5rem; }
-  .anchor-body a { color: var(--accent); }
-</style>

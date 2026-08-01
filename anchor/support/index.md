@@ -1,11 +1,10 @@
 ---
-layout: default
+layout: app
 title: Anchor — Support
 permalink: /anchor/support/
 description: "Help for Anchor, the macOS menu bar app that keeps desktop icons where you put them."
 ---
 
-<div class="blog-label">Anchor for macOS</div>
 <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:0.8rem;">Support</h1>
 <p style="font-family:'Inconsolata',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-bottom:2.5rem;">Keeping desktop icons where you put them</p>
 
@@ -78,10 +77,3 @@ anywhere — see the [privacy policy](/anchor/privacy/).
 
 </div>
 
-<style>
-  .anchor-body h3 { font-size: 1.45rem; font-weight: 400; margin: 2.6rem 0 0.8rem; }
-  .anchor-body p, .anchor-body ul { margin-bottom: 1.2rem; }
-  .anchor-body ul { padding-left: 1.4rem; }
-  .anchor-body li { margin-bottom: 0.5rem; }
-  .anchor-body a { color: var(--accent); }
-</style>
