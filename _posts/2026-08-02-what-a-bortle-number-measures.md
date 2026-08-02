@@ -6,13 +6,16 @@ image: /images/bortle_scale.webp
 image_alt: "Chart summarising the Bortle scale. Across the top, the nine classes from 1 (Excellent Dark Sky, remote rural locations) through 5 (Suburban/Urban Transition, city outskirts) to 9 (Inner-City Sky), each with a sky image showing progressively more skyglow. Below, a table of integration time needed for the same signal-to-noise ratio: 0.5–1x at Bortle 1–3, around 1.5–3x at Bortle 4–5, around 3–8x at Bortle 6–7, and around 8–20x or more at Bortle 8–9."
 ---
 
+Everyone finds their Bortle number the same way. You type your postcode into a light pollution map, read off the colour, and then quote that number for the rest of your life. Mine comes back as 7, shading towards 8 nearer the centre of Edinburgh, and I've repeated it often enough on this site that it may as well be printed on the telescope. The chart above is the version of the scale I keep coming back to — nine classes, and what each one costs you in hours.
+
 <style>
   /* The chart is 3:2 and full of small text — the default 16/9 cover crop
-     would take the heading off the top and the caveat off the bottom. */
+     would take the heading off the top and the caveat off the bottom.
+     This has to sit below the opening paragraph, not above it: Jekyll takes
+     the excerpt from the first block, and strip_html discards <style>
+     wholesale, which empties both the blog card and the schema description. */
   .post-cover { aspect-ratio: 3/2; }
 </style>
-
-Everyone finds their Bortle number the same way. You type your postcode into a light pollution map, read off the colour, and then quote that number for the rest of your life. Mine comes back as 7, shading towards 8 nearer the centre of Edinburgh, and I've repeated it often enough on this site that it may as well be printed on the telescope. The chart above is the version of the scale I keep coming back to — nine classes, and what each one costs you in hours.
 
 What that chart can't tell you is which column you're actually in tonight. The number came from a satellite that has never seen my garden, and the distance between the two is where most of the frustration in city astrophotography quietly lives.
 
