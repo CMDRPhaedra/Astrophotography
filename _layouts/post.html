@@ -28,7 +28,7 @@ layout: default
   </div>
 </div>
 
-{% if page.image %}<img class="post-cover" src="{{ page.image }}" alt="{{ page.title }}">{% endif %}
+{% if page.image %}<img class="post-cover" src="{{ page.image }}" alt="{{ page.image_alt | default: page.title }}">{% endif %}
 
 <div class="post-body">
   {{ content }}
