@@ -11,7 +11,7 @@
 ![Images](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/CMDRPhaedra/Astrophotography/main/badges/images-count.json)
 ![Integration time](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/CMDRPhaedra/Astrophotography/main/badges/integration-time.json)
 
-Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub Pages.
+Personal astrophotography gallery. The gallery itself is a single self-contained `index.html`; the blog, the per-photo pages and the standalone pages around it are built by GitHub Pages' native Jekyll. Hosted on GitHub Pages.
 
 **Live site:** https://chryse.co.uk
 
@@ -24,6 +24,7 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **Latest capture strip** — always shows the first entry in the `CAPTURES` array with a pulsing indicator
 - **Search** — press `/` to focus the search bar; searches target names, catalogue numbers, and descriptions; works alongside the category filter
 - **Descriptive gallery alt text** — grid thumbnails carry an alt combining the title and a snippet of the description (e.g. *"Elephant's Trunk Nebula — IC 1396A is a dense globule of cold gas…"*); the lightbox and latest-capture image keep a plain title alt since their full description is already shown as visible text right next to them, so a richer alt there would just duplicate it for screen readers
+- **Per-capture alt text** — the photo pages and the `/photos/` grid build a unique alt sentence for every image from the capture's own front matter (catalogue, object type, distance, location) via the shared `_includes/capture-alt.html`, so no two of the 56 images share a templated string; see [Per-photo pages](#per-photo-pages)
 - **Stats bar** — live count of total images, per-category breakdown with dot visualisation, and total integration time observed
 - **Lightbox** with scroll-to-zoom, drag-to-pan, double-click to reset, pinch on mobile, arrow key navigation, and image counter; includes Copy link, Sky view, and theme toggle buttons
 - **Sky view** — a ⛶ Sky view button in the lightbox opens a full-screen interactive sky atlas (Aladin Lite, CDS Strasbourg) centred on the target, with DSS2 optical, 2MASS near-infrared, and Hα survey options
@@ -49,6 +50,8 @@ Personal astrophotography gallery. Built as a single HTML file, hosted on GitHub
 - **Gear & process page** at [/gear/](https://chryse.co.uk/gear/) — the Dwarf 3, shooting conditions in Edinburgh, and the capture/stacking workflow; linked from the nav, the hero, the gallery footer, and every photo page. The page has a hidden hardware-photo slot: drop a photo named `dwarf3_telescope.jpg` (any format) into `images/` and push — the Action converts it and the figure appears automatically
 - **Bortle scale page** at [/bortle/](https://chryse.co.uk/bortle/) — what the nine sky-darkness classes mean and how each one maps to integration time, with the scale itself built in CSS rather than shipped as an image, so it reflows on mobile, follows the light/dark theme, and stays real indexable text. Emits `FAQPage` + `BreadcrumbList` JSON-LD
 - **Privacy policy** at [/privacy/](https://chryse.co.uk/privacy/), linked from both the gallery and blog footers
+- **Image sitemap** at `/image-sitemap.xml` — a second sitemap alongside the generated `sitemap.xml`, giving every capture an `<image:image>` entry for Google Images; see [SEO](#seo)
+- **Anchor app pages** at [/anchor/support/](https://chryse.co.uk/anchor/support/) and [/anchor/privacy/](https://chryse.co.uk/anchor/privacy/) — support and privacy pages for a separate macOS app, hosted here but deliberately kept outside the site's own navigation; see [Anchor pages](#anchor-pages)
 - Animated starfield background
 
 ---
@@ -218,7 +221,7 @@ Controls: drag to rotate and tilt · scroll to zoom (up to 8×) · hover markers
 ## First-time setup on GitHub
 
 1. Create a new repository at https://github.com/new
-2. Push the whole repo — alongside `index.html` and `images/`, the moving parts are `convert_to_webp.py` + `scripts/` (automation), `.github/` (the Actions), `_config.yml` + `_layouts/` + `_posts/` + `blog/` (the Jekyll blog), `_captures/` + `photos/` (per-photo pages), and `badges/` (gallery stat badges)
+2. Push the whole repo — alongside `index.html` and `images/`, the moving parts are `convert_to_webp.py` + `scripts/` (automation), `.github/` (the Actions), `_config.yml` + `_layouts/` + `_includes/` + `_posts/` + `blog/` (the Jekyll blog), `_captures/` + `photos/` (per-photo pages), `badges/` (gallery stat badges), `image-sitemap.xml` (image indexing), `anchor/` (the Anchor app pages), and `ads.txt` (AdSense verification, must stay at the domain root)
 3. Go to **Settings → Pages**
 4. Under *Source*, select **Deploy from a branch**, choose `main`, folder `/root`
 5. Click Save — your site will be live at `https://yourusername.github.io/astrophotography`
@@ -276,6 +279,10 @@ Post body in Markdown…
 
 `target`, `distance`, and `integration` are optional and render in the post's meta line; `image` is the 16:9 cover and the Open Graph preview. Keep `target`'s catalogue segment (before the ` · `) consistent with the same object's gallery-card `meta` — see the multi-catalogue note above. Posts are published at `/blog/YYYY/MM/DD/slug/`, and the first paragraph doubles as the excerpt on the blog index and the meta description. To link a post back to its gallery card, use the deep-link form `[gallery card](/?photo=slug)`.
 
+`image_alt` is optional and overrides the cover image's alt text, which otherwise falls back to the post title. The title is fine for a nebula photo, where the image is the thing the title names. Set `image_alt` when the cover is an information graphic rather than a capture — the Bortle post uses it to give the scale chart the same full description it carries on `/bortle/`.
+
+**The first block of a post must be prose, not raw HTML.** Jekyll takes the excerpt from everything before the first blank line, and Liquid's `strip_html` discards `<style>` and `<script>` blocks wholesale rather than just unwrapping them. A post that opens with one gets an empty excerpt on the blog index *and* an empty `description` in its `BlogPosting` schema, silently. If a post needs its own CSS — for example to override the 16:9 `.post-cover` crop for a cover that isn't 16:9 — put the `<style>` block after the opening paragraph.
+
 ---
 
 ## Blog search
@@ -293,6 +300,22 @@ Because it's plain client-side JS reading attributes already in the rendered HTM
 Every capture also gets its own static page at `/photos/<slug>/`, with an index of all of them at [/photos/](https://chryse.co.uk/photos/). These are Jekyll collection pages (`_captures/`, published via the `captures` collection in `_config.yml` with the `capture` layout) — fully crawlable HTML with the image, capture details, and description, unlike the JavaScript-rendered gallery.
 
 The files in `_captures/` are generated from the `CAPTURES` array by `scripts/generate_capture_pages.py` — **never edit them by hand**. The slug mirrors the gallery's own `slugify()`, so `/photos/<slug>/` and the `?photo=<slug>` deep links always agree, and each page links back to its gallery card. The script runs automatically in the convert-webp Action, so pushing a new image keeps the pages in sync; to regenerate locally, run `python3 scripts/generate_capture_pages.py` from the repo root.
+
+---
+
+## Anchor pages
+
+The repo also hosts the support and privacy pages for **Anchor**, a separate macOS menu bar app that keeps desktop icons where you put them. They live at [/anchor/support/](https://chryse.co.uk/anchor/support/) and [/anchor/privacy/](https://chryse.co.uk/anchor/privacy/). Nothing to do with astrophotography — they're here because the Mac App Store requires a public support URL and a public privacy policy URL, and this domain was already live.
+
+They use `_layouts/app.html`, which is deliberately standalone rather than extending `default.html`: a visitor arriving from the App Store gets Anchor's own header and a two-item Support / Privacy nav, not the gallery navigation, which would be baffling in that context. It keeps the same palette, typography and light/dark handling as the rest of the site, so the pages still read as part of chryse.co.uk, and its footer links back to the gallery.
+
+Neither page is linked from the site's own navigation, and both are ordinary Jekyll pages — they're picked up by `sitemap.xml` automatically.
+
+---
+
+## Google AdSense
+
+`ads.txt` in the repo root declares the AdSense publisher ID (`pub-3829889623088010`) as an authorised seller of this domain's inventory. It's served at `https://chryse.co.uk/ads.txt` and is required by AdSense for the domain to be verified. Don't rename, move or exclude it — the file has to sit at the domain root to be found.
 
 ---
 
@@ -340,7 +363,21 @@ The slug is generated automatically from the `title` field — no extra configur
 
 ## SEO
 
-The site is verified with Google Search Console and a sitemap submitted at `https://chryse.co.uk/sitemap.xml`. The sitemap is generated automatically on every build by the `jekyll-sitemap` plugin (see `_config.yml`) — there is nothing to update by hand. The `<head>` includes a canonical URL tag and a sitemap link for search engine discovery. A `robots.txt` in the repo root allows all crawlers and points to the sitemap.
+The site is verified with Google Search Console and a sitemap submitted at `https://chryse.co.uk/sitemap.xml`. The sitemap is generated automatically on every build by the `jekyll-sitemap` plugin (see `_config.yml`) — there is nothing to update by hand. The `<head>` includes a canonical URL tag and a sitemap link for search engine discovery. A `robots.txt` in the repo root allows all crawlers and points to both sitemaps.
+
+### Image sitemap
+
+`jekyll-sitemap` has no support for the sitemap image extension, so the captures — the whole point of the site, and the thing most likely to be found through Google Images — were invisible to image indexing. `image-sitemap.xml` in the repo root is a second sitemap that fixes this: a Liquid template looping the `captures` collection, one `<image:image>` entry per capture page pointing at that page's full-size image. It carries `sitemap: false` so `jekyll-sitemap` doesn't list it inside `sitemap.xml`.
+
+**Both sitemaps need submitting in Search Console** — `sitemap.xml` and `image-sitemap.xml`. Both are listed in `robots.txt`. The file regenerates itself from the collection on every build, so adding a capture needs no edit here.
+
+Only `<image:loc>` is emitted. Google deprecated `image:title`, `image:caption`, `image:geo_location` and `image:license` and now ignores them; the descriptive text that used to live in those tags is in each image's alt attribute and `ImageObject` schema instead.
+
+### Alt text
+
+Grid thumbnails on the gallery combine the title with a snippet of the description. The photo pages and the `/photos/` grid go further: `_includes/capture-alt.html` builds a unique sentence per capture from the front matter `scripts/generate_capture_pages.py` already writes — catalogue, object type, distance and location — so each of the 56 images gets its own string rather than one template with the title swapped. Near-identical alt text across a whole gallery gives Google Images nothing to tell one capture from another. Every clause except title, tag and location is conditional, since the comets have no catalogue and the Sun and Moon have neither distance nor a meaningful object type.
+
+The include is shared by `_layouts/capture.html` and `photos/index.html` specifically so the two can't drift. Callers must `strip` the result before putting it in an attribute.
 
 A `<noscript>` block in `index.html` contains static HTML versions of all captures so search engine crawlers that don't execute JavaScript can index the gallery content and descriptions. It is generated from the `CAPTURES` array by `scripts/update_noscript.py` (run automatically by the convert-webp Action, or manually with `python3 scripts/update_noscript.py`) — never edit it by hand.
 
