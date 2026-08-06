@@ -149,6 +149,12 @@
   .hero-label { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
   .hero h2 { font-size: clamp(2.2rem, 4vw, 3.8rem); font-weight: 300; line-height: 1.15; letter-spacing: 0.01em; margin-bottom: 1.5rem; }
   .hero p { font-size: 1.1rem; line-height: 1.75; color: var(--dim); font-style: italic; max-width: 480px; }
+  /* Sits under the intro as a quiet second line — a live pointer rather than
+     another nav item, since the answer it gives changes every night. */
+  .hero-sky { margin-top: 1.6rem; font-style: normal !important; font-size: 0.95rem !important; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.9rem; }
+  .hero-sky a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; white-space: nowrap; }
+  .hero-sky a:hover { border-bottom-color: var(--accent); }
+  .hero-sky span { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
 
   /* filter-bar removed — filters now live in header */
   .filter-btn { font-family: 'Inconsolata', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; background: transparent; border: 1px solid var(--border); color: var(--dim); padding: 0.4rem 1rem; cursor: pointer; transition: all 0.2s; border-radius: 0; text-decoration: none; display: inline-block; }
@@ -535,6 +541,7 @@
   <p class="hero-label">// Personal Archive</p>
   <h2>Light from the edge<br>of the observable</h2>
   <p>Captured from Edinburgh with a <a href="/gear/" style="color:inherit;">Dwarf 3 smart telescope</a>. Each image represents hours of integration against the northern light-polluted sky.</p>
+  <p class="hero-sky"><a href="/sky/">Tonight's sky conditions &rarr;</a> <span>Cloud, moon and darkness over Edinburgh</span></p>
 </section>
 
 <!-- LATEST CAPTURE -->
