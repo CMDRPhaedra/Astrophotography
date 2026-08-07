@@ -78,8 +78,27 @@ description: "Tonight's imaging conditions over Edinburgh — cloud cover, the a
   .sky-tone--bad     { color: var(--overcast); }
   .sky-tone--unknown { color: var(--dim); }
 
-  .sky-verdict-sub p { color: var(--dim); line-height: 1.7; font-style: italic; margin-bottom: 0.6rem; }
-  .sky-verdict-sub p:last-child { margin-bottom: 0; }
+  /* Three levels of emphasis rather than one. The lead is the assessment,
+     the risk list is scannable hazards, the note is background — rendering
+     all three as identical italic paragraphs made a wall of slanted text
+     with no way to tell which sentence mattered. */
+  .sky-verdict-sub > *:last-child { margin-bottom: 0 !important; }
+
+  .sky-lead { color: var(--ink); line-height: 1.65; margin-bottom: 1.1rem; }
+
+  .sky-risks { list-style: none; margin: 0 0 1.1rem; padding: 0; }
+  .sky-risk { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.45rem; line-height: 1.55; }
+  .sky-risk:last-child { margin-bottom: 0; }
+  .sky-risk-dot { flex: 0 0 auto; width: 5px; height: 5px; border-radius: 50%; transform: translateY(-0.15em); }
+  .sky-risk--warn .sky-risk-dot { background: var(--broken); }
+  .sky-risk--bad  .sky-risk-dot { background: var(--overcast); }
+  .sky-risk-text {
+    font-family: 'Inconsolata', monospace; font-size: 0.75rem; letter-spacing: 0.03em;
+    color: var(--dim);
+  }
+  .sky-risk--bad .sky-risk-text { color: var(--ink); }
+
+  .sky-note { color: var(--dim); line-height: 1.7; font-style: italic; font-size: 0.95rem; margin-bottom: 0.6rem; }
 
   /* ── Stat grid ───────────────────────────────────────────────────────── */
   .sky-stats {

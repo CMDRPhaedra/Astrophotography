@@ -618,34 +618,42 @@
 
     var headline, tone;
 
+    // Notes carry a kind so the page can give them a visual hierarchy: one
+    // lead sentence, a scannable list of hazards, then a quiet footnote.
+    // Rendering five identical italic paragraphs made the summary, the
+    // warnings and the latitude explanation all look equally important.
+    function lead(text) { notes.push({ kind: 'lead', text: text }); }
+    function risk(toneName, text) { notes.push({ kind: 'risk', tone: toneName, text: text }); }
+    function note(text) { notes.push({ kind: 'note', text: text }); }
+
     if (cloud === null) {
       headline = 'Cloud data unavailable';
       tone = 'unknown';
-      notes.push('The weather proxy did not respond, so this is the sky geometry only.');
+      lead('The weather proxy did not respond, so this is the sky geometry only.');
     } else if (band === 'overcast') {
       headline = 'Clouded out';
       tone = 'bad';
-      notes.push('Averaging ' + cloud + '% cloud across the window — not a night for setting up.');
+      lead('Averaging ' + cloud + '% cloud across the window — not a night for setting up.');
     } else if (band === 'poor') {
       headline = 'Mostly clouded';
       tone = 'bad';
-      notes.push(cloud + '% mean cloud. Gaps are possible but you would be chasing them.');
+      lead(cloud + '% mean cloud. Gaps are possible but you would be chasing them.');
     } else if (band === 'broken') {
       headline = 'Patchy — worth watching';
       tone = 'caution';
-      notes.push(cloud + '% mean cloud. Broken skies; usable if the gaps line up with your target.');
+      lead(cloud + '% mean cloud. Broken skies; usable if the gaps line up with your target.');
     } else if (moonWeight < 0.15) {
       headline = 'Good night for imaging';
       tone = 'good';
-      notes.push(cloud + '% mean cloud with the moon out of the way for most of the window.');
+      lead(cloud + '% mean cloud with the moon out of the way for most of the window.');
     } else if (moonWeight < 0.45) {
       headline = 'Clear, with some moon';
       tone = 'good';
-      notes.push(cloud + '% mean cloud, but the moon is up for part of the window.');
+      lead(cloud + '% mean cloud, but the moon is up for part of the window.');
     } else {
       headline = 'Clear skies, bright moon';
       tone = 'caution';
-      notes.push(cloud + '% mean cloud, though a ' + Math.round(ctx.illum.fraction * 100) +
+      lead(cloud + '% mean cloud, though a ' + Math.round(ctx.illum.fraction * 100) +
         '% moon sits above the horizon for most of the dark hours. Narrowband targets will cope; galaxies will not.');
     }
 
@@ -653,32 +661,28 @@
     // night survives once you are out. They are reported even on a clouded-out
     // night, because a 90% gust warning is worth seeing before you carry the
     // tripod outside regardless.
+    // Terse and scannable: the stat cards already carry the detail, so these
+    // only need to name the hazard and its number.
     var ex = ctx.extremes;
     if (ex) {
-      if (precipBand(ex.maxPrecip) === 'bad') {
-        notes.push('Rain reaches ' + ex.maxPrecip + '% during the window — worth keeping the gear indoors.');
-      } else if (precipBand(ex.maxPrecip) === 'warn') {
-        notes.push(ex.maxPrecip + '% chance of rain at some point in the window; keep an eye on it.');
-      }
+      var pBand = precipBand(ex.maxPrecip);
+      if (pBand === 'bad') risk('bad', 'Rain reaches ' + ex.maxPrecip + '% — keep the gear indoors.');
+      else if (pBand === 'warn') risk('warn', ex.maxPrecip + '% chance of rain in the window.');
 
-      if (dewBand(ex.minSpread) === 'bad') {
-        notes.push('Dew point closes to within ' + ex.minSpread + '°C of the air temperature — expect dew on the optics, and there is no heater to fight it.');
-      } else if (dewBand(ex.minSpread) === 'warn') {
-        notes.push('Dew point gets within ' + ex.minSpread + '°C; dew is possible late on.');
-      }
+      var dBand = dewBand(ex.minSpread);
+      if (dBand === 'bad') risk('bad', 'Dew point within ' + ex.minSpread + '°C — expect dew on the optics.');
+      else if (dBand === 'warn') risk('warn', 'Dew point within ' + ex.minSpread + '°C; possible late on.');
 
-      if (windBand(ex.maxGust) === 'bad') {
-        notes.push('Gusts to ' + ex.maxGust + ' km/h. Too much for a light alt-az tripod — expect trailed frames.');
-      } else if (windBand(ex.maxGust) === 'warn') {
-        notes.push('Gusts to ' + ex.maxGust + ' km/h; some frames will trail, so shoot short and stack more.');
-      }
+      var gBand = windBand(ex.maxGust);
+      if (gBand === 'bad') risk('bad', 'Gusts to ' + ex.maxGust + ' km/h — too much for the tripod.');
+      else if (gBand === 'warn') risk('warn', 'Gusts to ' + ex.maxGust + ' km/h; some frames will trail.');
     }
 
     if (ctx.window.level === null) {
-      notes.push('The sun stays above civil twilight all night at this latitude right now — there is no usable darkness at all.');
+      note('The sun stays above civil twilight all night at this latitude right now — there is no usable darkness at all.');
     } else if (ctx.window.degraded) {
       var back = ctx.nextAstro;
-      notes.push('No astronomical darkness tonight: at 56°N the sun does not reach 18° below the horizon in high summer. ' +
+      note('No astronomical darkness tonight: at 56°N the sun does not reach 18° below the horizon in high summer. ' +
         ctx.window.label + ' is as dark as it gets' +
         (back ? ', and true astronomical night returns on ' + fmtDate(back) + '.' : '.'));
     }
@@ -854,7 +858,26 @@
 
     var sub = root.querySelector('[data-slot="verdict-sub"]');
     sub.innerHTML = '';
-    v.notes.forEach(function (n) { sub.appendChild(el('p', null, n)); });
+
+    var riskList = null;
+    v.notes.forEach(function (n) {
+      if (n.kind === 'risk') {
+        // Hazards group into one list so they read as a checklist rather than
+        // as more prose competing with the lead sentence.
+        if (!riskList) {
+          riskList = el('ul', 'sky-risks');
+          sub.appendChild(riskList);
+        }
+        var li = el('li', 'sky-risk sky-risk--' + (n.tone || 'warn'));
+        li.appendChild(el('span', 'sky-risk-dot'));
+        li.appendChild(el('span', 'sky-risk-text', n.text));
+        riskList.appendChild(li);
+        return;
+      }
+
+      riskList = null; // any non-risk note closes the current list
+      sub.appendChild(el('p', n.kind === 'note' ? 'sky-note' : 'sky-lead', n.text));
+    });
 
     // ── Stats
     var stats = root.querySelector('[data-slot="stats"]');
