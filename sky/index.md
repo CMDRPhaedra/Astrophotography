@@ -95,6 +95,8 @@ description: "Tonight's imaging conditions over Edinburgh — cloud cover, the a
   .sky-stat-value { font-size: 1.45rem; font-weight: 300; line-height: 1.2; }
   .sky-stat-value.is-moon { color: var(--moonlit); }
   .sky-stat-value.is-good { color: var(--clear); }
+  .sky-stat-value.is-warn { color: var(--broken); }
+  .sky-stat-value.is-bad  { color: var(--overcast); }
   .sky-stat-detail {
     font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.05em;
     color: var(--dim); margin-top: 0.4rem; line-height: 1.6;
@@ -219,14 +221,25 @@ description: "Tonight's imaging conditions over Edinburgh — cloud cover, the a
     .sky-hero { grid-template-columns: 1fr; gap: 1.8rem; justify-items: center; text-align: center; }
     .sky-verdict-sub p { text-align: left; }
     .sky-stats { grid-template-columns: repeat(2, 1fr); }
+    /* An odd card count leaves a hole, and because the grid uses its gap to
+       draw the rules, that hole renders as a solid border-coloured block.
+       Letting the last one span the row keeps the edge clean. */
+    .sky-stats .sky-stat:last-child:nth-child(odd) { grid-column: 1 / -1; }
     .sky-chart { gap: 0.4rem; padding: 0.7rem 0.6rem 0.5rem; }
     .sky-plot, .sky-axis-y { height: 110px; }
     .sky-plot, .sky-axis-x { gap: 2px; }
     .sky-bar-time { font-size: 0.48rem; }
   }
-  @media (max-width: 380px) {
+  /* Nine cards single-file is a long scroll on a phone, and two columns stay
+     legible well below the narrowest common handset — so only fall back to
+     one column on genuinely tiny viewports. */
+  @media (max-width: 330px) {
     .sky-stats { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 380px) {
     .sky-dial, .sky-dial-wrap { width: 180px; height: 180px; }
+    .sky-stat { padding: 0.85rem 0.8rem 1rem; }
+    .sky-stat-value { font-size: 1.25rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -298,6 +311,10 @@ Cloud cover is the number that decides the night, so it gets the dial. Below abo
 The darkness window matters more than sunset. Astronomical twilight — the sun 18° below the horizon — is the point at which the sky stops contributing its own glow and faint detail becomes reachable. From Edinburgh that window is generous in winter and non-existent in high summer: between early May and early August the sun never sinks far enough, and the deepest available darkness is nautical twilight instead. The page says so plainly when that happens rather than showing a blank.
 
 Moon illumination is the other half of the picture, and it is not simply about phase. A brilliant gibbous moon that sets an hour after dusk costs you very little; a half moon riding high all night costs you a great deal. The verdict weighs illumination against how much of the dark window the moon actually spends above the horizon, which is why a bright moon sometimes still reads as a good night.
+
+The last three figures decide whether a clear night survives contact with reality, and they are reported as the worst value across the dark window rather than an average — all three are threshold effects, and an average would hide precisely the hour that ends the session. Dew point spread is the gap between the air temperature and the point at which moisture condenses: below about 2°C it forms on the corrector, and with no dew heater on the telescope that is the end of the night rather than an inconvenience. Wind is quoted with its gusts, because a 1.3&nbsp;kg telescope on a tripod copes with a steady breeze and not with the gust that lands mid-exposure. Rain chance is there for the hardware rather than the picture.
+
+What none of this covers is seeing and transparency — how much the atmosphere is boiling, and how much of the starlight actually reaches the ground. Those are the numbers astronomers argue about, and they come from specialist astronomy forecasts rather than a general weather service. Cloud, moon, dew and wind are the honest limit of what can be answered here.
 
 None of this replaces looking out of the window. Forecasts at this resolution are honest about the next few hours and increasingly speculative after that, and Scottish weather has a talent for ignoring them entirely. Treat it as a reason to check, not a promise. What a light-polluted sky costs you even on a clear night is covered on the [Bortle page](/bortle/), and the [gear page](/gear/) explains what the telescope can do with the hours you get.
 

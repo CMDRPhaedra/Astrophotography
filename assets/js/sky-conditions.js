@@ -523,6 +523,80 @@
     return { mean: Math.round(sum / series.length), coveredWindow: inWindow.length > 0, hours: series.length };
   }
 
+  /**
+   * Worst-case dew, wind and rain across the dark window.
+   *
+   * Extremes rather than averages, because these three are threshold effects
+   * rather than gradual ones: one hour where the dew point closes on the air
+   * temperature fogs the corrector for the rest of the night, and a single
+   * gust trails the sub it lands on. An average would hide exactly the hour
+   * that ends the session.
+   */
+  function windowExtremes(hourly, window) {
+    if (!hourly || !hourly.length) return null;
+
+    var inWindow = [];
+    if (window.start && window.end) {
+      for (var i = 0; i < hourly.length; i++) {
+        var t = new Date(hourly[i].time).valueOf();
+        if (t >= window.start.valueOf() && t <= window.end.valueOf()) inWindow.push(hourly[i]);
+      }
+    }
+    var series = inWindow.length ? inWindow : hourly;
+
+    var maxPrecip = null, minSpread = null, maxGust = null, maxWind = null;
+    for (var j = 0; j < series.length; j++) {
+      var h = series[j];
+      if (h.precipChancePercent != null) {
+        maxPrecip = maxPrecip === null ? h.precipChancePercent : Math.max(maxPrecip, h.precipChancePercent);
+      }
+      if (h.temperatureC != null && h.dewPointC != null) {
+        var spread = h.temperatureC - h.dewPointC;
+        minSpread = minSpread === null ? spread : Math.min(minSpread, spread);
+      }
+      if (h.windGustKph != null) {
+        maxGust = maxGust === null ? h.windGustKph : Math.max(maxGust, h.windGustKph);
+      }
+      if (h.windSpeedKph != null) {
+        maxWind = maxWind === null ? h.windSpeedKph : Math.max(maxWind, h.windSpeedKph);
+      }
+    }
+
+    return {
+      maxPrecip: maxPrecip,
+      minSpread: minSpread === null ? null : Math.round(minSpread * 10) / 10,
+      maxGust: maxGust,
+      maxWind: maxWind,
+      coveredWindow: inWindow.length > 0
+    };
+  }
+
+  // Below about 2°C the air is close enough to saturation that dew forms on
+  // the corrector. The Dwarf 3 has no dew heater, so this ends a session
+  // rather than degrading it.
+  function dewBand(spread) {
+    if (spread === null || spread === undefined) return 'unknown';
+    if (spread < 2) return 'bad';
+    if (spread < 4) return 'warn';
+    return 'good';
+  }
+
+  // Gusts matter more than sustained wind for a 1.3 kg alt-az scope on a
+  // tripod: the average is survivable, the gust is what trails a frame.
+  function windBand(gust) {
+    if (gust === null || gust === undefined) return 'unknown';
+    if (gust >= 40) return 'bad';
+    if (gust >= 25) return 'warn';
+    return 'good';
+  }
+
+  function precipBand(pct) {
+    if (pct === null || pct === undefined) return 'unknown';
+    if (pct >= 50) return 'bad';
+    if (pct >= 20) return 'warn';
+    return 'good';
+  }
+
   function cloudBand(pct) {
     if (pct === null || pct === undefined) return 'unknown';
     if (pct <= 20) return 'clear';
@@ -573,6 +647,31 @@
       tone = 'caution';
       notes.push(cloud + '% mean cloud, though a ' + Math.round(ctx.illum.fraction * 100) +
         '% moon sits above the horizon for most of the dark hours. Narrowband targets will cope; galaxies will not.');
+    }
+
+    // Cloud decides whether to go out at all; these three decide whether the
+    // night survives once you are out. They are reported even on a clouded-out
+    // night, because a 90% gust warning is worth seeing before you carry the
+    // tripod outside regardless.
+    var ex = ctx.extremes;
+    if (ex) {
+      if (precipBand(ex.maxPrecip) === 'bad') {
+        notes.push('Rain reaches ' + ex.maxPrecip + '% during the window — worth keeping the gear indoors.');
+      } else if (precipBand(ex.maxPrecip) === 'warn') {
+        notes.push(ex.maxPrecip + '% chance of rain at some point in the window; keep an eye on it.');
+      }
+
+      if (dewBand(ex.minSpread) === 'bad') {
+        notes.push('Dew point closes to within ' + ex.minSpread + '°C of the air temperature — expect dew on the optics, and there is no heater to fight it.');
+      } else if (dewBand(ex.minSpread) === 'warn') {
+        notes.push('Dew point gets within ' + ex.minSpread + '°C; dew is possible late on.');
+      }
+
+      if (windBand(ex.maxGust) === 'bad') {
+        notes.push('Gusts to ' + ex.maxGust + ' km/h. Too much for a light alt-az tripod — expect trailed frames.');
+      } else if (windBand(ex.maxGust) === 'warn') {
+        notes.push('Gusts to ' + ex.maxGust + ' km/h; some frames will trail, so shoot short and stack more.');
+      }
     }
 
     if (ctx.window.level === null) {
@@ -733,13 +832,15 @@
     var hourly = data && data.hourlyCloudCover ? data.hourlyCloudCover : null;
     var cloudStats = windowCloud(hourly, window_);
     var cloudMean = cloudStats ? cloudStats.mean : (data && data.cloudCoverPercent != null ? data.cloudCoverPercent : null);
+    var extremes = windowExtremes(hourly, window_);
 
     var v = verdict({
       cloudMean: cloudMean,
       window: window_,
       moon: moon,
       illum: illum,
-      nextAstro: nextAstro
+      nextAstro: nextAstro,
+      extremes: extremes
     });
 
     // ── Hero
@@ -808,6 +909,46 @@
       data && data.visibilityKm != null
         ? (data.visibilityKm >= 15 ? 'Clear horizon' : data.visibilityKm >= 8 ? 'Slight haze' : 'Murky')
         : 'Unavailable'
+    ));
+
+    // The three that decide whether a clear night actually survives.
+    var toneClass = { good: 'is-good', warn: 'is-warn', bad: 'is-bad', unknown: null };
+
+    var spread = extremes && extremes.minSpread != null ? extremes.minSpread : null;
+    var dew = dewBand(spread);
+    stats.appendChild(statCard(
+      'Dew point spread',
+      spread != null ? spread + '°C' : '—',
+      dew === 'bad' ? 'Dew likely on the optics' :
+        dew === 'warn' ? 'Dew possible late on' :
+          dew === 'good' ? 'Optics should stay clear' : 'Unavailable',
+      toneClass[dew]
+    ));
+
+    var gust = extremes && extremes.maxGust != null ? extremes.maxGust
+             : (data && data.windGustKph != null ? data.windGustKph : null);
+    var wind = extremes && extremes.maxWind != null ? extremes.maxWind
+             : (data && data.windSpeedKph != null ? data.windSpeedKph : null);
+    var wb = windBand(gust);
+    stats.appendChild(statCard(
+      'Wind',
+      wind != null ? wind + ' km/h' : '—',
+      gust != null
+        ? 'Gusting ' + gust + ' — ' + (wb === 'bad' ? 'too much for the tripod' :
+            wb === 'warn' ? 'some frames will trail' : 'steady enough')
+        : 'Unavailable',
+      toneClass[wb]
+    ));
+
+    var precip = extremes && extremes.maxPrecip != null ? extremes.maxPrecip : null;
+    var pb = precipBand(precip);
+    stats.appendChild(statCard(
+      'Rain chance',
+      precip != null ? precip + '%' : '—',
+      pb === 'bad' ? 'Keep the gear indoors' :
+        pb === 'warn' ? 'Possible — worth watching' :
+          pb === 'good' ? 'Dry through the window' : 'Unavailable',
+      toneClass[pb]
     ));
 
     // ── Chart
