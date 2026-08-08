@@ -6,6 +6,7 @@ target: "NGC 1333 · Embryo Nebula"
 distance: "1,000 light-years"
 integration: "6h"
 image: /images/ngc1333_embryo_nebula.webp
+image_alt: "NGC 1333 in Perseus. A bright blue-white cloud of reflected starlight fills the upper left of centre, fading into dark dust lanes. Below and right of it, warm orange and red knots of glowing gas mark where jets from newly forming stars are striking the surrounding cloud. Several brilliant blue-white stars with diffraction spikes sit around the edges of the frame."
 photo: embryo-nebula
 ---
 

@@ -354,3 +354,73 @@ None of this replaces looking out of the window. Forecasts at this resolution ar
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Sky Conditions — Among Stars",
+  "url": "https://chryse.co.uk/sky/",
+  "applicationCategory": "Astronomy",
+  "applicationSubCategory": "Observing conditions forecast",
+  "operatingSystem": "Any modern web browser",
+  "browserRequirements": "Requires JavaScript",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+  "inLanguage": "en-GB",
+  "description": "Tonight's imaging conditions over Edinburgh: cloud cover, the astronomical darkness window, moon phase and illumination, dew point spread, wind and rain risk, with a twelve-hour cloud trend.",
+  "featureList": [
+    "Current cloud cover and twelve-hour hourly cloud forecast",
+    "Astronomical, nautical and civil darkness window for the coming night",
+    "Moon phase, illuminated fraction, rise and set times",
+    "Dew point spread, wind gusts and rain risk across the dark window",
+    "Plain-language verdict on whether the night is worth using"
+  ],
+  "contentLocation": {
+    "@type": "Place",
+    "name": "Edinburgh, Scotland",
+    "geo": { "@type": "GeoCoordinates", "latitude": 55.9533, "longitude": -3.1883 }
+  },
+  "creator": { "@type": "Person", "name": "Dale", "url": "https://chryse.co.uk/" },
+  "isPartOf": { "@type": "WebSite", "name": "Among Stars", "url": "https://chryse.co.uk/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What cloud cover is low enough for astrophotography?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Below about 20 percent you can work normally. Between 20 and 45 percent the sky is broken and you are gambling on gaps lining up with your target. Above 75 percent there is no practical point setting a telescope up. What matters is the average across the hours of actual darkness rather than the reading at the moment you check, because a cloudy evening that clears by midnight is still a good night."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does Edinburgh have no astronomical darkness in summer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Astronomical twilight ends when the sun reaches 18 degrees below the horizon. At Edinburgh's latitude of 55.95 degrees north the sun does not sink that far between early May and early August, so there is no astronomical night at all for roughly a third of the year. In 2026 the gap ran from 5 May to 9 August. During that period nautical twilight, with the sun 12 degrees below the horizon, is the darkest sky available."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the moon ruin astrophotography?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends far more on when the moon is above the horizon than on its phase. A bright gibbous moon that sets shortly after dusk costs very little, while a half moon riding high all night costs a great deal. Narrowband and dual-band filters cope reasonably well with moonlight because they pass only specific emission wavelengths, but broadband targets such as galaxies and reflection nebulae suffer badly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is dew point spread and why does it matter for a telescope?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Dew point spread is the gap between the air temperature and the temperature at which moisture condenses. When it falls below about 2 degrees Celsius, dew forms on the telescope's optics. On a scope without a dew heater that ends the session rather than merely degrading it, and it tends to happen on exactly the clear, calm nights that are otherwise best for imaging."
+      }
+    }
+  ]
+}
+</script>

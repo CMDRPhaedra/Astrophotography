@@ -6,6 +6,7 @@ target: "C4 / NGC 7023 · Iris Nebula"
 distance: "1,300 light-years"
 integration: "1h 45m"
 image: /images/c4_iris_nebula_v2.webp
+image_alt: "A small blue reflection nebula at the centre of a wide star field in Cepheus, its petal-like structure lit by a single bright star embedded in the middle. Faint brown dust spreads outward from it and darkens much of the surrounding sky. A distinctly orange star sits left of centre, against several hundred fainter white stars."
 photo: iris-nebula
 ---
 

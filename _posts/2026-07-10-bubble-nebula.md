@@ -6,6 +6,7 @@ target: "C11 / NGC 7635 / Sh2-162 · Bubble Nebula"
 distance: "7,100 light-years"
 integration: "2h 11m"
 image: /images/c11_ngc7635_sharpless162_bubble_nebula.webp
+image_alt: "A dense star field in Cassiopeia. Just right of centre, a small round shell of pinkish-red gas — the Bubble Nebula — with a bright blue star sitting inside its upper edge. A compact knot of faint stars, the open cluster M52, sits above and left. Softer red nebulosity drifts in at the top right and along the bottom right corner, and several hundred stars are scattered across a dark background."
 photo: bubble-nebula
 ---
 

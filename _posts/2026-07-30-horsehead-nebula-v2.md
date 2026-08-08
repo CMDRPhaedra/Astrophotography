@@ -6,6 +6,7 @@ target: "B33 / IC 434 · Horsehead Nebula"
 distance: "1,375 light-years"
 integration: "2h 27m"
 image: /images/b33_horsehead_nebula_v2.webp
+image_alt: "A tall wall of vivid red hydrogen glow running vertically through the frame in Orion. At centre left the dark silhouette of the Horsehead Nebula juts out from the wall, its distinctive head-and-neck profile facing left. Above it sits the Flame Nebula, a bright patch divided by dark forked dust lanes, next to a brilliant white star. A small pale reflection nebula glows between the two, and the right half of the frame is filled with softer red gas and dark dust."
 photo: horsehead-nebula
 ---
 

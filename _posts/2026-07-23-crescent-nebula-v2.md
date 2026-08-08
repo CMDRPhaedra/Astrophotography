@@ -6,6 +6,7 @@ target: "C27 / NGC 6888 / Sh2-105 · Crescent Nebula"
 distance: "5,000 light-years"
 integration: "1h 10m"
 image: /images/c27_crescent_nebula_v2.webp
+image_alt: "A wide star field in Cygnus with a small, bright crescent-shaped shell of pinkish gas at the centre — NGC 6888, appearing as a rounded arc with a brighter rim along its upper left edge. Brighter stars across the frame show four-pointed diffraction spikes, and faint dark nebulosity drifts across the upper right corner."
 photo: crescent-nebula
 ---
 

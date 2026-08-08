@@ -78,7 +78,16 @@ description: "Field notes from Edinburgh — write-ups of deep-sky targets, inte
   {% for post in site.posts %}
   <li class="post-item" data-title="{{ post.title | strip_html | strip_newlines | escape }}" data-search="{{ post.title | strip_html | strip_newlines | escape }} {{ post.target | strip_html | strip_newlines | escape }} {{ post.content | strip_html | strip_newlines | escape }}">
     <a href="{{ post.url }}">
-      {% if post.image %}<img class="p-thumb" src="{{ post.image | replace: '/images/', '/images/thumbs/' }}" alt="" loading="lazy" decoding="async">{% endif %}
+      {%- comment -%}
+        Check the thumbnail exists rather than the full-size image: a post can
+        name a cover that has not been added yet (the gear page's hardware-photo
+        slot does exactly this), and without the check the card renders a broken
+        thumbnail. The alt stays empty on purpose — the post title sits directly
+        beside it, so announcing the image again is noise for a screen reader.
+      {%- endcomment -%}
+      {%- assign thumb = post.image | replace: '/images/', '/images/thumbs/' -%}
+      {%- assign thumb_exists = site.static_files | where: "path", thumb | size -%}
+      {% if post.image and thumb_exists > 0 %}<img class="p-thumb" src="{{ thumb }}" alt="" loading="lazy" decoding="async">{% endif %}
       <div class="p-text">
         <div class="p-date">{{ post.date | date: "%-d %B %Y" }}{% if post.target %} &middot; {{ post.target }}{% endif %}</div>
         <h2 class="p-title">{{ post.title }}</h2>

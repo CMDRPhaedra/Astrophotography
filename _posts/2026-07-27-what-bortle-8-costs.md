@@ -3,6 +3,7 @@ layout: post
 title: "Ten Hours for One Galaxy: What a Bortle 7–8 Sky Actually Costs"
 date: 2026-07-27
 image: /images/m51_whirlpool_galaxy.webp
+image_alt: "The Whirlpool Galaxy, M51, seen face-on near the centre of a dark field. Blue-white spiral arms wind out from a bright core, threaded with reddish-brown dust lanes and studded with pink star-forming knots. A smaller, yellower companion galaxy is attached at the end of one arm below, with a faint bridge of material stretching between the two. A brilliant star with long diffraction spikes sits upper right, and several small edge-on background galaxies are scattered across the frame."
 ---
 
 The Whirlpool Galaxy took ten hours. Not ten hours of driving somewhere dark, or ten hours of processing — ten hours of shutter time, accumulated an hour or two at a time across a Scottish autumn, pointed at a galaxy bright enough to have been catalogued in 1773. From a properly dark site, a rig like mine would have had something respectable in well under two. The extra eight hours weren't buying detail. They were paying rent to Edinburgh.

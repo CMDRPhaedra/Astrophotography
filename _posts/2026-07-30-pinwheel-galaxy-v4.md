@@ -6,6 +6,7 @@ target: "M101 / NGC 5457 · Pinwheel Galaxy"
 distance: "20.9 million light-years"
 integration: "9h 34m"
 image: /images/m101_pinwheel_galaxy_v4.webp
+image_alt: "The Pinwheel Galaxy, M101, seen face-on right of centre against a sparse, dark star field. Pale blue-white spiral arms wind loosely outward from a small pinkish core, dotted with brighter knots along their length. The arms fade gradually into the background, and a scattering of white and pale-orange foreground stars fills the rest of the frame."
 photo: pinwheel-galaxy
 ---
 

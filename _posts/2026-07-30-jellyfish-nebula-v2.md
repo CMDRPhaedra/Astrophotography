@@ -6,6 +6,7 @@ target: "IC 443 / Sh2-248 · The Jellyfish Nebula"
 distance: "5,000 light-years"
 integration: "3h 27m"
 image: /images/ic443_jellyfish_nebula_v2.webp
+image_alt: "The supernova remnant IC 443 in Gemini, right of centre — a rounded dome of orange and red filaments with a brighter, sharply defined rim along its upper left, trailing looser strands away to the lower right. A brilliant white star sits on either side of it, and dark dust with faint red nebulosity occupies the upper left of the frame."
 photo: the-jellyfish-nebula
 ---
 

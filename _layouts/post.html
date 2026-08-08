@@ -28,7 +28,22 @@ layout: default
   </div>
 </div>
 
-{% if page.image %}<img class="post-cover" src="{{ page.image }}" alt="{{ page.image_alt | default: page.title }}">{% endif %}
+{%- comment -%}
+  Only render the cover if the file is actually in the repo. The gear page's
+  hardware-photo slot points at /images/dwarf3_telescope.webp, which does not
+  exist yet — there it degrades via an onerror handler, but a post has no such
+  fallback, so it rendered a broken image and pointed og:image and the
+  BlogPosting schema at a 404. Checking site.static_files makes the whole
+  layout safe against a cover that has not been added yet.
+{%- endcomment -%}
+{%- assign cover_exists = site.static_files | where: "path", page.image | size -%}
+{%- if page.image and cover_exists > 0 -%}
+<figure class="post-cover-wrap">
+  <img class="post-cover" src="{{ page.image }}"
+       alt="{{ page.image_alt | default: page.title }}"
+       loading="eager" decoding="async">
+</figure>
+{%- endif -%}
 
 <div class="post-body">
   {{ content }}
@@ -44,7 +59,18 @@ layout: default
   "datePublished": "{{ page.date | date_to_xmlschema }}",
   "dateModified": "{{ page.date | date_to_xmlschema }}",
   "description": {{ page.excerpt | strip_html | strip_newlines | truncate: 200 | jsonify }},
-  {% if page.image %}"image": "{{ site.url }}{{ page.image }}",
+  {% if cover_exists > 0 %}"image": {
+    "@type": "ImageObject",
+    "url": "{{ site.url }}{{ page.image }}",
+    "contentUrl": "{{ site.url }}{{ page.image }}"{% if page.image_alt %},
+    "caption": {{ page.image_alt | jsonify }},
+    "description": {{ page.image_alt | jsonify }}{% endif %},
+    "creditText": "Dale — Among Stars",
+    "creator": { "@type": "Person", "name": "Dale", "url": "{{ site.url }}/" },
+    "copyrightNotice": "Copyright (c) 2026 CMDRPhaedra. All rights reserved.",
+    "license": "{{ site.url }}/privacy/",
+    "acquireLicensePage": "{{ site.url }}/privacy/"
+  },
   {% endif %}{% if page.target %}"about": {{ page.target | jsonify }},
   {% endif %}"inLanguage": "en-GB",
   "author": { "@type": "Person", "name": "Dale", "url": "{{ site.url }}/" },

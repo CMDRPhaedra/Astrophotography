@@ -4,6 +4,7 @@ title: "Big Joe on the Plains of Gold: Fifty Years Since Viking 1"
 date: 2026-07-25
 target: "Chryse Planitia · Mars"
 image: /images/big_joe_chryse.webp
+image_alt: "The surface of Mars photographed by NASA's Viking 1 lander on Chryse Planitia. A rust-orange rocky plain stretches to a flat horizon under a pale salmon-pink sky. Scattered dark boulders sit across the foreground, with one large rounded rock — Big Joe — prominent right of centre. Part of the lander itself, a cream-white panel with red stripes, occupies the bottom left corner."
 ---
 
 Nothing on this site was taken from another planet's surface, except this. A grey-brown boulder sitting in rust-coloured dirt under a hazy salmon sky, with the corner of a spacecraft intruding into the bottom-left of the frame. It looks like a snapshot someone took on a bad camera in a quarry. It is the surface of Mars, photographed fifty years ago last week, and the rock has a name: Big Joe.

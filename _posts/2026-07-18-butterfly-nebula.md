@@ -6,6 +6,7 @@ target: "IC 1318 / Sh2-108 · Butterfly Nebula"
 distance: "4,900 light-years"
 integration: "1h 17m"
 image: /images/ic1318_butterfly_nebula.webp
+image_alt: "A wide field of deep red-brown hydrogen nebulosity filling most of the frame, split by a broad dark dust lane running diagonally from upper left to lower right — the shape that gives the Butterfly Nebula its name. A brilliant white star sits right of centre with a soft halo around it, and a small tight group of stars is visible near the top."
 photo: butterfly-nebula
 ---
 

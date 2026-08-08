@@ -6,6 +6,7 @@ target: "IC 1396A · Elephant's Trunk Nebula"
 distance: "2,400 light-years"
 integration: "3h 12m"
 image: /images/ic1396a_elephants_trunk_nebula.webp
+image_alt: "A dim, dusty field of red-brown nebulosity in Cepheus. Right of centre a dark winding column of dust curls through the glow, tapering to a point with a bright star at its tip — the Elephant's Trunk. The nebulosity is faint and diffuse throughout, with a moderately dense scatter of stars across the frame."
 photo: elephants-trunk-nebula
 ---
 

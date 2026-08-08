@@ -6,6 +6,7 @@ target: "IC 1318 / Sh2-108 · Gamma Cygni Nebula"
 distance: "4,900 light-years"
 integration: "1h 12m"
 image: /images/ic1318_gamma_cygni_nebula.webp
+image_alt: "A broad, faint band of dusty pink and magenta nebulosity running diagonally across a very dense Milky Way star field in Cygnus. The glow is soft-edged and low-contrast rather than structured, with darker dust threading through it and thousands of small white and pale-orange stars covering the whole frame."
 photo: gamma-cygni-nebula
 ---
 
