@@ -50,6 +50,7 @@ Personal astrophotography gallery. The gallery itself is a single self-contained
 - **Light / dark theme** toggle — available in the main header, lightbox, and sky view modal; choice is remembered across visits
 - **Gear & process page** at [/gear/](https://chryse.co.uk/gear/) — the Dwarf 3, shooting conditions in Edinburgh, and the capture/stacking workflow; linked from the nav, the hero, the gallery footer, and every photo page. The page has a hidden hardware-photo slot: drop a photo named `dwarf3_telescope.jpg` (any format) into `images/` and push — the Action converts it and the figure appears automatically
 - **Bortle scale page** at [/bortle/](https://chryse.co.uk/bortle/) — what the nine sky-darkness classes mean and how each one maps to integration time, with the scale itself built in CSS rather than shipped as an image, so it reflows on mobile, follows the light/dark theme, and stays real indexable text. Emits `FAQPage` + `BreadcrumbList` JSON-LD
+- **Sky conditions page** at [/sky/](https://chryse.co.uk/sky/) — tonight's imaging conditions over Edinburgh: a cloud-cover dial, a plain-English verdict, the astronomical darkness window, moon phase and illumination, and a twelve-hour cloud trend. Cloud comes from Apple WeatherKit via a proxy; all the astronomy is computed in the browser, so the page still works when the weather service is down. Not to be confused with the lightbox's **Sky view** (Aladin); see [Sky conditions page](#sky-conditions-page)
 - **Privacy policy** at [/privacy/](https://chryse.co.uk/privacy/), linked from both the gallery and blog footers
 - **Image sitemap** at `/image-sitemap.xml` — a second sitemap alongside the generated `sitemap.xml`, giving every capture an `<image:image>` entry for Google Images; see [SEO](#seo)
 - **Anchor app pages** at [/anchor/support/](https://chryse.co.uk/anchor/support/) and [/anchor/privacy/](https://chryse.co.uk/anchor/privacy/) — support and privacy pages for a separate macOS app, hosted here but deliberately kept outside the site's own navigation; see [Anchor pages](#anchor-pages)
@@ -390,7 +391,41 @@ A missing-page request is served by an on-brand `404.html` (uses `layout: defaul
 
 ---
 
-## Sky view
+## Sky conditions page
+
+[/sky/](https://chryse.co.uk/sky/) answers one question — is it worth setting up tonight? — for Edinburgh specifically (55.9533°N, −3.1883°W, hard-coded as `data-lat`/`data-lon` on the page). It shows a cloud-cover dial with a plain-English verdict, the astronomical darkness window, moon rise/set with phase and illumination, and a twelve-hour cloud trend.
+
+**This is not the lightbox's Sky view** — that's the Aladin star atlas, documented [below](#sky-view-lightbox). Same word, unrelated features.
+
+### Where the data comes from
+
+The split matters, because it's what keeps the page useful when things break:
+
+- **Cloud cover, visibility, hourly forecast** — Apple WeatherKit, fetched from a proxy at `https://weather.chryse.co.uk/weather`. That proxy is a **separate Cloudflare Worker, not in this repo** — WeatherKit needs a signed JWT, which can't be done from a static page without leaking the key. The endpoint is set via `data-endpoint` on the `.sky` element in `sky/index.md`, with `data-endpoint-dev` pointing at `localhost:8787` for local Worker development.
+- **Twilight, moon rise/set, phase, illumination** — computed in the browser by `assets/js/sky-conditions.js`, following Meeus' *Astronomical Algorithms* in the low-precision forms popularised by SunCalc. Accurate to about a minute for the sun and a few minutes for the moon.
+
+Nothing astronomical is fetched, for three reasons worth preserving: WeatherKit's `moonPhase` is a string enum with no illumination percentage, so it has to be computed anyway; twilight is pure geometry and routing it through a weather proxy buys nothing; and Edinburgh sits above the latitude where astronomical night exists in summer — in 2026 the sun fails to reach 18° below the horizon from 5 May to 9 August, and WeatherKit returns null throughout. Computing locally lets the page explain *why* there's no darkness and when it returns, rather than printing a dash for a third of the year.
+
+### States
+
+The page is a four-state machine driven by `data-state` on the `.sky` element, so the JS never touches inline display rules:
+
+| State | Shown |
+|---|---|
+| `loading` | Skeleton ring, "Reading the sky…" |
+| `ready` | Full content |
+| `partial` | Full content plus a notice that cloud figures are missing |
+| `error` | Error box with a Try again button |
+
+`partial` is the important one: if the Worker is unreachable, darkness and moon still render from local computation and only the cloud numbers drop out.
+
+The page refreshes every 30 minutes — cloud forecasts move hourly, and anything faster just burns WeatherKit quota. It emits `WebApplication` + `BreadcrumbList` + `FAQPage` JSON-LD, the `WebApplication` carrying a free `Offer` and the Edinburgh `GeoCoordinates` it reports for.
+
+`sky-conditions.js` exports its astronomy functions via `module.exports` when run under Node, so the solar and lunar maths can be exercised without a browser.
+
+---
+
+## Sky view (lightbox)
 
 Every deep-sky lightbox shows a **⛶ Sky view** button next to the Copy link button (solar-system captures — Moon, Sun, comets — don't, as they have no fixed sky position). Clicking it opens a full-screen modal powered by [Aladin Lite](https://aladin.cds.unistra.fr/AladinLite/) from the Centre de Données astronomiques de Strasbourg (CDS).
 
