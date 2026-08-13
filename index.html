@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en-GB" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,8 @@
 <meta property="og:image" content="https://chryse.co.uk/images/m101_pinwheel_galaxy_v4.webp">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://chryse.co.uk/">
+<meta property="og:site_name" content="Among Stars">
+<meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Dale — Among Stars">
 <meta name="twitter:description" content="Deep-sky astrophotography from Edinburgh, Scotland.">
@@ -924,7 +926,7 @@
 <!-- HERO -->
 <section class="hero">
   <p class="hero-label">// Personal Archive</p>
-  <h2>Light from the edge<br>of the observable</h2>
+  <h2>Deep-sky astrophotography<br>from a light-polluted city</h2>
   <p>Captured from Edinburgh with a <a href="/gear/" style="color:inherit;">Dwarf 3 smart telescope</a>. Each image represents hours of integration against the northern light-polluted sky.</p>
   <p class="hero-sky"><a href="/sky/">Tonight's sky conditions &rarr;</a> <span>Cloud, moon and darkness over Edinburgh</span></p>
 </section>
@@ -1815,7 +1817,13 @@ function buildLatestCapture() {
   const data = CAPTURES[0];
   if(!data) return;
   const label = data.tag.charAt(0).toUpperCase() + data.tag.slice(1);
-  const imgHTML = data.img ? `<img src="${data.img}" alt="${data.title}" loading="eager" decoding="async">` : '';
+  // The thumbnail, not data.img: this strip renders into a 340px box but was
+  // loading the full-resolution capture — up to 1.6 MB — and being eager, it is
+  // the likeliest LCP element on the page. Falls back to the full image if the
+  // thumbnail is missing, the same way the grid cards do.
+  const imgHTML = data.img
+    ? `<img src="${thumbSrc(data.img)}" alt="${escapeHTML(data.title)}" loading="eager" decoding="async" onerror="if(!this.dataset.fellBack){this.dataset.fellBack='1';this.src='${data.img}';}">`
+    : '';
   const wrap = document.getElementById('latest-capture');
   wrap.innerHTML = `
     <div class="latest-inner">
