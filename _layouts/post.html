@@ -56,8 +56,14 @@ layout: default
   "headline": {{ page.title | jsonify }},
   "url": "{{ site.url }}{{ page.url }}",
   "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ site.url }}{{ page.url }}" },
+  {% comment %}
+    dateModified fell back to the publication date, so a post that was revised
+    still claimed it had never changed. Set `updated: YYYY-MM-DD` in the front
+    matter when you edit one meaningfully; without it the two stay equal, which
+    is accurate for a post that has not been touched since publication.
+  {% endcomment %}
   "datePublished": "{{ page.date | date_to_xmlschema }}",
-  "dateModified": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ page.updated | default: page.date | date_to_xmlschema }}",
   "description": {{ page.excerpt | strip_html | strip_newlines | truncate: 200 | jsonify }},
   {% if cover_exists > 0 %}"image": {
     "@type": "ImageObject",
@@ -80,7 +86,12 @@ layout: default
   {% endif %}"inLanguage": "en-GB",
   "author": { "@type": "Person", "name": "Dale", "url": "{{ site.url }}/" },
   "publisher": { "@type": "Person", "name": "Dale", "url": "{{ site.url }}/" },
-  "isPartOf": { "@type": "Blog", "name": "Among Stars — Field notes", "url": "{{ site.url }}/blog/" }
+  {% comment %}
+    An @id reference rather than a repeated inline Blog node: /blog/ emits the
+    Blog itself, so this points at it instead of the two describing it
+    separately and risking a drift between them.
+  {% endcomment %}
+  "isPartOf": { "@id": "{{ site.url }}/blog/" }
 }
 </script>
 <script type="application/ld+json">
