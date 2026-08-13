@@ -96,6 +96,15 @@ layout: default
   "creator": { "@type": "Person", "name": "Dale", "url": "{{ site.url }}/" },
   "creditText": "Dale — Among Stars",
   "copyrightNotice": "© Dale. All rights reserved.",
+  {% comment %}
+    license and acquireLicensePage are what qualify an image for Google Images'
+    licensable treatment, and these pages — not the blog posts — are what
+    image-sitemap.xml points at, so without them the whole gallery was sitting
+    out a feature it is eligible for. Both must resolve to a page that actually
+    states the terms, which is why they point at /licence/ rather than /privacy/.
+  {% endcomment %}
+  "license": "{{ site.url }}/licence/",
+  "acquireLicensePage": "{{ site.url }}/licence/",
   "contentLocation": { "@type": "Place", "name": {{ page.location | default: "Edinburgh, Scotland" | jsonify }} },
   "url": "{{ site.url }}{{ page.url }}"
 }

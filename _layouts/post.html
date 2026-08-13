@@ -68,8 +68,13 @@ layout: default
     "creditText": "Dale — Among Stars",
     "creator": { "@type": "Person", "name": "Dale", "url": "{{ site.url }}/" },
     "copyrightNotice": "Copyright (c) 2026 CMDRPhaedra. All rights reserved.",
-    "license": "{{ site.url }}/privacy/",
-    "acquireLicensePage": "{{ site.url }}/privacy/"
+    {% comment %}
+      Both pointed at /privacy/, which says nothing about image rights. Google
+      expects these to resolve to the licence terms themselves, so they now
+      point at /licence/ — the same target the capture pages use.
+    {% endcomment %}
+    "license": "{{ site.url }}/licence/",
+    "acquireLicensePage": "{{ site.url }}/licence/"
   },
   {% endif %}{% if page.target %}"about": {{ page.target | jsonify }},
   {% endif %}"inLanguage": "en-GB",
