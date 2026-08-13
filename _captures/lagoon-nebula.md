@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Lagoon Nebula"
+description: "Lagoon Nebula (M8 / NGC 6523 / Sh2-25) — a nebula imaged from Edinburgh on 14 Sep 2025 with a Dwarf 3 smart telescope."
 catalogue: "M8 / NGC 6523 / Sh2-25"
 date: "2025-09-14"
 display_date: "14 Sep 2025"

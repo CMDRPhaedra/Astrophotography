@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Bode's Galaxy"
+description: "Bode's Galaxy (M81 / NGC 3031) — a galaxy 11,750,000 light-years from Earth. 4h of integration from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "M81 / NGC 3031"
 date: "2026-02-22"
 display_date: "22 Feb 2026"

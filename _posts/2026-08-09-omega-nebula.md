@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Eighteen Degrees: 3h 45m on the Omega Nebula"
+description: "3h 45m on M17 in Sagittarius, a target that never rises past 18 degrees from Edinburgh. Why that matters, and what came through anyway."
 date: 2026-08-09
 target: "M17 / NGC 6618 · Omega Nebula"
 distance: "5,500 light-years"

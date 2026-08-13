@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Ursa Minor Dwarf"
+description: "Ursa Minor Dwarf (UGC 9749) — a galaxy 206,000 light-years from Earth. 10m of integration from Edinburgh on 20 Apr 2026 with a Dwarf 3 smart telescope."
 catalogue: "UGC 9749"
 date: "2026-04-20"
 display_date: "20 Apr 2026"

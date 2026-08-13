@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "The Jellyfish Nebula"
+description: "The Jellyfish Nebula (IC 443 / Sh2-248) — a nebula imaged from Edinburgh on 14 Sep 2025 with a Dwarf 3 smart telescope. 3h 27m of integration."
 catalogue: "IC 443 / Sh2-248"
 date: "2025-09-14"
 display_date: "14 Sep 2025"

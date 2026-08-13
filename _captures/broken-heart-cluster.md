@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Broken Heart Cluster"
+description: "Broken Heart Cluster (NGC 2281) — a star cluster 1,600 light-years from Earth. Photographed from Edinburgh on 25 Jan 2026 with a Dwarf 3 smart telescope."
 catalogue: "NGC 2281"
 date: "2026-01-25"
 display_date: "25 Jan 2026"

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Fifteen Months in One Frame: The Cone Nebula"
+description: "Three Dwarf 3 sessions fifteen months apart, combined into 6h 38m on NGC 2264 — the Cone Nebula and the Christmas Tree Cluster in Monoceros."
 date: 2026-08-07
 target: "NGC 2264 · Cone Nebula & Christmas Tree Cluster"
 distance: "2,600 light-years"

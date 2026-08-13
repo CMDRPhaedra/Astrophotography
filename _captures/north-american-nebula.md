@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "North American Nebula"
+description: "North American Nebula (NGC 7000 / C20 / Sh2-117) — a nebula imaged from Edinburgh on 4 Oct 2025 with a Dwarf 3 smart telescope."
 catalogue: "NGC 7000 / C20 / Sh2-117"
 date: "2025-10-04"
 display_date: "4 Oct 2025"

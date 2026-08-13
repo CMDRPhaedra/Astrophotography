@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Horsehead Nebula"
+description: "Horsehead Nebula (B33 / IC 434) — a nebula imaged from Edinburgh on 25 Jan 2026 with a Dwarf 3 smart telescope. 2h 27m of integration."
 catalogue: "B33 / IC 434"
 date: "2026-01-25"
 display_date: "25 Jan 2026"

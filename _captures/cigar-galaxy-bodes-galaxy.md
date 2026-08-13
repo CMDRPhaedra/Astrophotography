@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Cigar Galaxy & Bode's Galaxy"
+description: "Cigar Galaxy & Bode's Galaxy (M82 / NGC 3034 & M81 / NGC 3031) — galaxies imaged from Edinburgh with a Dwarf 3 smart telescope. 4h of integration."
 catalogue: "M82 / NGC 3034 & M81 / NGC 3031"
 date: "2026-02-09"
 display_date: "9 Feb 2026"

@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Embryo Nebula"
+description: "Embryo Nebula (NGC 1333) — a nebula 1,000 light-years from Earth. 6h of integration from Edinburgh on 21 Nov 2025 with a Dwarf 3 smart telescope."
 catalogue: "NGC 1333"
 date: "2025-11-21"
 display_date: "21 Nov 2025"

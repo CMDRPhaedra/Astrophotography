@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Cocoon Galaxy"
+description: "Cocoon Galaxy (NGC 4490) — a galaxy 25,000,000 light-years from Earth. 18m of integration from Edinburgh on 01 May 2026 with a Dwarf 3 smart telescope."
 catalogue: "NGC 4490"
 date: "2026-05-01"
 display_date: "01 May 2026"

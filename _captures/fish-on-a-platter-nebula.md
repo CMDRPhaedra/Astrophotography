@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Fish on a Platter Nebula"
+description: "Fish on a Platter Nebula (B144) — a nebula 6,000 light-years from Earth. 34m of integration from Edinburgh on 25 Jun 2026 with a Dwarf 3 smart telescope."
 catalogue: "B144"
 date: "2026-06-25"
 display_date: "25 Jun 2026"

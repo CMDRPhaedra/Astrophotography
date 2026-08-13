@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Two Supernovae and a Lopsided Disc: 9h 34m on M101"
+description: "9h 34m on M101, up from seven. What the extra hours buy on a face-on spiral: the faint outer disc, its lopsided arms, and two supernovae."
 date: 2026-07-30
 target: "M101 / NGC 5457 · Pinwheel Galaxy"
 distance: "20.9 million light-years"

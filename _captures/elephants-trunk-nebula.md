@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Elephant's Trunk Nebula"
+description: "Elephant's Trunk Nebula (IC 1396A) — a nebula 2,400 light-years from Earth. 3h 12m of integration from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "IC 1396A"
 date: "2026-07-19"
 display_date: "19 Jul 2026"

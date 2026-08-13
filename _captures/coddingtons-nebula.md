@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Coddington's Nebula"
+description: "Coddington's Nebula (IC 2574) — a galaxy imaged from Edinburgh on 4 Apr 2026 with a Dwarf 3 smart telescope. 1h of integration."
 catalogue: "IC 2574"
 date: "2026-04-04"
 display_date: "4 Apr 2026"

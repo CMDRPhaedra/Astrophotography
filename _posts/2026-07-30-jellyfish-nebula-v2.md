@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Wreckage and Cosmic Rays: 3h 27m on the Jellyfish Nebula"
+description: "The same September 2025 data on IC 443, restacked from scratch — a supernova remnant in Gemini and the filaments the first attempt lost."
 date: 2026-07-30
 target: "IC 443 / Sh2-248 · The Jellyfish Nebula"
 distance: "5,000 light-years"

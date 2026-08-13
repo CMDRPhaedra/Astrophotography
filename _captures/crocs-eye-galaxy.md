@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Croc's Eye Galaxy"
+description: "Croc's Eye Galaxy (M94 / NGC 4736) — a galaxy 16,000,000 light-years from Earth. 10m of integration from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "M94 / NGC 4736"
 date: "2026-04-23"
 display_date: "23 Apr 2026"

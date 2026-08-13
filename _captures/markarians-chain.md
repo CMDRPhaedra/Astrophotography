@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Markarian's Chain"
+description: "Markarian's Chain (Virgo Cluster) — galaxies imaged from Edinburgh on 29 Apr 2026 with a Dwarf 3 smart telescope. 10m of integration."
 catalogue: "Virgo Cluster"
 date: "2026-04-29"
 display_date: "29 Apr 2026"

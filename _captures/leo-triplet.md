@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Leo Triplet"
+description: "Leo Triplet (M65 / NGC 3623) — galaxies 35,000,000 light-years from Earth. 16m of integration from Edinburgh on 30 Apr 2026 with a Dwarf 3 smart telescope."
 catalogue: "M65 / NGC 3623"
 date: "2026-04-30"
 display_date: "30 Apr 2026"

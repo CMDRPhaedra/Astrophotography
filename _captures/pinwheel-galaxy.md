@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Pinwheel Galaxy"
+description: "Pinwheel Galaxy (M101 / NGC 5457) — a galaxy imaged from Edinburgh on 30 Apr 2026 with a Dwarf 3 smart telescope. 9h 34m of integration."
 catalogue: "M101 / NGC 5457"
 date: "2026-04-30"
 display_date: "30 Apr 2026"

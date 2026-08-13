@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Triangulum Galaxy"
+description: "Triangulum Galaxy (M33 / NGC 598) — a galaxy 2,730,000 light-years from Earth. 4h of integration from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "M33 / NGC 598"
 date: "2025-11-02"
 display_date: "2 Nov 2025"

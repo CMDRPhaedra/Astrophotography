@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "The Ghost of Cassiopeia"
+description: "The Ghost of Cassiopeia (IC 63 / Sh2-185) — a nebula imaged from Edinburgh on 18 Oct 2025 with a Dwarf 3 smart telescope."
 catalogue: "IC 63 / Sh2-185"
 date: "2025-10-18"
 display_date: "18 Oct 2025"

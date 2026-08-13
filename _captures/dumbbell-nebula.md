@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Dumbbell Nebula"
+description: "Dumbbell Nebula (M27 / NGC 6853) — a nebula 1,360 light-years from Earth. Photographed from Edinburgh on 14 Dec 2025 with a Dwarf 3 smart telescope."
 catalogue: "M27 / NGC 6853"
 date: "2025-12-14"
 display_date: "14 Dec 2025"

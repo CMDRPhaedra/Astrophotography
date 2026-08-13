@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Jets, Shocks and Failed Stars: Six Hours on NGC 1333"
+description: "Six hours on NGC 1333 in Perseus, one of the nearest places low-mass stars are forming — with jets, shock fronts and brown dwarfs in the frame."
 date: 2026-07-30
 target: "NGC 1333 · Embryo Nebula"
 distance: "1,000 light-years"

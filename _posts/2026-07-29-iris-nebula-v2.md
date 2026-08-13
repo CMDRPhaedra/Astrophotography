@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Borrowed Light: 105 Minutes on the Iris Nebula"
+description: "105 minutes on NGC 7023 in Cepheus. The Iris glows with borrowed light — starlight scattered off dust rather than gas radiating on its own."
 date: 2026-07-29
 target: "C4 / NGC 7023 · Iris Nebula"
 distance: "1,300 light-years"

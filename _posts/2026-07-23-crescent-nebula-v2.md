@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Revisiting the Crescent: A Deeper Look at NGC 6888"
+description: "A deeper return to NGC 6888 in Cygnus — the shell blown by the Wolf-Rayet star WR 136, and the two colliding stellar winds that shaped it."
 date: 2026-07-23
 target: "C27 / NGC 6888 / Sh2-105 · Crescent Nebula"
 distance: "5,000 light-years"

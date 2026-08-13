@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Patrick Starfish Cluster"
+description: "Patrick Starfish Cluster (NGC 1245) — a star cluster 9,000 light-years from Earth. Photographed from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "NGC 1245"
 date: "2026-03-21"
 display_date: "21 Mar 2026"

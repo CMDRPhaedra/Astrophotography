@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Ring Nebula"
+description: "Ring Nebula (M57 / NGC 6720) — a nebula 2,570 light-years from Earth. 14m of integration from Edinburgh on 25 Jun 2026 with a Dwarf 3 smart telescope."
 catalogue: "M57 / NGC 6720"
 date: "2026-06-25"
 display_date: "25 Jun 2026"

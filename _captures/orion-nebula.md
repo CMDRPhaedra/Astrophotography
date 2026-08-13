@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Orion Nebula"
+description: "Orion Nebula (M42 / NGC 1976 / Sh2-281) — a nebula imaged from Edinburgh on 3 Oct 2025 with a Dwarf 3 smart telescope."
 catalogue: "M42 / NGC 1976 / Sh2-281"
 date: "2025-10-03"
 display_date: "3 Oct 2025"

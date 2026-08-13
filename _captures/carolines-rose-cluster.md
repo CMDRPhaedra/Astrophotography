@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Caroline's Rose Cluster"
+description: "Caroline's Rose Cluster (NGC 7789) — a star cluster 7,600 light-years from Earth. Photographed from Edinburgh on 9 Mar 2026 with a Dwarf 3 smart telescope."
 catalogue: "NGC 7789"
 date: "2026-03-09"
 display_date: "9 Mar 2026"

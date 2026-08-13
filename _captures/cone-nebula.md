@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Cone Nebula"
+description: "Cone Nebula (NGC 2264) — a nebula 2,600 light-years from Earth. 6h 38m of integration from Edinburgh on 18 Mar 2026 with a Dwarf 3 smart telescope."
 catalogue: "NGC 2264"
 date: "2026-03-18"
 display_date: "18 Mar 2026"

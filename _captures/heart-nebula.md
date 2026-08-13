@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Heart Nebula"
+description: "Heart Nebula (IC 1805 / Sh2-190) — a nebula imaged from Edinburgh on 8 Feb 2026 with a Dwarf 3 smart telescope."
 catalogue: "IC 1805 / Sh2-190"
 date: "2026-02-08"
 display_date: "8 Feb 2026"

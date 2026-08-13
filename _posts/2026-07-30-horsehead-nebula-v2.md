@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Horse Nobody Credited: B33 Reprocessed"
+description: "Barnard 33 reprocessed from January's subs. The hard part is IC 434, the smooth red ridge behind the horse, not the dark nebula itself."
 date: 2026-07-30
 target: "B33 / IC 434 · Horsehead Nebula"
 distance: "1,375 light-years"

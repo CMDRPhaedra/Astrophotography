@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Owl Nebula"
+description: "Owl Nebula (M97 / NGC 3587) — a nebula 2,030 light-years from Earth. Photographed from Edinburgh on 29 Nov 2025 with a Dwarf 3 smart telescope."
 catalogue: "M97 / NGC 3587"
 date: "2025-11-29"
 display_date: "29 Nov 2025"

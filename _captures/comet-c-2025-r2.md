@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Comet C/2025 R2"
+description: "Comet C/2025 R2. Photographed from Edinburgh with a Dwarf 3 smart telescope."
 date: "2026-02-22"
 location: "Edinburgh"
 tag: "other"

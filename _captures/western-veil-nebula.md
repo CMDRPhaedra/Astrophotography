@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Western Veil Nebula"
+description: "Western Veil Nebula (NGC 6960 / C34) — a nebula imaged from Edinburgh on 9 Feb 2026 with a Dwarf 3 smart telescope."
 catalogue: "NGC 6960 / C34"
 date: "2026-02-09"
 display_date: "9 Feb 2026"

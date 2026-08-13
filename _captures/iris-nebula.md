@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Iris Nebula"
+description: "Iris Nebula (C4 / NGC 7023) — a nebula 1,300 light-years from Earth. 1h 45m of integration from Edinburgh on 29 Jul 2026 with a Dwarf 3 smart telescope."
 catalogue: "C4 / NGC 7023"
 date: "2026-07-29"
 display_date: "29 Jul 2026"

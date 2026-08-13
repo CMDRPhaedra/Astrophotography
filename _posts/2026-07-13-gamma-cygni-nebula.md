@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Sadr's Butterfly: A Trick of Perspective"
+description: "72 minutes on IC 1318 in Cygnus. Sadr looks embedded in the nebula but sits three times closer — the glow comes from a hot star hidden in the dust."
 date: 2026-07-13
 target: "IC 1318 / Sh2-108 · Gamma Cygni Nebula"
 distance: "4,900 light-years"

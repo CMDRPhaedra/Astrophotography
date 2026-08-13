@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Rose Cluster"
+description: "Rose Cluster (M5 / NGC 5904) — a star cluster 24,500 light-years from Earth. 21m of integration from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "M5 / NGC 5904"
 date: "2026-04-29"
 display_date: "29 Apr 2026"

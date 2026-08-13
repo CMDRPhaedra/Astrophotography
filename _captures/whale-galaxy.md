@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Whale Galaxy"
+description: "Whale Galaxy (C32 / NGC 4631) — a galaxy 25,000,000 light-years from Earth. 10m of integration from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "C32 / NGC 4631"
 date: "2026-04-29"
 display_date: "29 Apr 2026"

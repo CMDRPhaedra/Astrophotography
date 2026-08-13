@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Hercules Cluster"
+description: "Hercules Cluster (M13 / NGC 6205) — a star cluster 25,100 light-years from Earth. 10m of integration from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "M13 / NGC 6205"
 date: "2026-04-29"
 display_date: "29 Apr 2026"

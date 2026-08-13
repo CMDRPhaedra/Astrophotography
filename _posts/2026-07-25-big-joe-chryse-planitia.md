@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Big Joe on the Plains of Gold: Fifty Years Since Viking 1"
+description: "Fifty years since Viking 1 landed on Chryse Planitia — the boulder called Big Joe, and the only picture on this site taken from another planet."
 date: 2026-07-25
 target: "Chryse Planitia · Mars"
 image: /images/big_joe_chryse.webp

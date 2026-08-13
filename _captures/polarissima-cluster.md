@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Polarissima Cluster"
+description: "Polarissima Cluster (C1 / NGC 188) — a star cluster 42,000 light-years from Earth. 10m of integration from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "C1 / NGC 188"
 date: "2026-04-23"
 display_date: "23 Apr 2026"

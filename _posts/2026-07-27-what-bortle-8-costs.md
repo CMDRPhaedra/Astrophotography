@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Ten Hours for One Galaxy: What a Bortle 7–8 Sky Actually Costs"
+description: "The Whirlpool Galaxy took ten hours from Edinburgh, and under two from a dark site. What a Bortle 7–8 sky actually costs in shutter time."
 date: 2026-07-27
 image: /images/m51_whirlpool_galaxy.webp
 image_alt: "The Whirlpool Galaxy, M51, seen face-on near the centre of a dark field. Blue-white spiral arms wind out from a bright core, threaded with reddish-brown dust lanes and studded with pink star-forming knots. A smaller, yellower companion galaxy is attached at the end of one arm below, with a faint bridge of material stretching between the two. A brilliant star with long diffraction spikes sits upper right, and several small edge-on background galaxies are scattered across the frame."

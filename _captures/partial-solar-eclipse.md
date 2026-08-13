@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Partial Solar Eclipse"
+description: "Partial Solar Eclipse (Our Sun). 20s of integration from Edinburgh on 12 Aug 2026 with a Dwarf 3 smart telescope."
 catalogue: "Our Sun"
 date: "2026-08-12"
 display_date: "12 Aug 2026"

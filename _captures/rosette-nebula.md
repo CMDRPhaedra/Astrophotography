@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Rosette Nebula"
+description: "Rosette Nebula (C49 / NGC 2237 / Sh2-275) — a nebula imaged from Edinburgh on 1 Nov 2025 with a Dwarf 3 smart telescope."
 catalogue: "C49 / NGC 2237 / Sh2-275"
 date: "2025-11-01"
 display_date: "1 Nov 2025"

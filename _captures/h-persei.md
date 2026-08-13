@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "h Persei"
+description: "h Persei (NGC 869) — a star cluster imaged from Edinburgh on 22 Feb 2026 with a Dwarf 3 smart telescope."
 catalogue: "NGC 869"
 date: "2026-02-22"
 display_date: "22 Feb 2026"

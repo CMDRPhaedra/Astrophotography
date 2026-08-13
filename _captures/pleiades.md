@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Pleiades"
+description: "Pleiades (M45) — a star cluster imaged from Edinburgh on 3 Oct 2025 with a Dwarf 3 smart telescope."
 catalogue: "M45"
 date: "2025-10-03"
 display_date: "3 Oct 2025"

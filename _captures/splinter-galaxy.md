@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Splinter Galaxy"
+description: "Splinter Galaxy (NGC 5906 / NGC 5907) — a galaxy 50,000,000 light-years from Earth. 39m of integration from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "NGC 5906 / NGC 5907"
 date: "2026-04-29"
 display_date: "29 Apr 2026"

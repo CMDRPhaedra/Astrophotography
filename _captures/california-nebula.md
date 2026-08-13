@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "California Nebula"
+description: "California Nebula (NGC 1499 / Sh2-220) — a nebula imaged from Edinburgh on 14 Sep 2025 with a Dwarf 3 smart telescope."
 catalogue: "NGC 1499 / Sh2-220"
 date: "2025-09-14"
 display_date: "14 Sep 2025"

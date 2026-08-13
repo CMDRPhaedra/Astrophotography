@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Chasing the Bubble Nebula"
+description: "Two hours on NGC 7635 in Cassiopeia — the seven-light-year shell blown by SAO 20575, and what a Dwarf 3 resolves in it from a Bortle 7–8 sky."
 date: 2026-07-10
 target: "C11 / NGC 7635 / Sh2-162 · Bubble Nebula"
 distance: "7,100 light-years"

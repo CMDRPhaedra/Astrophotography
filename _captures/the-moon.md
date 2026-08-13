@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "The Moon"
+description: "The Moon (Luna). 1m of integration from Edinburgh on 01 May 2026 with a Dwarf 3 smart telescope."
 catalogue: "Luna"
 date: "2026-05-01"
 display_date: "01 May 2026"

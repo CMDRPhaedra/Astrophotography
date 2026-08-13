@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "The Dark Seahorse Nebula"
+description: "The Dark Seahorse Nebula (B150) — a nebula 1,200 light-years from Earth. Photographed from Edinburgh on 1 Nov 2025 with a Dwarf 3 smart telescope."
 catalogue: "B150"
 date: "2025-11-01"
 display_date: "1 Nov 2025"

@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Bubble Nebula"
+description: "Bubble Nebula (C11 / NGC 7635 / Sh2-162) — a nebula 7,100 light-years from Earth. 2h 11m of integration from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "C11 / NGC 7635 / Sh2-162"
 date: "2026-07-10"
 display_date: "10 Jul 2026"

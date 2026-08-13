@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Crescent Nebula"
+description: "Crescent Nebula (C27 / NGC 6888 / Sh2-105) — a nebula imaged from Edinburgh on 23 Jul 2026 with a Dwarf 3 smart telescope. 1h 10m of integration."
 catalogue: "C27 / NGC 6888 / Sh2-105"
 date: "2026-07-23"
 display_date: "23 Jul 2026"

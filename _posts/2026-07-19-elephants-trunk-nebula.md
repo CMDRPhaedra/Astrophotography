@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Twenty Light-Years of Trunk: First Light on IC 1396A"
+description: "3h 12m on IC 1396A in Cepheus. Twenty light-years of cold gas sculpted by HD 206267, with protostars forming inside the compressed head."
 date: 2026-07-19
 target: "IC 1396A · Elephant's Trunk Nebula"
 distance: "2,400 light-years"

@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Vacuum Cleaner Galaxy"
+description: "Vacuum Cleaner Galaxy (M109 / NGC 3992) — a galaxy 83,000,000 light-years from Earth. 30m of integration from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "M109 / NGC 3992"
 date: "2026-02-08"
 display_date: "8 Feb 2026"

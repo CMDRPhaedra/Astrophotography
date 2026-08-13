@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Gamma Cygni Nebula"
+description: "Gamma Cygni Nebula (IC 1318 / Sh2-108) — a nebula 4,900 light-years from Earth. 1h 12m of integration from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "IC 1318 / Sh2-108"
 date: "2026-07-13"
 display_date: "13 Jul 2026"

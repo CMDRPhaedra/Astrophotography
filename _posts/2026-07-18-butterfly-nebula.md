@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Sadr's Chest, Split in Two: The Butterfly Returns"
+description: "A second pass on IC 1318, framed for the wings either side of Sadr that give the Butterfly Nebula its name. 1h 17m from Edinburgh with a Dwarf 3."
 date: 2026-07-18
 target: "IC 1318 / Sh2-108 · Butterfly Nebula"
 distance: "4,900 light-years"

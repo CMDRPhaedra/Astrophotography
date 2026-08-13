@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Telescope That Earned Its Successor: Dwarf II to Dwarf 3"
+description: "How an impulse-buy Dwarf II from eBay led to the Dwarf 3 behind every image on this site — what the smaller scope managed, and where it ran out."
 date: 2026-07-19
 # No cover image: the DwarfLab product photo this used to point at was removed
 # deliberately. The layouts skip a cover whose file is missing, but jekyll-feed

@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Andromeda Galaxy"
+description: "Andromeda Galaxy (M31 / NGC 224) — a galaxy imaged from Edinburgh on 14 Sep 2025 with a Dwarf 3 smart telescope. 7h of integration."
 catalogue: "M31 / NGC 224"
 date: "2025-09-14"
 display_date: "14 Sep 2025"

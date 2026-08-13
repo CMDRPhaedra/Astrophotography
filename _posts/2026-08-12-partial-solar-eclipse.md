@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Ninety-Six Percent: The Eclipse from Edinburgh"
+description: "96% of the Sun covered from Edinburgh on 12 August 2026, caught in a twenty-second gap in the cloud. Why a deep partial is nothing like totality."
 date: 2026-08-12
 target: "Sol · Partial Solar Eclipse"
 distance: "8 light-minutes"

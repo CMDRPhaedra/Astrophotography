@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Veil Nebula Complex"
+description: "Veil Nebula Complex (NGC 6960 / 6992 / IC 1340 / C33 / C34) — nebulae imaged from Edinburgh on 29 Nov 2025 with a Dwarf 3 smart telescope."
 catalogue: "NGC 6960 / 6992 / IC 1340 / C33 / C34"
 date: "2025-11-29"
 display_date: "29 Nov 2025"

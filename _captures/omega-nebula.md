@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Omega Nebula"
+description: "Omega Nebula (M17 / NGC 6618 / Sh2-45) — a nebula 5,500 light-years from Earth. 3h 45m of integration from Edinburgh with a Dwarf 3 smart telescope."
 catalogue: "M17 / NGC 6618 / Sh2-45"
 date: "2025-06-20"
 display_date: "20 Jun 2025"

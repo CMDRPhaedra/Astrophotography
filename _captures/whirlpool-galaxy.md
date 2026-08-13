@@ -3,6 +3,7 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Whirlpool Galaxy"
+description: "Whirlpool Galaxy (M51 / NGC 5194) — a galaxy imaged from Edinburgh on 1 Nov 2025 with a Dwarf 3 smart telescope. 10h of integration."
 catalogue: "M51 / NGC 5194"
 date: "2025-11-01"
 display_date: "1 Nov 2025"

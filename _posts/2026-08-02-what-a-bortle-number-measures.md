@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Satellite Can't See Your Garden: What a Bortle Number Actually Measures"
+description: "A light pollution map reports satellite data averaged over half a kilometre. What that misses about your own garden, and what Bortle really measures."
 date: 2026-08-02
 image: /images/bortle_scale.webp
 image_alt: "Chart summarising the Bortle scale. Across the top, the nine classes from 1 (Excellent Dark Sky, remote rural locations) through 5 (Suburban/Urban Transition, city outskirts) to 9 (Inner-City Sky), each with a sky image showing progressively more skyglow. Below, a table of integration time needed for the same signal-to-noise ratio: 0.5–1x at Bortle 1–3, around 1.5–3x at Bortle 4–5, around 3–8x at Bortle 6–7, and around 8–20x or more at Bortle 8–9."
