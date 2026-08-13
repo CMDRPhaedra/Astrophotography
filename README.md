@@ -41,10 +41,10 @@ Personal astrophotography gallery. The gallery itself is a single self-contained
 - **Keyboard accessible** — `/` focuses search, `?` opens a shortcut cheatsheet, Tab reaches every card and control, Enter/Space opens a card, arrows navigate the lightbox, Escape closes; a **?** button in the header surfaces the same cheatsheet for mouse users
 - **Automatic WebP conversion** — a GitHub Action converts new images to WebP on every push and updates references in `index.html` and `_posts/` automatically
 - **Automatic thumbnails** — the same Action generates 640 px thumbnails in `images/thumbs/`; the gallery grid loads those (~1.4 MB total) instead of the full-resolution files (~20 MB), and the lightbox still opens the full image
-- **Self-updating noscript SEO block** — `scripts/update_noscript.py` regenerates the crawler-visible capture list from the `CAPTURES` array, so the two can't drift; it also runs inside the Action
+- **Self-updating noscript SEO block and `ItemList`** — `scripts/update_noscript.py` regenerates both the crawler-visible capture list and the head's `ItemList` JSON-LD from the `CAPTURES` array, so neither can drift; it also runs inside the Action
 - **Self-updating README badges** — the Images and Integration time badges above are shields.io endpoint badges fed by `badges/*.json`, regenerated from the `CAPTURES` array by `scripts/generate_badges.py` inside the Action
 - **Open Graph / Twitter card meta tags** for rich link previews
-- **Structured data (JSON-LD)** — every photo page emits `ImageObject` + `BreadcrumbList`, blog posts emit `BlogPosting` + `BreadcrumbList`, and the gallery emits a `WebSite`/`Person`/`CollectionPage` graph, so Google Images and rich results have machine-readable context. Images declare `license` and `acquireLicensePage`, which is what qualifies them for Google Images' licensable treatment
+- **Structured data (JSON-LD)** — every photo page emits `ImageObject` + `BreadcrumbList`, blog posts emit `BlogPosting` + `BreadcrumbList`, and the gallery emits a `WebSite`/`Person`/`CollectionPage` graph plus an `ItemList` naming every capture, so Google Images and rich results have machine-readable context. Images declare `license` and `acquireLicensePage`, which is what qualifies them for Google Images' licensable treatment
 - **Installable (PWA)** — a `manifest.webmanifest` with maskable 192/512 px icons (rasterised from `favicon.svg`) lets mobile visitors Add to Home Screen with a proper name and icon; no service worker, so nothing is cached offline
 - **Custom 404 page** — an on-brand `/404.html` (dark theme, nav intact) served by GitHub Pages instead of the generic default
 - **Favicon** — black hole event horizon icon (SVG for Chrome/Firefox, PNG fallback for Safari)
@@ -259,6 +259,8 @@ This is a separate implementation from the blog's own search (see [Blog search](
 
 The strip between the hero text and the gallery always reflects `CAPTURES[0]` — the first entry in the array. To update it, simply add the new capture object at the top of the `CAPTURES` array.
 
+It loads the **thumbnail**, not the full-resolution capture. The strip renders into a 340 px box and is the only eager image on the page, which makes it the likeliest Largest Contentful Paint element — pointing it at `img` meant a visitor could wait on a 1.6 MB file to paint a 340 px box. It falls back to the full image if the thumbnail is missing, the same way the grid cards do.
+
 ---
 
 ## Blog
@@ -285,6 +287,8 @@ Post body in Markdown…
 `target`, `distance`, and `integration` are optional and render in the post's meta line; `image` is the 16:9 cover and the Open Graph preview. Keep `target`'s catalogue segment (before the ` · `) consistent with the same object's gallery-card `meta` — see the multi-catalogue note above. Posts are published at `/blog/YYYY/MM/DD/slug/`, and the first paragraph is the excerpt shown on the blog index. To link a post back to its gallery card, use the deep-link form `[gallery card](/?photo=slug)`.
 
 **Write a `description`.** It is the meta description and the Open Graph description, so it is what the post looks like in a search result and in a link preview. Aim for 150 characters or so and say what the post is actually about — without one the layout falls back to the first 155 characters of the opening paragraph, which almost always cuts mid-sentence. See [Meta descriptions](#meta-descriptions).
+
+`updated` is optional: set it to a `YYYY-MM-DD` date when you meaningfully revise a published post, and the `BlogPosting` schema reports it as `dateModified`. Without it `dateModified` equals `datePublished`, which is accurate for a post that hasn't been touched since it went up.
 
 `image_alt` is optional and overrides the cover image's alt text, which otherwise falls back to the post title. The title is fine for a nebula photo, where the image is the thing the title names. Set `image_alt` when the cover is an information graphic rather than a capture — the Bortle post uses it to give the scale chart the same full description it carries on `/bortle/`.
 
@@ -330,7 +334,7 @@ Neither page is linked from the site's own navigation, and both are ordinary Jek
 
 ## Open Graph tags
 
-The `<head>` includes Open Graph and Twitter card meta tags for rich previews in iMessage, Discord, Slack, and social media. To update the preview image, use **absolute URLs**:
+The `<head>` includes Open Graph and Twitter card meta tags for rich previews in iMessage, Discord, Slack, and social media, along with `og:site_name` and `og:locale` (`en_GB`). The document language is `en-GB` throughout, matching the `inLanguage` the schema already declared. To update the preview image, use **absolute URLs**:
 
 ```html
 <meta property="og:image" content="https://chryse.co.uk/images/your-filename.webp">
@@ -405,11 +409,17 @@ Grid thumbnails on the gallery combine the title with a snippet of the descripti
 
 The include is shared by `_layouts/capture.html` and `photos/index.html` specifically so the two can't drift. Callers must `strip` the result before putting it in an attribute.
 
-A `<noscript>` block in `index.html` contains static HTML versions of all captures so search engine crawlers that don't execute JavaScript can index the gallery content and descriptions. It is generated from the `CAPTURES` array by `scripts/update_noscript.py` (run automatically by the convert-webp Action, or manually with `python3 scripts/update_noscript.py`) — never edit it by hand.
+A `<noscript>` block in `index.html` lists every capture as static HTML so crawlers that don't execute JavaScript can still index the gallery. It is generated from the `CAPTURES` array by `scripts/update_noscript.py` (run automatically by the convert-webp Action, or manually with `python3 scripts/update_noscript.py`) — never edit it by hand.
+
+Each entry carries only the **first sentence** of its description. It used to carry the whole thing, which put a verbatim copy of all 59 capture-page bodies on the home page and left the canonical home of each description ambiguous — the same text was the entire body of `/photos/<slug>/`. One sentence still tells a non-JS crawler what the capture is, and the link beside it goes to the page that owns the full text. That alone halved the block, from about 41,000 characters to 18,700.
 
 The per-photo pages at `/photos/<slug>/` (see above) give every capture a real, individually indexable URL on top of the noscript block, and are picked up by the sitemap automatically.
 
 **Structured data (JSON-LD)** is emitted on every page for rich results: photo pages carry `ImageObject` + `BreadcrumbList` (in `_layouts/capture.html`), blog posts carry `BlogPosting` + `BreadcrumbList` (in `_layouts/post.html`), and the gallery head carries a `WebSite` / `Person` / `CollectionPage` `@graph` (in `index.html`). `/gear/` and `/sky/` add their own `BreadcrumbList`, and `/bortle/` adds `FAQPage` on top of one. All of it is filled from the same front matter and `CAPTURES` data the pages already use, so it can't drift from what's displayed.
+
+**`ItemList`** names the members of each index, which none of them previously did — the home page's grid is rendered from `CAPTURES` by JavaScript, and its `CollectionPage` entry described the collection without ever naming a member. The home page's list is generated by `scripts/update_noscript.py` between the `ITEMLIST` markers (it can't be Liquid — `index.html` has no front matter and Jekyll never processes it) and is wired to the `CollectionPage` via `mainEntity`. `/photos/` and `/blog/` build theirs in Liquid; `/blog/` wraps its list in a `Blog` node whose `@id` is what every post's `isPartOf` points at, so the two agree instead of describing the blog separately. Worth being clear that **this will not produce a carousel** — Google's `ItemList` rich results cover a handful of content types and a photo archive isn't one. It is there so the indexes can state what they hold and in what order.
+
+The **`Person`** entity carries a description, `homeLocation` and `knowsAbout` alongside the name and job title. There is deliberately no `sameAs`: it must point at profiles that genuinely belong to the same person, so it stays empty until there are real ones to list.
 
 Both image schemas declare `license` and `acquireLicensePage`, pointing at [/licence/](https://chryse.co.uk/licence/). That pair is what qualifies an image for Google Images' licensable treatment, and the target has to be a page that actually states the terms — pointing it at the privacy policy, as the blog layout once did, is a dead signal rather than a working one. The photo pages matter most here, since `image-sitemap.xml` points at them. Keep `copyrightNotice` in both layouts in step with the repo's `LICENSE` file and the `/licence/` page.
 
