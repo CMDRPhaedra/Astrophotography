@@ -142,6 +142,16 @@
 <footer>
   <a href="/">&larr; Back to the gallery</a>
   &nbsp;&middot;&nbsp;
+  {%- comment -%}
+    rel="me" is the visible counterpart to the Person schema's sameAs — it
+    states the profile belongs to the same person in a link a crawler follows
+    as a matter of course, rather than a hint it may ignore. External profiles
+    open in a new tab; every internal link on the site stays in place.
+  {%- endcomment -%}
+  <a href="https://app.astrobin.com/u/Phers" rel="me noopener" target="_blank">AstroBin</a>
+  &nbsp;&middot;&nbsp;
+  <a href="https://www.instagram.com/dale.forster/" rel="me noopener" target="_blank">Instagram</a>
+  &nbsp;&middot;&nbsp;
   <a href="/licence/">Licence</a>
   &nbsp;&middot;&nbsp;
   <a href="/privacy/">Privacy</a>
