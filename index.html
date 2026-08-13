@@ -50,8 +50,11 @@
   ]
 }
 </script>
-<link rel="stylesheet" href="https://aladin.cds.unistra.fr/AladinLite/api/v3/latest/aladin.min.css">
-<script src="https://aladin.cds.unistra.fr/AladinLite/api/v3/latest/aladin.js" charset="utf-8"></script>
+<!-- Aladin Lite is NOT loaded here. It is ~1.8 MB and used to be a
+     render-blocking script tag in this head, delaying the first paint on every
+     visit for a feature only reached by opening a photo and clicking "Sky
+     view". It is now fetched on first use by loadAladin(), the same way Plotly
+     already was. -->
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="/icon-192.png">
@@ -432,7 +435,9 @@
   .help-key { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.06em; color: var(--dim); background: transparent; border: 1px solid var(--border); border-radius: 3px; padding: 0.22rem 0.5rem; min-width: 1.7rem; text-align: center; }
   .help-close { position: absolute; top: 1.1rem; right: 1.1rem; font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); background: none; border: 1px solid var(--border); padding: 0.35rem 0.7rem; cursor: pointer; transition: all 0.2s; }
   .help-close:hover { color: var(--ink); border-color: var(--ink); }
-  #skyview-modal-aladin { flex: 1; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; background: #060504; }
+  /* position: relative so the .depth-loading spinner shown while Aladin
+     downloads centres on this container rather than the whole modal. */
+  #skyview-modal-aladin { position: relative; flex: 1; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; background: #060504; }
   .depth-modal {
     display: none; position: fixed; inset: 0; z-index: 150;
     background: var(--lightbox-bg);
@@ -1890,6 +1895,32 @@ let lbAladinTarget = null;
 
 let lbAladinModal = null;
 
+// Aladin Lite is ~1.8 MB of script and stylesheet, and nothing on the page
+// touches it until this modal opens. Fetched on first open instead of from
+// <head>, following the same pattern as loadPlotly() above.
+let aladinLoaded  = false;
+let aladinPromise = null;
+
+function loadAladin() {
+  if(aladinLoaded) return Promise.resolve();
+  if(aladinPromise) return aladinPromise;
+  aladinPromise = new Promise((resolve, reject) => {
+    const base = 'https://aladin.cds.unistra.fr/AladinLite/api/v3/latest/aladin';
+    const css = document.createElement('link');
+    css.rel  = 'stylesheet';
+    css.href = base + '.min.css';
+    document.head.appendChild(css);
+    const s = document.createElement('script');
+    s.src     = base + '.js';
+    s.onload  = () => { aladinLoaded = true; resolve(); };
+    // Clear the cached promise so a later open retries rather than replaying
+    // the rejection forever.
+    s.onerror = () => { aladinPromise = null; reject(new Error('Aladin failed to load')); };
+    document.head.appendChild(s);
+  });
+  return aladinPromise;
+}
+
 function openSkyViewModal() {
   const title = document.getElementById('lightbox-title').textContent || '';
   document.getElementById('skyview-modal-title').textContent = title;
@@ -1897,26 +1928,41 @@ function openSkyViewModal() {
   // Reset survey buttons
   document.querySelectorAll('#skyview-modal .lb-skyview-survey-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('skyview-modal-dss').classList.add('active');
-  // Init a fresh Aladin in the modal container
+
+  // On the first open the script is still downloading, so the container shows a
+  // spinner rather than an empty black box.
   const container = document.getElementById('skyview-modal-aladin');
-  container.innerHTML = '';
-  A.init.then(() => {
-    lbAladinModal = A.aladin('#skyview-modal-aladin', {
-      survey: 'P/DSS2/color',
-      target: lbAladinTarget,
-      fov: 1.0,
-      showReticle: true,
-      showZoomControl: true,
-      showFullscreenControl: false,
-      showLayersControl: false,
-      showGotoControl: true,
-      showShareControl: false,
-      showCooGridControl: false,
-      showProjectionControl: false,
-      showContextMenu: false,
-      showFrame: false,
+  container.innerHTML = '<div class="depth-loading"><div class="depth-loading-spinner"></div>Loading sky survey</div>';
+  const target = lbAladinTarget;
+
+  loadAladin()
+    .then(() => A.init)
+    .then(() => {
+      // The modal can be closed, or a different capture opened, while the
+      // script is in flight — only build if this request is still the current
+      // one, otherwise a stale init writes over the new target's view.
+      if(!document.getElementById('skyview-modal').classList.contains('open')) return;
+      if(lbAladinTarget !== target) return;
+      container.innerHTML = '';
+      lbAladinModal = A.aladin('#skyview-modal-aladin', {
+        survey: 'P/DSS2/color',
+        target: target,
+        fov: 1.0,
+        showReticle: true,
+        showZoomControl: true,
+        showFullscreenControl: false,
+        showLayersControl: false,
+        showGotoControl: true,
+        showShareControl: false,
+        showCooGridControl: false,
+        showProjectionControl: false,
+        showContextMenu: false,
+        showFrame: false,
+      });
+    })
+    .catch(() => {
+      container.innerHTML = '<div class="depth-loading">Could not load the sky survey — check your connection and try again.</div>';
     });
-  });
 }
 
 function skyViewModalSurvey(survey, btn) {
