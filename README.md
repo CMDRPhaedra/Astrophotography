@@ -25,10 +25,11 @@ Personal astrophotography gallery. The gallery itself is a single self-contained
 - **Latest capture strip** — always shows the first entry in the `CAPTURES` array with a pulsing indicator
 - **Search** — press `/` to focus the search bar; searches target names, catalogue numbers, and descriptions; works alongside the category filter
 - **Descriptive gallery alt text** — grid thumbnails carry an alt combining the title and a snippet of the description (e.g. *"Elephant's Trunk Nebula — IC 1396A is a dense globule of cold gas…"*); the lightbox and latest-capture image keep a plain title alt since their full description is already shown as visible text right next to them, so a richer alt there would just duplicate it for screen readers
-- **Per-capture alt text** — the photo pages and the `/photos/` grid build a unique alt sentence for every image from the capture's own front matter (catalogue, object type, distance, location) via the shared `_includes/capture-alt.html`, so no two of the 56 images share a templated string; see [Per-photo pages](#per-photo-pages)
+- **Per-capture alt text** — the photo pages and the `/photos/` grid build a unique alt sentence for every image from the capture's own front matter (catalogue, object type, distance, location) via the shared `_includes/capture-alt.html`, so no two images share a templated string; see [Per-photo pages](#per-photo-pages)
+- **Per-page meta descriptions** — every capture and post carries its own `description`, so nothing falls back to a mid-sentence slice of its opening paragraph; capture descriptions are generated alongside the pages themselves, see [Meta descriptions](#meta-descriptions)
 - **Stats bar** — live count of total images, per-category breakdown with dot visualisation, and total integration time observed
 - **Lightbox** with scroll-to-zoom, drag-to-pan, double-click to reset, pinch on mobile, arrow key navigation, and image counter; includes Copy link, Sky view, and theme toggle buttons
-- **Sky view** — a ⛶ Sky view button in the lightbox opens a full-screen interactive sky atlas (Aladin Lite, CDS Strasbourg) centred on the target, with DSS2 optical, 2MASS near-infrared, and Hα survey options
+- **Sky view** — a ⛶ Sky view button in the lightbox opens a full-screen interactive sky atlas (Aladin Lite, CDS Strasbourg) centred on the target, with DSS2 optical, 2MASS near-infrared, and Hα survey options; Aladin is ~1.8 MB and is fetched on first use rather than at page load, so it costs nothing to visitors who never open it
 - **Equatorial coordinates** — the lightbox shows each target's J2000 RA/Dec, computed on the fly from the galactic `l`/`b` already stored for the 3D Map (an exact astronomical transform, so no coordinates are hand-entered and none can drift); shown only for cards whose primary depth entry has `l`/`b`
 - **3D depth view** per card — hover any deep-sky card and click **⬡ 3D** to open an interactive Plotly scene at the card's real distance from Earth
 - **⬡ 3D Distance** — all targets on a single stretched-log distance axis with a built-in explainer
@@ -43,7 +44,7 @@ Personal astrophotography gallery. The gallery itself is a single self-contained
 - **Self-updating noscript SEO block** — `scripts/update_noscript.py` regenerates the crawler-visible capture list from the `CAPTURES` array, so the two can't drift; it also runs inside the Action
 - **Self-updating README badges** — the Images and Integration time badges above are shields.io endpoint badges fed by `badges/*.json`, regenerated from the `CAPTURES` array by `scripts/generate_badges.py` inside the Action
 - **Open Graph / Twitter card meta tags** for rich link previews
-- **Structured data (JSON-LD)** — every photo page emits `ImageObject` + `BreadcrumbList`, blog posts emit `BlogPosting` + `BreadcrumbList`, and the gallery emits a `WebSite`/`Person`/`CollectionPage` graph, so Google Images and rich results have machine-readable context
+- **Structured data (JSON-LD)** — every photo page emits `ImageObject` + `BreadcrumbList`, blog posts emit `BlogPosting` + `BreadcrumbList`, and the gallery emits a `WebSite`/`Person`/`CollectionPage` graph, so Google Images and rich results have machine-readable context. Images declare `license` and `acquireLicensePage`, which is what qualifies them for Google Images' licensable treatment
 - **Installable (PWA)** — a `manifest.webmanifest` with maskable 192/512 px icons (rasterised from `favicon.svg`) lets mobile visitors Add to Home Screen with a proper name and icon; no service worker, so nothing is cached offline
 - **Custom 404 page** — an on-brand `/404.html` (dark theme, nav intact) served by GitHub Pages instead of the generic default
 - **Favicon** — black hole event horizon icon (SVG for Chrome/Firefox, PNG fallback for Safari)
@@ -52,6 +53,7 @@ Personal astrophotography gallery. The gallery itself is a single self-contained
 - **Bortle scale page** at [/bortle/](https://chryse.co.uk/bortle/) — what the nine sky-darkness classes mean and how each one maps to integration time, with the scale itself built in CSS rather than shipped as an image, so it reflows on mobile, follows the light/dark theme, and stays real indexable text. Emits `FAQPage` + `BreadcrumbList` JSON-LD
 - **Sky conditions page** at [/sky/](https://chryse.co.uk/sky/) — tonight's imaging conditions over Edinburgh: a cloud-cover dial, a plain-English verdict, the astronomical darkness window, moon phase and illumination, and a twelve-hour cloud trend. Cloud comes from Apple WeatherKit via a proxy; all the astronomy is computed in the browser, so the page still works when the weather service is down. Not to be confused with the lightbox's **Sky view** (Aladin); see [Sky conditions page](#sky-conditions-page)
 - **Privacy policy** at [/privacy/](https://chryse.co.uk/privacy/), linked from both the gallery and blog footers
+- **Image licence** at [/licence/](https://chryse.co.uk/licence/) — restates the terms in the repo's `LICENSE` file as a public page, so the `license` and `acquireLicensePage` fields in the image schema resolve to the actual terms; linked from both footers
 - **Image sitemap** at `/image-sitemap.xml` — a second sitemap alongside the generated `sitemap.xml`, giving every capture an `<image:image>` entry for Google Images; see [SEO](#seo)
 - **Anchor app pages** at [/anchor/support/](https://chryse.co.uk/anchor/support/) and [/anchor/privacy/](https://chryse.co.uk/anchor/privacy/) — support and privacy pages for a separate macOS app, hosted here but deliberately kept outside the site's own navigation; see [Anchor pages](#anchor-pages)
 - Animated starfield background
@@ -269,6 +271,7 @@ To add a post, create `_posts/YYYY-MM-DD-slug.md`:
 ---
 layout: post
 title: "Sadr's Butterfly: A Trick of Perspective"
+description: "72 minutes on IC 1318 in Cygnus. Sadr looks embedded in the nebula but sits three times closer — the glow comes from a hot star hidden in the dust."
 date: 2026-07-13
 target: "IC 1318 / Sh2-108 · Gamma Cygni Nebula"
 distance: "4,900 light-years"
@@ -279,7 +282,9 @@ image: /images/ic1318_gamma_cygni_nebula.webp
 Post body in Markdown…
 ```
 
-`target`, `distance`, and `integration` are optional and render in the post's meta line; `image` is the 16:9 cover and the Open Graph preview. Keep `target`'s catalogue segment (before the ` · `) consistent with the same object's gallery-card `meta` — see the multi-catalogue note above. Posts are published at `/blog/YYYY/MM/DD/slug/`, and the first paragraph doubles as the excerpt on the blog index and the meta description. To link a post back to its gallery card, use the deep-link form `[gallery card](/?photo=slug)`.
+`target`, `distance`, and `integration` are optional and render in the post's meta line; `image` is the 16:9 cover and the Open Graph preview. Keep `target`'s catalogue segment (before the ` · `) consistent with the same object's gallery-card `meta` — see the multi-catalogue note above. Posts are published at `/blog/YYYY/MM/DD/slug/`, and the first paragraph is the excerpt shown on the blog index. To link a post back to its gallery card, use the deep-link form `[gallery card](/?photo=slug)`.
+
+**Write a `description`.** It is the meta description and the Open Graph description, so it is what the post looks like in a search result and in a link preview. Aim for 150 characters or so and say what the post is actually about — without one the layout falls back to the first 155 characters of the opening paragraph, which almost always cuts mid-sentence. See [Meta descriptions](#meta-descriptions).
 
 `image_alt` is optional and overrides the cover image's alt text, which otherwise falls back to the post title. The title is fine for a nebula photo, where the image is the thing the title names. Set `image_alt` when the cover is an information graphic rather than a capture — the Bortle post uses it to give the scale chart the same full description it carries on `/bortle/`.
 
@@ -300,6 +305,8 @@ Because it's plain client-side JS reading attributes already in the rendered HTM
 ## Per-photo pages
 
 Every capture also gets its own static page at `/photos/<slug>/`, with an index of all of them at [/photos/](https://chryse.co.uk/photos/). These are Jekyll collection pages (`_captures/`, published via the `captures` collection in `_config.yml` with the `capture` layout) — fully crawlable HTML with the image, capture details, and description, unlike the JavaScript-rendered gallery.
+
+Each page's `description` front matter is generated too, by `build_description()` in the same script — see [Meta descriptions](#meta-descriptions) for why it is assembled from the metadata rather than taken from the prose.
 
 The files in `_captures/` are generated from the `CAPTURES` array by `scripts/generate_capture_pages.py` — **never edit them by hand**. The slug mirrors the gallery's own `slugify()`, so `/photos/<slug>/` and the `?photo=<slug>` deep links always agree, and each page links back to its gallery card. The script runs automatically in the convert-webp Action, so pushing a new image keeps the pages in sync; to regenerate locally, run `python3 scripts/generate_capture_pages.py` from the repo root.
 
@@ -367,6 +374,8 @@ The slug is generated automatically from the `title` field — no extra configur
 
 The site is verified with Google Search Console and a sitemap submitted at `https://chryse.co.uk/sitemap.xml`. The sitemap is generated automatically on every build by the `jekyll-sitemap` plugin (see `_config.yml`) — there is nothing to update by hand. The `<head>` includes a canonical URL tag and a sitemap link for search engine discovery. A `robots.txt` in the repo root allows all crawlers and points to both sitemaps.
 
+Every indexable page also carries `max-snippet:-1, max-image-preview:large, max-video-preview:-1`, which lifts the snippet and preview limits Google would otherwise pick for itself. These are honoured by AI Overviews and AI Mode as well as ordinary results, so they are what permits a full passage to be quoted and the image shown at full size rather than as a thumbnail. Pages that set `noindex` in their front matter — currently only `404.html` — keep that instead.
+
 ### Image sitemap
 
 `jekyll-sitemap` has no support for the sitemap image extension, so the captures — the whole point of the site, and the thing most likely to be found through Google Images — were invisible to image indexing. `image-sitemap.xml` in the repo root is a second sitemap that fixes this: a Liquid template looping the `captures` collection, one `<image:image>` entry per capture page pointing at that page's full-size image. It carries `sitemap: false` so `jekyll-sitemap` doesn't list it inside `sitemap.xml`.
@@ -375,9 +384,24 @@ The site is verified with Google Search Console and a sitemap submitted at `http
 
 Only `<image:loc>` is emitted. Google deprecated `image:title`, `image:caption`, `image:geo_location` and `image:license` and now ignores them; the descriptive text that used to live in those tags is in each image's alt attribute and `ImageObject` schema instead.
 
+### Meta descriptions
+
+`_layouts/default.html` builds the `<meta name="description">` and `og:description` from the page's own `description` front matter, falling back to a 155-character slice of the excerpt only when there isn't one. The branch matters: written as a single filter chain, `page.description | default: page.excerpt | ... | truncate: 155` applies the truncate to *whichever value survived the default*, so a description written by hand was cut at 155 too — `/gear/`, `/photos/` and `/blog/` were all being chopped mid-word.
+
+Every capture and post now carries its own, so nothing relies on the fallback. **Posts are written by hand** (see [Blog](#blog)). **Capture descriptions are generated** by `build_description()` in `scripts/generate_capture_pages.py`, assembled from title, catalogue, object type, distance, integration and date:
+
+```
+Omega Nebula (M17 / NGC 6618 / Sh2-45) — a nebula 5,500 light-years from
+Earth. 3h 45m of integration from Edinburgh with a Dwarf 3 smart telescope.
+```
+
+The prose can't be reused for this. Capture descriptions open with sentences of 150–270 characters (median 156), which is exactly why truncating the first one read so badly — assembling the sentence instead means it always ends where it should. Clauses are optional in reverse order of value: the date is dropped first when the sentence would run long, then the distance, then the integration time. The catalogue IDs go in early on purpose, since `M17` and `Sh2-45` are what people type into a search box and they differ on every page.
+
+Two wrinkles come from the source data. Roughly half the gallery has no single distance — the wide fields and pairs carry several depth targets, and the Sun and Moon carry none — so that case folds the object type into the capture sentence rather than leaving a terse `— a galaxy.` fragment. And `tag` is a single gallery-filter category, so a frame holding several objects is still tagged `galaxy`; a `PLURAL_TITLE` regex catches the five titles that say so plainly (Leo Triplet, Markarian's Chain, Cigar & Bode's, Heart & Soul, Veil Complex) and gives them `galaxies` or `nebulae`.
+
 ### Alt text
 
-Grid thumbnails on the gallery combine the title with a snippet of the description. The photo pages and the `/photos/` grid go further: `_includes/capture-alt.html` builds a unique sentence per capture from the front matter `scripts/generate_capture_pages.py` already writes — catalogue, object type, distance and location — so each of the 56 images gets its own string rather than one template with the title swapped. Near-identical alt text across a whole gallery gives Google Images nothing to tell one capture from another. Every clause except title, tag and location is conditional, since the comets have no catalogue and the Sun and Moon have neither distance nor a meaningful object type.
+Grid thumbnails on the gallery combine the title with a snippet of the description. The photo pages and the `/photos/` grid go further: `_includes/capture-alt.html` builds a unique sentence per capture from the front matter `scripts/generate_capture_pages.py` already writes — catalogue, object type, distance and location — so each image gets its own string rather than one template with the title swapped. Near-identical alt text across a whole gallery gives Google Images nothing to tell one capture from another. Every clause except title, tag and location is conditional, since the comets have no catalogue and the Sun and Moon have neither distance nor a meaningful object type.
 
 The include is shared by `_layouts/capture.html` and `photos/index.html` specifically so the two can't drift. Callers must `strip` the result before putting it in an attribute.
 
@@ -385,7 +409,9 @@ A `<noscript>` block in `index.html` contains static HTML versions of all captur
 
 The per-photo pages at `/photos/<slug>/` (see above) give every capture a real, individually indexable URL on top of the noscript block, and are picked up by the sitemap automatically.
 
-**Structured data (JSON-LD)** is emitted on every page for rich results: photo pages carry `ImageObject` + `BreadcrumbList` (in `_layouts/capture.html`), blog posts carry `BlogPosting` + `BreadcrumbList` (in `_layouts/post.html`), and the gallery head carries a `WebSite` / `Person` / `CollectionPage` `@graph` (in `index.html`). All of it is filled from the same front matter and `CAPTURES` data the pages already use, so it can't drift from what's displayed.
+**Structured data (JSON-LD)** is emitted on every page for rich results: photo pages carry `ImageObject` + `BreadcrumbList` (in `_layouts/capture.html`), blog posts carry `BlogPosting` + `BreadcrumbList` (in `_layouts/post.html`), and the gallery head carries a `WebSite` / `Person` / `CollectionPage` `@graph` (in `index.html`). `/gear/` and `/sky/` add their own `BreadcrumbList`, and `/bortle/` adds `FAQPage` on top of one. All of it is filled from the same front matter and `CAPTURES` data the pages already use, so it can't drift from what's displayed.
+
+Both image schemas declare `license` and `acquireLicensePage`, pointing at [/licence/](https://chryse.co.uk/licence/). That pair is what qualifies an image for Google Images' licensable treatment, and the target has to be a page that actually states the terms — pointing it at the privacy policy, as the blog layout once did, is a dead signal rather than a working one. The photo pages matter most here, since `image-sitemap.xml` points at them. Keep `copyrightNotice` in both layouts in step with the repo's `LICENSE` file and the `/licence/` page.
 
 A missing-page request is served by an on-brand `404.html` (uses `layout: default`, `sitemap: false`) rather than the GitHub Pages default, and the site ships a `manifest.webmanifest` (with 192/512 px icons rasterised from `favicon.svg`) so it is installable as a PWA — no service worker, so nothing is cached offline.
 
@@ -438,6 +464,8 @@ The viewer is centred automatically on the target using the catalogue ID extract
 Controls: scroll to zoom · drag to pan · use the Goto control to jump to any object · Escape or click outside to close.
 
 The Aladin logo and attribution link are preserved in the bottom-right corner of the viewer as required by CDS terms of use.
+
+Aladin's script and stylesheet total ~1.8 MB and are **loaded on first use**, not from `index.html`'s `<head>`. Loading them up front made every visitor pay for them before the page could paint, for a feature reached only by opening a capture and clicking this button. `loadAladin()` injects both on the first open and caches the promise, following the same pattern `loadPlotly()` uses for the 3D views; the modal shows a spinner while they download, and a guard stops a slow load from painting a stale target over a newly opened one. If the fetch fails the modal says so and a later open retries.
 
 ---
 
