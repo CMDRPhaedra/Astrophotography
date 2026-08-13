@@ -343,6 +343,8 @@ The `<head>` includes Open Graph and Twitter card meta tags for rich previews in
 
 The `og:image` should be at least 1200 × 630 px for best results.
 
+Jekyll pages take their preview from the page's own `image` front matter, and fall back to `og_image` in `_config.yml` when there isn't one. Only the posts, the capture pages and `/bortle/` set their own, so without the fallback `/gear/`, `/photos/`, `/blog/`, `/sky/`, `/privacy/` and `/licence/` shared as a bare title with no picture. The fallback also covers a post whose cover hasn't been added yet — the layout checks the file actually exists, so a missing cover degrades to the site image rather than advertising a 404.
+
 ---
 
 ## Recommended image sizes

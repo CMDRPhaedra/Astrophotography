@@ -25,12 +25,24 @@
   Recomputed here rather than inherited: a child layout's assigns are not
   visible to its parent. Without the check, a post whose cover has not been
   added yet advertises a 404 as its social preview image.
+
+  Falling back to site.og_image rather than emitting nothing: only the posts,
+  the capture pages and /bortle/ carry an `image`, so /gear/, /photos/,
+  /blog/, /sky/, /privacy/ and /licence/ were all being shared as a bare
+  title with no picture at all.
 {%- endcomment -%}
 {%- assign og_image_exists = site.static_files | where: "path", page.image | size -%}
-{% if page.image and og_image_exists > 0 %}<meta property="og:image" content="{{ site.url }}{{ page.image }}">
-{% if page.image_alt %}<meta property="og:image:alt" content="{{ page.image_alt | strip_html | truncate: 420 }}">
+{%- if page.image and og_image_exists > 0 -%}
+  {%- assign og_image = page.image -%}
+  {%- assign og_image_alt = page.image_alt -%}
+{%- else -%}
+  {%- assign og_image = site.og_image -%}
+  {%- assign og_image_alt = site.og_image_alt -%}
+{%- endif -%}
+<meta property="og:image" content="{{ site.url }}{{ og_image }}">
+{% if og_image_alt %}<meta property="og:image:alt" content="{{ og_image_alt | strip_html | truncate: 420 }}">
 {% endif %}<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="{{ site.url }}{{ page.image }}">{% endif %}
+<meta name="twitter:image" content="{{ site.url }}{{ og_image }}">
 <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
 <meta property="og:site_name" content="Among Stars">
