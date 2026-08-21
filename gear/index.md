@@ -2,7 +2,7 @@
 layout: default
 title: Gear & Process
 permalink: /gear/
-description: "The gear and process behind the images: a Dwarf 3 smart telescope, how the captures are stacked and processed, and what a small scope manages under Edinburgh's skies."
+description: "The gear and process behind the images: a Dwarf 3 smart telescope, a Dwarf Mini alongside it, how the captures are stacked and processed, and what a small scope manages under Edinburgh's skies."
 ---
 
 <div class="blog-label">The instrument</div>
@@ -45,7 +45,30 @@ It's really two cameras sharing one mount. The telephoto side does all the deep-
 
 A 35&nbsp;mm aperture sounds like a toy next to traditional astrophotography rigs — and next to a 10-inch reflector, it is. What makes it work is patience: the telescope takes short exposures continuously and stacks them, so the real aperture is time. A faint nebula that shows almost nothing in a single frame emerges cleanly after an hour or two of integration. The [integration time listed on every photo](/photos/) is that accumulated exposure.
 
-The Dwarf 3 wasn't a leap of faith, either — it's an upgrade. Its predecessor, the Dwarf II, did sterling service here first: a great little telescope that proved the smart-scope concept was worth trusting, and earned its successor. When the Dwarf 3 arrived with better optics, a bigger sensor and the built-in filters, the Dwarf II was sold on to a new home — every image in the gallery came through the Dwarf 3. DwarfLab also makes a smaller, cheaper sibling, the Dwarf Mini; that one has never been used for anything on this site, so no claims are made about it here.
+The Dwarf 3 wasn't a leap of faith, either — it's an upgrade. Its predecessor, the Dwarf II, did sterling service here first: a great little telescope that proved the smart-scope concept was worth trusting, and earned its successor. When the Dwarf 3 arrived with better optics, a bigger sensor and the built-in filters, the Dwarf II was sold on to a new home. Every image in the [gallery](/) came through the Dwarf 3; DwarfLab's smaller, cheaper sibling the Dwarf Mini has since joined it here, and captures from here on say which scope took them.
+
+### The other scope
+
+The **Dwarf Mini** is the smallest thing DwarfLab makes, and it now sits alongside the Dwarf 3 here. It's built on exactly the same idea, scaled down until it fits in a coat pocket: sealed unit, motorised mount, plate-solving, live stacking and filters, all on board.
+
+<figure id="gear-photo-mini" style="margin:2.5rem 0;">
+  <img src="/images/dwarfmini_telescope.webp" alt="The Dwarf Mini smart telescope" style="width:100%;border:1px solid var(--border);display:block;" onerror="document.getElementById('gear-photo-mini').style.display='none'">
+  <figcaption style="font-family:'Inconsolata',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-top:0.7rem;">The Dwarf Mini — the same idea, smaller again.</figcaption>
+</figure>
+
+<table class="gear-specs">
+  <tr><td>Telephoto lens</td><td>30 mm apochromatic, six elements, 150 mm focal length (f/5) — around 1,016 mm equivalent</td></tr>
+  <tr><td>Telephoto sensor</td><td>Sony IMX662, 1/2.9-inch, 2.9 µm pixels, 2 MP RAW — roughly 2.1° × 1.2° field of view</td></tr>
+  <tr><td>Wide-angle camera</td><td>Separate lens and sensor for framing, targeting and Milky Way wide-fields</td></tr>
+  <tr><td>Filters</td><td>Built-in dark-frame, astro (430–690 nm) and dual narrowband (Hα 656.3 nm + O III 500.7 nm)</td></tr>
+  <tr><td>Exposure</td><td>Up to 90 seconds per sub-frame</td></tr>
+  <tr><td>Mount</td><td>Motorised alt-azimuth with equatorial mode</td></tr>
+  <tr><td>Weight</td><td>~840 g</td></tr>
+</table>
+
+The focal length is the same 150&nbsp;mm as the Dwarf 3's telephoto side, but everything around it is smaller: 30&nbsp;mm of aperture instead of 35, and a 1/2.9-inch sensor where the Dwarf 3 carries a 1/1.8-inch one. The sensor is what really separates them — it crops the field to roughly half the Dwarf 3's sky coverage, so the Mini frames tight on a single galaxy or nebula where the Dwarf 3 takes in the complex around it. Less aperture and a quarter of the pixels also mean the same target needs longer to reach the same depth.
+
+What it buys in return is weight: 840&nbsp;g against 1.3&nbsp;kg, in a body small enough to travel without being planned around. The Dwarf 3 remains the instrument behind the gallery, and everything on the [processing](#from-photons-to-pixels) side applies equally to both — same app, same Mega Stack, same finishing pass.
 
 ### The sky it works under
 
@@ -68,6 +91,8 @@ The results, along with capture dates and integration times, end up in the [gall
 ### What it can't do
 
 Honesty matters more than marketing here. A 35&nbsp;mm f/4.3 lens with a small sensor has real limits: planets render as tiny discs a few pixels across, tight double stars don't split, and small faint galaxies stay small and faint. The Dwarf 3 is at its best on the targets this gallery leans into — large nebulae, bright galaxies, star clusters, and comets — where its wide, fast field and tireless tracking count for more than raw aperture ever would.
+
+All of that goes double for the Dwarf Mini, which trades away aperture and sensor area for portability — it reaches less deep, on a tighter field, for the same time spent.
 
 That trade-off is the point. The best telescope is the one that actually gets used, and a self-contained unit that sets up in two minutes between Scottish weather windows gets used a great deal more than a car-boot full of counterweights.
 
