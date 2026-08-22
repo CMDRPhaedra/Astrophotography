@@ -28,4 +28,4 @@
 {%- if c.catalogue %} ({{ c.catalogue }}){% endif -%}
 {%- if kind != '' %}, {{ kind }}{% if c.distance %} {{ c.distance }} from Earth{% endif %}
 {%- elsif c.distance %}, {{ c.distance }} from Earth{% endif -%}
-, photographed from {{ c.location | default: 'Edinburgh' }} with a Dwarf 3 smart telescope
+, photographed from {{ c.location | default: 'Edinburgh' }} with a {{ c.scope | default: 'Dwarf 3' }} smart telescope

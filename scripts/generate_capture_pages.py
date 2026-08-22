@@ -34,6 +34,11 @@ MONTHS = {
     "jul": 7, "aug": 8, "sep": 9, "oct": 10, "nov": 11, "dec": 12,
 }
 DATE_RE = re.compile(r"^(\d{1,2})\s+([A-Za-z]{3})[a-z]*\s+(\d{4})$")
+# Integration times are the only meta part shaped like "3h 45m" / "18m" / "20s",
+# which is what lets a scope name ("Dwarf Mini") sit between the location and the
+# integration without being mistaken for it. generate_badges.py reads the
+# integration off the last part, so the scope must go before it, never after.
+TIME_RE = re.compile(r"^\d+\s*[hms](?:\s+\d+\s*[ms])*$")
 
 
 def slugify(title):
@@ -89,10 +94,12 @@ def parse_meta(meta):
                 out["date"] = f"{year:04d}-{mon:02d}-{day:02d}"
                 out["display_date"] = part
                 continue
-        if "location" not in out and not re.search(r"\d", part):
-            out["location"] = part
-        elif "integration" not in out:
+        if TIME_RE.match(part) and "integration" not in out:
             out["integration"] = part
+        elif "location" not in out:
+            out["location"] = part
+        elif "scope" not in out:
+            out["scope"] = part
     return out
 
 
@@ -132,7 +139,9 @@ KIND_PLURAL = {"nebula": "nebulae", "galaxy": "galaxies", "cluster": "star clust
 # follows the title rather than the tag. Matches: Leo Triplet, Markarian's Chain,
 # Cigar Galaxy & Bode's Galaxy, Heart & Soul Nebula, Veil Nebula Complex.
 PLURAL_TITLE = re.compile(r"\s&\s|\bComplex\b|\bChain\b|\bTriplet\b|\bPair\b|\bGroup\b", re.I)
-SCOPE = "a Dwarf 3 smart telescope"
+# The gallery was shot entirely on the Dwarf 3 until the Dwarf Mini joined it, so
+# an entry that names no scope in its meta is still a Dwarf 3 capture.
+SCOPE = "Dwarf 3"
 DESC_LIMIT = 155
 
 
@@ -162,6 +171,7 @@ def build_description(capture, meta, distance, limit=DESC_LIMIT):
     # display_date, not date: backfill_dates() borrows a neighbour's date for
     # the comets purely to sort them, and that borrowed value must not be shown.
     display_date = meta.get("display_date", "")
+    scope = f"a {meta.get('scope') or SCOPE} smart telescope"
     tag = capture.get("tag", "")
     plural = bool(PLURAL_TITLE.search(title))
     kind = (KIND_PLURAL if plural else KIND).get(tag, "")
@@ -183,13 +193,13 @@ def build_description(capture, meta, distance, limit=DESC_LIMIT):
         if kind and shown_distance:
             return (f"{head} — {kind} {shown_distance} from Earth. "
                     f"{f'{integration} of integration' if integration else 'Photographed'} "
-                    f"{where} with {SCOPE}.")
+                    f"{where} with {scope}.")
         if kind:
             tail = f" {integration} of integration." if integration else ""
-            return f"{head} — {kind} imaged {where} with {SCOPE}.{tail}"
+            return f"{head} — {kind} imaged {where} with {scope}.{tail}"
         first = f"{head} — {shown_distance} from Earth." if shown_distance else f"{head}."
         lead = f"{integration} of integration" if integration else "Photographed"
-        return f"{first} {lead} {where} with {SCOPE}."
+        return f"{first} {lead} {where} with {scope}."
 
     for with_distance, with_date in ((True, True), (True, False), (False, True)):
         candidate = compose(with_distance, with_date)
@@ -210,6 +220,7 @@ def build_page(capture, meta):
         "display_date": meta.get("display_date", ""),
         "location": meta.get("location", ""),
         "integration": meta.get("integration", ""),
+        "scope": meta.get("scope", ""),
         "tag": capture.get("tag", ""),
         "image": "/" + capture.get("img", ""),
         "thumb": "/" + capture.get("img", "").replace("images/", "images/thumbs/", 1),
