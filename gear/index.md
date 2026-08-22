@@ -5,9 +5,9 @@ permalink: /gear/
 description: "The gear and process behind the images: a Dwarf 3 smart telescope, a Dwarf Mini alongside it, how the captures are stacked and processed, and what a small scope manages under Edinburgh's skies."
 ---
 
-<div class="blog-label">The instrument</div>
-<h1 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:0.8rem;">One small telescope</h1>
-<p style="font-family:'Inconsolata',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-bottom:2.5rem;">Every image on this site · One rig · Edinburgh, Scotland</p>
+<div class="blog-label">The instruments</div>
+<h1 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:0.8rem;">Two small telescopes</h1>
+<p style="font-family:'Inconsolata',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-bottom:2.5rem;">Every image on this site · Two small rigs · Edinburgh, Scotland</p>
 
 <div style="font-size:1.15rem;line-height:1.85;">
 <style>
@@ -21,10 +21,10 @@ description: "The gear and process behind the images: a Dwarf 3 smart telescope,
 </style>
 <div class="gear-body" markdown="1">
 
-Everything in the [gallery](/) — every galaxy, nebula, cluster and comet — was captured with a single instrument: a **Dwarf 3 smart telescope**, shooting from light-polluted city skies in Edinburgh, Scotland. No observatory, no equatorial pier, no cooled astronomy camera. This page is about what that little telescope is, why it works, and how the images get from photons to the pictures you see here.
+Nearly everything in the [gallery](/) — every galaxy, nebula, cluster and comet — was captured with a single instrument: a **Dwarf 3 smart telescope**, shooting from light-polluted city skies in Edinburgh, Scotland. A smaller **Dwarf Mini** has since joined it, and the newest captures are starting to come through that one instead. No observatory, no equatorial pier, no cooled astronomy camera. This page is about what these little telescopes are, why they work, and how the images get from photons to the pictures you see here.
 
 <figure id="gear-photo" style="margin:2.5rem 0;">
-  <img src="/images/dwarf3_telescope.webp" alt="The Dwarf 3 smart telescope used for every image on this site" style="width:100%;border:1px solid var(--border);display:block;" onerror="document.getElementById('gear-photo').style.display='none'">
+  <img src="/images/dwarf3_telescope.webp" alt="The Dwarf 3 smart telescope behind almost every image on this site" style="width:100%;border:1px solid var(--border);display:block;" onerror="document.getElementById('gear-photo').style.display='none'">
   <figcaption style="font-family:'Inconsolata',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-top:0.7rem;">The Dwarf 3 — the entire observatory, in one hand. Image courtesy of DwarfLab.</figcaption>
 </figure>
 
@@ -41,11 +41,11 @@ The Dwarf 3 is a fully self-contained robotic observatory about the size of a ha
   <tr><td>Weight</td><td>~1.3 kg, battery and everything included</td></tr>
 </table>
 
-It's really two cameras sharing one mount. The telephoto side does all the deep-sky work — every image in the [gallery](/) came through it, with a field of view about six full Moons across: wide enough to swallow the sprawling nebula complexes in Cygnus, tight enough to resolve structure in galaxies tens of millions of light-years out. The wide-angle camera sees a 45&nbsp;mm-equivalent slice of sky and plays the supporting role — helping the telescope orient itself and frame targets, and turning its hand to nightscapes, panoramas and meteor-watching when the deep-sky side is busy.
+It's really two cameras sharing one mount. The telephoto side does all the deep-sky work — almost every image in the [gallery](/) came through it, with a field of view about six full Moons across: wide enough to swallow the sprawling nebula complexes in Cygnus, tight enough to resolve structure in galaxies tens of millions of light-years out. The wide-angle camera sees a 45&nbsp;mm-equivalent slice of sky and plays the supporting role — helping the telescope orient itself and frame targets, and turning its hand to nightscapes, panoramas and meteor-watching when the deep-sky side is busy.
 
 A 35&nbsp;mm aperture sounds like a toy next to traditional astrophotography rigs — and next to a 10-inch reflector, it is. What makes it work is patience: the telescope takes short exposures continuously and stacks them, so the real aperture is time. A faint nebula that shows almost nothing in a single frame emerges cleanly after an hour or two of integration. The [integration time listed on every photo](/photos/) is that accumulated exposure.
 
-The Dwarf 3 wasn't a leap of faith, either — it's an upgrade. Its predecessor, the Dwarf II, did sterling service here first: a great little telescope that proved the smart-scope concept was worth trusting, and earned its successor. When the Dwarf 3 arrived with better optics, a bigger sensor and the built-in filters, the Dwarf II was sold on to a new home. Every image in the [gallery](/) came through the Dwarf 3; DwarfLab's smaller, cheaper sibling the Dwarf Mini has since joined it here, and captures from here on say which scope took them.
+The Dwarf 3 wasn't a leap of faith, either — it's an upgrade. Its predecessor, the Dwarf II, did sterling service here first: a great little telescope that proved the smart-scope concept was worth trusting, and earned its successor. When the Dwarf 3 arrived with better optics, a bigger sensor and the built-in filters, the Dwarf II was sold on to a new home. Almost every image in the [gallery](/) came through the Dwarf 3; DwarfLab's smaller, cheaper sibling the Dwarf Mini has since joined it here, and every capture now names the scope that took it — in its gallery details and on its [photo page](/photos/).
 
 ### The other scope
 
@@ -68,9 +68,9 @@ The **Dwarf Mini** is the smallest thing DwarfLab makes, and it now sits alongsi
 
 The focal length is the same 150&nbsp;mm as the Dwarf 3's telephoto side, but everything around it is smaller: 30&nbsp;mm of aperture instead of 35, and a 1/2.9-inch sensor where the Dwarf 3 carries a 1/1.8-inch one. The sensor is what really separates them — it crops the field to roughly half the Dwarf 3's sky coverage, so the Mini frames tight on a single galaxy or nebula where the Dwarf 3 takes in the complex around it. Less aperture and a quarter of the pixels also mean the same target needs longer to reach the same depth.
 
-What it buys in return is weight: 840&nbsp;g against 1.3&nbsp;kg, in a body small enough to travel without being planned around. The Dwarf 3 remains the instrument behind the gallery, and everything on the [processing](#from-photons-to-pixels) side applies equally to both — same app, same Mega Stack, same finishing pass.
+What it buys in return is weight: 840&nbsp;g against 1.3&nbsp;kg, in a body small enough to travel without being planned around. The Dwarf 3 is still the instrument behind all but the newest of the gallery, and everything on the [processing](#from-photons-to-pixels) side applies equally to both — same app, same Mega Stack, same finishing pass.
 
-### The sky it works under
+### The sky they work under
 
 Edinburgh is not an easy place to do this. The city sky drowns faint targets in sodium and LED glow — around [Bortle 7 to 8](/bortle/) on the nine-point scale of sky darkness, which in practice means several times the integration time a rural site would need for the same image. And at 56° north there is no astronomical darkness at all from mid-May to late July: the sun never gets far enough below the horizon for the sky to fully darken.
 
