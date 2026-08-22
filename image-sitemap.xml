@@ -2,7 +2,7 @@
 # Image sitemap for the gallery.
 #
 # jekyll-sitemap generates sitemap.xml but has no support for the image
-# extension, so the 56 captures — the whole point of the site, and the thing
+# extension, so the captures — the whole point of the site, and the thing
 # most likely to be found through Google Images — were invisible to image
 # indexing. This adds a second sitemap alongside it; both are listed in
 # robots.txt and both should be submitted in Search Console.

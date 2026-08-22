@@ -25,7 +25,8 @@ Personal astrophotography gallery. The gallery itself is a single self-contained
 - **Latest capture strip** — always shows the first entry in the `CAPTURES` array with a pulsing indicator
 - **Search** — press `/` to focus the search bar; searches target names, catalogue numbers, and descriptions; works alongside the category filter
 - **Descriptive gallery alt text** — grid thumbnails carry an alt combining the title and a snippet of the description (e.g. *"Elephant's Trunk Nebula — IC 1396A is a dense globule of cold gas…"*); the lightbox and latest-capture image keep a plain title alt since their full description is already shown as visible text right next to them, so a richer alt there would just duplicate it for screen readers
-- **Per-capture alt text** — the photo pages and the `/photos/` grid build a unique alt sentence for every image from the capture's own front matter (catalogue, object type, distance, location) via the shared `_includes/capture-alt.html`, so no two images share a templated string; see [Per-photo pages](#per-photo-pages)
+- **Per-capture alt text** — the photo pages and the `/photos/` grid build a unique alt sentence for every image from the capture's own front matter (catalogue, object type, distance, location, scope) via the shared `_includes/capture-alt.html`, so no two images share a templated string; see [Per-photo pages](#per-photo-pages)
+- **Per-capture scope attribution** — a capture names the telescope that took it through an optional segment in its `CAPTURES` `meta`, and that flows through to the photo page's meta line, the generated description and the alt text. Entries that name no scope default to the Dwarf 3, which is everything shot before the Dwarf Mini arrived; see [How to add a new capture](#how-to-add-a-new-capture)
 - **Per-page meta descriptions** — every capture and post carries its own `description`, so nothing falls back to a mid-sentence slice of its opening paragraph; capture descriptions are generated alongside the pages themselves, see [Meta descriptions](#meta-descriptions)
 - **Stats bar** — live count of total images, per-category breakdown with dot visualisation, and total integration time observed
 - **Lightbox** with scroll-to-zoom, drag-to-pan, double-click to reset, pinch on mobile, arrow key navigation, and image counter; includes Copy link, Sky view, and theme toggle buttons
@@ -50,7 +51,7 @@ Personal astrophotography gallery. The gallery itself is a single self-contained
 - **Favicon** — black hole event horizon icon (SVG for Chrome/Firefox, PNG fallback for Safari)
 - **Light / dark theme** toggle — available in the main header, lightbox, and sky view modal; choice is remembered across visits
 - **Profile links** — AstroBin and Instagram in both footers, plus a Follow button beside the theme toggle in the gallery header; all carry `rel="me"`, the visible counterpart to the `Person` schema's `sameAs`, see [SEO](#seo)
-- **Gear & process page** at [/gear/](https://chryse.co.uk/gear/) — the Dwarf 3, shooting conditions in Edinburgh, and the capture/stacking workflow; linked from the nav, the hero, the gallery footer, and every photo page. The page has a hidden hardware-photo slot: drop a photo named `dwarf3_telescope.jpg` (any format) into `images/` and push — the Action converts it and the figure appears automatically
+- **Gear & process page** at [/gear/](https://chryse.co.uk/gear/) — the Dwarf 3 and the Dwarf Mini that now sits alongside it, shooting conditions in Edinburgh, and the capture/stacking workflow; linked from the nav, the hero, the gallery footer, and every photo page. The page has two hidden hardware-photo slots: drop a photo named `dwarf3_telescope.jpg` or `dwarfmini_telescope.jpg` (any format) into `images/` and push — the Action converts it and that figure appears automatically
 - **Bortle scale page** at [/bortle/](https://chryse.co.uk/bortle/) — what the nine sky-darkness classes mean and how each one maps to integration time, with the scale itself built in CSS rather than shipped as an image, so it reflows on mobile, follows the light/dark theme, and stays real indexable text. Emits `FAQPage` + `BreadcrumbList` JSON-LD
 - **Sky conditions page** at [/sky/](https://chryse.co.uk/sky/) — tonight's imaging conditions over Edinburgh: a cloud-cover dial, a plain-English verdict, the astronomical darkness window, moon phase and illumination, and a twelve-hour cloud trend. Cloud comes from Apple WeatherKit via a proxy; all the astronomy is computed in the browser, so the page still works when the weather service is down. Not to be confused with the lightbox's **Sky view** (Aladin); see [Sky conditions page](#sky-conditions-page)
 - **Privacy policy** at [/privacy/](https://chryse.co.uk/privacy/), linked from both the gallery and blog footers
@@ -110,7 +111,15 @@ depth: [
 
 Valid `type` values: `galaxy` · `nebula` · `cluster` · `star`
 
-**`meta` format:** `Catalogue · DD Mon YYYY · Location · Integration time` — the date is used by the Date sort, so keep it consistent.
+**`meta` format:** `Catalogue · DD Mon YYYY · Location · [Scope ·] Integration time` — the date is used by the Date sort, so keep it consistent.
+
+**`Scope`** is an optional segment naming the telescope that took the capture. Omitting it means the Dwarf 3, which is every capture predating the Dwarf Mini, so in practice the only value to write is `Dwarf Mini`:
+
+```js
+meta: 'C19 / IC 5146 / Sh2-125 · 22 Aug 2026 · Edinburgh · Dwarf Mini · 1h 30m',
+```
+
+It has to sit **between the location and the integration time, never after it.** `scripts/generate_badges.py` and the gallery's own `parseIntegrationMins()` both read the integration off the *last* `·` segment, so a scope in the final slot would silently zero that capture's contribution to the total-integration badge and the stats bar. `parse_meta()` in `scripts/generate_capture_pages.py` identifies the integration by shape instead (`3h 45m`, `18m`, `20s`), which is what leaves the slot free for a name. From there the scope reaches the capture page's front matter, and shows up in its meta line, its generated `description` and its alt text.
 
 The catalogue segment should list **every well-known designation** for the object, joined with ` / ` — e.g. `C27 / NGC 6888 / Sh2-105`, not just `C27`. Stick to catalogues already used on this site (Messier, NGC, IC, Caldwell, Barnard, Sharpless/`Sh2-`); verify each one (SIMBAD/Wikipedia), don't guess NGC/IC numbers from memory, and skip more obscure catalogues (vdB, LDN, UGC, Collinder, Melotte, etc.) even if they technically exist for that object — they aren't part of this site's vocabulary. Blog posts' `target` front matter (see [Blog](#blog) below) should list the same set, for consistency between a post and its gallery card.
 
@@ -285,7 +294,7 @@ image: /images/ic1318_gamma_cygni_nebula.webp
 Post body in Markdown…
 ```
 
-`target`, `distance`, and `integration` are optional and render in the post's meta line; `image` is the 16:9 cover and the Open Graph preview. Keep `target`'s catalogue segment (before the ` · `) consistent with the same object's gallery-card `meta` — see the multi-catalogue note above. Posts are published at `/blog/YYYY/MM/DD/slug/`, and the first paragraph is the excerpt shown on the blog index. To link a post back to its gallery card, use the deep-link form `[gallery card](/?photo=slug)`.
+`target`, `distance`, `integration` and `scope` are optional and render in the post's meta line; `image` is the 16:9 cover and the Open Graph preview. Set `scope: "Dwarf Mini"` on a post about a Dwarf Mini capture, matching its gallery entry; leave it out for the Dwarf 3. Keep `target`'s catalogue segment (before the ` · `) consistent with the same object's gallery-card `meta` — see the multi-catalogue note above. Posts are published at `/blog/YYYY/MM/DD/slug/`, and the first paragraph is the excerpt shown on the blog index. To link a post back to its gallery card, use the deep-link form `[gallery card](/?photo=slug)`.
 
 **Write a `description`.** It is the meta description and the Open Graph description, so it is what the post looks like in a search result and in a link preview. Aim for 150 characters or so and say what the post is actually about — without one the layout falls back to the first 155 characters of the opening paragraph, which almost always cuts mid-sentence. See [Meta descriptions](#meta-descriptions).
 
@@ -395,12 +404,14 @@ Only `<image:loc>` is emitted. Google deprecated `image:title`, `image:caption`,
 
 `_layouts/default.html` builds the `<meta name="description">` and `og:description` from the page's own `description` front matter, falling back to a 155-character slice of the excerpt only when there isn't one. The branch matters: written as a single filter chain, `page.description | default: page.excerpt | ... | truncate: 155` applies the truncate to *whichever value survived the default*, so a description written by hand was cut at 155 too — `/gear/`, `/photos/` and `/blog/` were all being chopped mid-word.
 
-Every capture and post now carries its own, so nothing relies on the fallback. **Posts are written by hand** (see [Blog](#blog)). **Capture descriptions are generated** by `build_description()` in `scripts/generate_capture_pages.py`, assembled from title, catalogue, object type, distance, integration and date:
+Every capture and post now carries its own, so nothing relies on the fallback. **Posts are written by hand** (see [Blog](#blog)). **Capture descriptions are generated** by `build_description()` in `scripts/generate_capture_pages.py`, assembled from title, catalogue, object type, distance, integration, date and scope:
 
 ```
 Omega Nebula (M17 / NGC 6618 / Sh2-45) — a nebula 5,500 light-years from
 Earth. 3h 45m of integration from Edinburgh with a Dwarf 3 smart telescope.
 ```
+
+The telescope at the end is whichever scope the capture's `meta` names, falling back to the `SCOPE` constant in the script — the Dwarf 3 — for every entry that names none.
 
 The prose can't be reused for this. Capture descriptions open with sentences of 150–270 characters (median 156), which is exactly why truncating the first one read so badly — assembling the sentence instead means it always ends where it should. Clauses are optional in reverse order of value: the date is dropped first when the sentence would run long, then the distance, then the integration time. The catalogue IDs go in early on purpose, since `M17` and `Sh2-45` are what people type into a search box and they differ on every page.
 
@@ -408,7 +419,7 @@ Two wrinkles come from the source data. Roughly half the gallery has no single d
 
 ### Alt text
 
-Grid thumbnails on the gallery combine the title with a snippet of the description. The photo pages and the `/photos/` grid go further: `_includes/capture-alt.html` builds a unique sentence per capture from the front matter `scripts/generate_capture_pages.py` already writes — catalogue, object type, distance and location — so each image gets its own string rather than one template with the title swapped. Near-identical alt text across a whole gallery gives Google Images nothing to tell one capture from another. Every clause except title, tag and location is conditional, since the comets have no catalogue and the Sun and Moon have neither distance nor a meaningful object type.
+Grid thumbnails on the gallery combine the title with a snippet of the description. The photo pages and the `/photos/` grid go further: `_includes/capture-alt.html` builds a unique sentence per capture from the front matter `scripts/generate_capture_pages.py` already writes — catalogue, object type, distance, location and scope — so each image gets its own string rather than one template with the title swapped. Near-identical alt text across a whole gallery gives Google Images nothing to tell one capture from another. Every clause except title, tag and location is conditional, since the comets have no catalogue and the Sun and Moon have neither distance nor a meaningful object type.
 
 The include is shared by `_layouts/capture.html` and `photos/index.html` specifically so the two can't drift. Callers must `strip` the result before putting it in an attribute.
 
