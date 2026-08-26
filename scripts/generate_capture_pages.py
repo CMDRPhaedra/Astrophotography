@@ -142,7 +142,22 @@ PLURAL_TITLE = re.compile(r"\s&\s|\bComplex\b|\bChain\b|\bTriplet\b|\bPair\b|\bG
 # The gallery was shot entirely on the Dwarf 3 until the Dwarf Mini joined it, so
 # an entry that names no scope in its meta is still a Dwarf 3 capture.
 SCOPE = "Dwarf 3"
+# A capture can combine data from both scopes, written "Dwarf 3 + Dwarf Mini" in
+# the meta. Splitting on the + keeps the sentence grammatical: one scope takes
+# "a ... smart telescope", two take "... and ... smart telescopes".
+SCOPE_SPLIT_RE = re.compile(r"\s*[+&]\s*")
 DESC_LIMIT = 155
+
+
+def format_scope(scope):
+    """'Dwarf Mini' -> 'a Dwarf Mini smart telescope';
+    'Dwarf 3 + Dwarf Mini' -> 'Dwarf 3 and Dwarf Mini smart telescopes'."""
+    names = [s for s in (n.strip() for n in SCOPE_SPLIT_RE.split(scope)) if s]
+    if not names:
+        names = [SCOPE]
+    if len(names) > 1:
+        return f"{' and '.join(names)} smart telescopes"
+    return f"a {names[0]} smart telescope"
 
 
 def build_description(capture, meta, distance, limit=DESC_LIMIT):
@@ -171,7 +186,7 @@ def build_description(capture, meta, distance, limit=DESC_LIMIT):
     # display_date, not date: backfill_dates() borrows a neighbour's date for
     # the comets purely to sort them, and that borrowed value must not be shown.
     display_date = meta.get("display_date", "")
-    scope = f"a {meta.get('scope') or SCOPE} smart telescope"
+    scope = format_scope(meta.get("scope") or SCOPE)
     tag = capture.get("tag", "")
     plural = bool(PLURAL_TITLE.search(title))
     kind = (KIND_PLURAL if plural else KIND).get(tag, "")

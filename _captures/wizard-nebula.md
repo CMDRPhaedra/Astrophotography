@@ -3,16 +3,18 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Wizard Nebula"
-description: "Wizard Nebula (NGC 7380 / Sh2-142) — a nebula 7,200 light-years from Earth. Photographed from Edinburgh on 5 Apr 2026 with a Dwarf 3 smart telescope."
+description: "Wizard Nebula (NGC 7380 / Sh2-142) — a nebula imaged from Edinburgh on 24 Aug 2026 with Dwarf 3 and Dwarf Mini smart telescopes. 6h 30m of integration."
 catalogue: "NGC 7380 / Sh2-142"
-date: "2026-04-05"
-display_date: "5 Apr 2026"
+date: "2026-08-24"
+display_date: "24 Aug 2026"
 location: "Edinburgh"
+integration: "6h 30m"
+scope: "Dwarf 3 + Dwarf Mini"
 tag: "nebula"
-image: "/images/ngc7380_wizard_nebula.webp"
-thumb: "/images/thumbs/ngc7380_wizard_nebula.webp"
+image: "/images/ngc7380_wizard_nebula_v2.webp"
+thumb: "/images/thumbs/ngc7380_wizard_nebula_v2.webp"
 distance: "7,200 light-years"
 gallery_link: "/?photo=wizard-nebula"
 ---
 
-NGC 7380 in Cepheus is an open cluster embedded in a surrounding emission nebula around 7,200 light-years away. The nebula's distinctive pointed towers of gas — which give it its wizard-like silhouette — are Bok globules and evaporating gaseous globules (EGGs) being sculpted by radiation from the young cluster stars. The whole complex is relatively young at only around 4 million years old.
+NGC 7380 in Cepheus is a young open cluster still sitting inside the cloud it formed from, the emission nebula Sh2-142, around 7,200 light-years away. Nearly all of the light comes from one source: DH Cephei, a close binary of two hot O-type stars near the centre of the cluster, whose ultraviolet output ionises the surrounding hydrogen and drives an ionisation front outward through the gas. The pointed towers that give the nebula its wizard-like silhouette are what survives that erosion — dense knots of dust and molecular gas, Bok globules and evaporating gaseous globules, each shielding a tail of material downwind of it, with new stars condensing inside some of them. Caroline Herschel found the cluster in 1787; at roughly 4 million years old it is young enough that the gas has still not been cleared away from the stars it made.

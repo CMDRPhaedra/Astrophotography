@@ -113,11 +113,14 @@ Valid `type` values: `galaxy` · `nebula` · `cluster` · `star`
 
 **`meta` format:** `Catalogue · DD Mon YYYY · Location · [Scope ·] Integration time` — the date is used by the Date sort, so keep it consistent.
 
-**`Scope`** is an optional segment naming the telescope that took the capture. Omitting it means the Dwarf 3, which is every capture predating the Dwarf Mini, so in practice the only value to write is `Dwarf Mini`:
+**`Scope`** is an optional segment naming the telescope that took the capture. Omitting it means the Dwarf 3, which is every capture predating the Dwarf Mini, so in practice the values to write are `Dwarf Mini` or — for a capture stacked from both scopes — the two joined with a `+`:
 
 ```js
 meta: 'C19 / IC 5146 / Sh2-125 · 22 Aug 2026 · Edinburgh · Dwarf Mini · 1h 30m',
+meta: 'NGC 7380 / Sh2-142 · 24 Aug 2026 · Edinburgh · Dwarf 3 + Dwarf Mini · 6h 30m',
 ```
+
+The `+` is what keeps the generated prose grammatical: one scope reads "with a Dwarf Mini smart telescope", two read "with Dwarf 3 and Dwarf Mini smart telescopes". `format_scope()` in `scripts/generate_capture_pages.py` and the matching `split` in `_includes/capture-alt.html` do that on both sides, so the meta description and the alt text always agree.
 
 It has to sit **between the location and the integration time, never after it.** `scripts/generate_badges.py` and the gallery's own `parseIntegrationMins()` both read the integration off the *last* `·` segment, so a scope in the final slot would silently zero that capture's contribution to the total-integration badge and the stats bar. `parse_meta()` in `scripts/generate_capture_pages.py` identifies the integration by shape instead (`3h 45m`, `18m`, `20s`), which is what leaves the slot free for a name. From there the scope reaches the capture page's front matter, and shows up in its meta line, its generated `description` and its alt text.
 

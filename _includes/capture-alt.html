@@ -10,7 +10,11 @@
 
   Everything except title, tag and location is optional: the comets have no
   catalogue, and the Sun and Moon have neither distance nor a meaningful object
-  type, so each clause is conditional.
+  type, so each clause is conditional. A capture combining both scopes carries
+  them as "Dwarf 3 + Dwarf Mini", which becomes "with Dwarf 3 and Dwarf Mini
+  smart telescopes" — the singular article would be wrong across a pair.
+  scripts/generate_capture_pages.py splits the same way for the meta
+  description, so the two sentences stay in step.
 
   Callers should strip the result before putting it in an attribute:
 
@@ -28,4 +32,7 @@
 {%- if c.catalogue %} ({{ c.catalogue }}){% endif -%}
 {%- if kind != '' %}, {{ kind }}{% if c.distance %} {{ c.distance }} from Earth{% endif %}
 {%- elsif c.distance %}, {{ c.distance }} from Earth{% endif -%}
-, photographed from {{ c.location | default: 'Edinburgh' }} with a {{ c.scope | default: 'Dwarf 3' }} smart telescope
+, photographed from {{ c.location | default: 'Edinburgh' }} with
+{%- assign scope_names = c.scope | default: 'Dwarf 3' | split: ' + ' -%}
+{%- if scope_names.size > 1 %} {{ scope_names | join: ' and ' }} smart telescopes
+{%- else %} a {{ scope_names[0] }} smart telescope{% endif -%}
