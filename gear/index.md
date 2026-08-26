@@ -21,7 +21,7 @@ description: "The gear and process behind the images: a Dwarf 3 smart telescope,
 </style>
 <div class="gear-body" markdown="1">
 
-Nearly everything in the [gallery](/) — every galaxy, nebula, cluster and comet — was captured with a single instrument: a **Dwarf 3 smart telescope**, shooting from light-polluted city skies in Edinburgh, Scotland. A smaller **Dwarf Mini** has since joined it, and the newest captures are starting to come through that one instead. No observatory, no equatorial pier, no cooled astronomy camera. This page is about what these little telescopes are, why they work, and how the images get from photons to the pictures you see here.
+Nearly everything in the [gallery](/) — every galaxy, nebula, cluster and comet — was captured with a single instrument: a <a href="https://dwarflab.com?aff=511" rel="sponsored nofollow"><strong>Dwarf 3 smart telescope</strong></a>, shooting from light-polluted city skies in Edinburgh, Scotland. A smaller <a href="https://dwarflab.com?aff=511" rel="sponsored nofollow"><strong>Dwarf Mini</strong></a> has since joined it, and the newest captures are starting to come through that one instead. No observatory, no equatorial pier, no cooled astronomy camera. This page is about what these little telescopes are, why they work, and how the images get from photons to the pictures you see here.
 
 <figure id="gear-photo" style="margin:2.5rem 0;">
   <img src="/images/dwarf3_telescope.webp" alt="The Dwarf 3 smart telescope behind almost every image on this site" style="width:100%;border:1px solid var(--border);display:block;" onerror="document.getElementById('gear-photo').style.display='none'">
@@ -95,6 +95,12 @@ Honesty matters more than marketing here. A 35&nbsp;mm f/4.3 lens with a small s
 All of that goes double for the Dwarf Mini, which trades away aperture and sensor area for portability — it reaches less deep, on a tighter field, for the same time spent.
 
 That trade-off is the point. The best telescope is the one that actually gets used, and a self-contained unit that sets up in two minutes between Scottish weather windows gets used a great deal more than a car-boot full of counterweights.
+
+### If you want one
+
+DwarfLab sell both scopes direct, and the DwarfLab links on this page are affiliate links: buying through one earns this site a small commission at no extra cost to the buyer. The discount code **AMONGSTARS** applies at checkout, and <a href="https://dwarflab.com?aff=511" rel="sponsored nofollow">dwarflab.com</a> is the place to start.
+
+That arrangement arrived long after the telescopes did. Both were bought at full price, the Dwarf II before them, and none of this page was written to sell one — the limits set out above are the honest ones, commission or no commission. The same disclosure is on the [privacy page](/privacy/).
 
 </div>
 </div>

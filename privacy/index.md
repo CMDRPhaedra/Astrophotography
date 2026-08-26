@@ -7,7 +7,7 @@ description: "Privacy policy for Among Stars — what is and is not collected wh
 
 <div class="blog-label">The small print</div>
 <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;margin-bottom:0.8rem;">Privacy policy</h1>
-<p style="font-family:'Inconsolata',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-bottom:2.5rem;">Last updated: 18 July 2026</p>
+<p style="font-family:'Inconsolata',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-bottom:2.5rem;">Last updated: 26 August 2026</p>
 
 <div style="font-size:1.15rem;line-height:1.85;">
 <style>
@@ -45,6 +45,10 @@ If you switch between the light and dark theme, that preference is saved in your
 ### Analytics
 
 The site runs no analytics or tracking scripts of its own.
+
+### Affiliate links
+
+The [gear page](/gear/) links to DwarfLab, the maker of the telescopes used here, using an affiliate link. Following one tells DwarfLab that the visit came from this site so a purchase can be credited to it — that tracking happens entirely on DwarfLab's side under their own privacy policy, and this site neither receives nor stores anything about who clicked. Nothing about the link is required: reaching dwarflab.com directly works exactly the same, and costs the same either way.
 
 ### External links
 
