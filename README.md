@@ -5,9 +5,9 @@
 ![Last commit](https://img.shields.io/github/last-commit/CMDRPhaedra/Astrophotography)
 ![Repo size](https://img.shields.io/github/repo-size/CMDRPhaedra/Astrophotography)
 ![Open issues](https://img.shields.io/github/issues/CMDRPhaedra/Astrophotography)
-![HTML](https://img.shields.io/badge/HTML-76.7%25-blue)
-![JavaScript](https://img.shields.io/badge/JavaScript-14.1%25-blue)
-![Python](https://img.shields.io/badge/Python-9.2%25-blue)
+![HTML](https://img.shields.io/badge/HTML-76.8%25-blue)
+![JavaScript](https://img.shields.io/badge/JavaScript-13.9%25-blue)
+![Python](https://img.shields.io/badge/Python-9.3%25-blue)
 <!-- BADGES:END -->
 ![Images](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/CMDRPhaedra/Astrophotography/main/badges/images-count.json)
 ![Integration time](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/CMDRPhaedra/Astrophotography/main/badges/integration-time.json)
