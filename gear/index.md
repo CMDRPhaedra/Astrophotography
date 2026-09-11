@@ -23,9 +23,9 @@ description: "The gear and process behind the images: a Dwarf 3 smart telescope,
 
 Nearly everything in the [gallery](/) — every galaxy, nebula, cluster and comet — was captured with a single instrument: a <a href="https://dwarflab.com/discount/AMONGSTARS?aff=511" rel="sponsored nofollow"><strong>Dwarf 3 smart telescope</strong></a>, shooting from light-polluted city skies in Edinburgh, Scotland. A smaller <a href="https://dwarflab.com/discount/AMONGSTARS?aff=511" rel="sponsored nofollow"><strong>Dwarf Mini</strong></a> has since joined it, and the newest captures are starting to come through that one instead. No observatory, no equatorial pier, no cooled astronomy camera. This page is about what these little telescopes are, why they work, and how the images get from photons to the pictures you see here.
 
-<figure id="gear-photo" style="margin:2.5rem 0;">
-  <img src="/images/dwarf3_telescope.webp" alt="The Dwarf 3 smart telescope behind almost every image on this site" style="width:100%;border:1px solid var(--border);display:block;" onerror="document.getElementById('gear-photo').style.display='none'">
-  <figcaption style="font-family:'Inconsolata',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-top:0.7rem;">The Dwarf 3 — the entire observatory, in one hand. Image courtesy of DwarfLab.</figcaption>
+<figure id="gear-photo" style="margin:2.5rem auto;max-width:480px;">
+  <img src="/images/dwarf3_telescope.webp" alt="The Dwarf 3 smart telescope: a grey rectangular unit with its telephoto and wide-angle lenses side by side on the front" width="1000" height="781" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid var(--border);display:block;" onerror="document.getElementById('gear-photo').style.display='none'">
+  <figcaption style="font-family:'Inconsolata',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-top:0.7rem;text-align:center;">The Dwarf 3 — the entire observatory, in one hand. Image courtesy of DwarfLab.</figcaption>
 </figure>
 
 ### The telescope
@@ -51,9 +51,9 @@ The Dwarf 3 wasn't a leap of faith, either — it's an upgrade. Its predecessor,
 
 The **Dwarf Mini** is the smallest thing DwarfLab makes, and it now sits alongside the Dwarf 3 here. It's built on exactly the same idea, scaled down until it fits in a coat pocket: sealed unit, motorised mount, plate-solving, live stacking and filters, all on board.
 
-<figure id="gear-photo-mini" style="margin:2.5rem 0;">
-  <img src="/images/dwarfmini_telescope.webp" alt="The Dwarf Mini smart telescope" style="width:100%;border:1px solid var(--border);display:block;" onerror="document.getElementById('gear-photo-mini').style.display='none'">
-  <figcaption style="font-family:'Inconsolata',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-top:0.7rem;">The Dwarf Mini — the same idea, smaller again.</figcaption>
+<figure id="gear-photo-mini" style="margin:2.5rem auto;max-width:400px;">
+  <img src="/images/dwarfmini_telescope.webp" alt="The Dwarf Mini smart telescope: a compact black unit with a single lens head that tilts up from the body" width="1000" height="1000" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid var(--border);display:block;" onerror="document.getElementById('gear-photo-mini').style.display='none'">
+  <figcaption style="font-family:'Inconsolata',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-top:0.7rem;text-align:center;">The Dwarf Mini — the same idea, smaller again. Image courtesy of DwarfLab.</figcaption>
 </figure>
 
 <table class="gear-specs">
