@@ -3,15 +3,16 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "North American Nebula"
-description: "North American Nebula (NGC 7000 / C20 / Sh2-117) — a nebula imaged from Edinburgh on 4 Oct 2025 with a Dwarf 3 smart telescope."
+description: "North American Nebula (NGC 7000 / C20 / Sh2-117) — a nebula imaged from Edinburgh on 12 Sep 2026 with a Dwarf 3 smart telescope. 1h 40m of integration."
 catalogue: "NGC 7000 / C20 / Sh2-117"
-date: "2025-10-04"
-display_date: "4 Oct 2025"
+date: "2026-09-12"
+display_date: "12 Sep 2026"
 location: "Edinburgh"
+integration: "1h 40m"
 tag: "nebula"
-image: "/images/ngc7000_north_american_nebula.webp"
-thumb: "/images/thumbs/ngc7000_north_american_nebula.webp"
+image: "/images/ngc7000_north_american_nebula_v2.webp"
+thumb: "/images/thumbs/ngc7000_north_american_nebula_v2.webp"
 gallery_link: "/?photo=north-american-nebula"
 ---
 
-The North American Nebula in Cygnus bears an unmistakable resemblance to the North American continent, complete with a Gulf of Mexico-shaped dark bay formed by an intervening dust cloud. It lies roughly 2,590 light-years away and spans over 100 light-years. The identity of the star responsible for ionising it remained uncertain for decades — it is now thought to be Deneb, one of the most luminous stars known, or a hidden cluster of hot stars within the same region.
+NGC 7000 in Cygnus is a large emission nebula around 2,590 light-years away, and the continent everyone sees in it is drawn not by the glowing gas but by what lies in front of it: the dark cloud LDN 935, whose silhouette carves out the Gulf of Mexico, the eastern seaboard and the Florida peninsula. The same cloud separates it from the Pelican Nebula (IC 5070) to the west, and the two are really one object — a single region of ionised hydrogen roughly 100 light-years across, cut in half by a foreground rift of dust. For decades nobody could say what was lighting it, because the source is hidden behind that dust as well: an O-type binary now known as the Bajamar Star, buried in LDN 935 roughly where the Bahamas would sit, whose ultraviolet output ionises the whole complex from behind the Gulf. The brightest ridge, the Cygnus Wall along the Central America edge, is where that radiation meets the densest gas and is compressing it into new stars; the sharp rims on the Pelican's head and neck are the same ionisation front seen on the far side of the lane. William Herschel found the nebula in 1786, and Max Wolf's photographs a century later were what first made the map legible.

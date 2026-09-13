@@ -1,0 +1,20 @@
+---
+layout: post
+title: "The Whole Continent: 1h 40m on NGC 7000"
+description: "A four-panel Dwarf 3 mosaic of NGC 7000 and the Pelican in Cygnus — the dark cloud that draws the continent, and the hidden star lighting it from behind the Gulf of Mexico."
+date: 2026-09-12
+target: "NGC 7000 / C20 / Sh2-117 · North American Nebula"
+distance: "2,590 light-years"
+integration: "1h 40m"
+image: /images/ngc7000_north_american_nebula_v2.webp
+image_alt: "The North American Nebula, NGC 7000, and the Pelican Nebula, IC 5070, filling a wide Cygnus star field. A large pale silver-blue cloud of glowing gas in the shape of the North American continent occupies the centre and left, with a golden-orange ridge along its lower edge and a large dark bay of dust cut into it at lower right. Rust-red mottled gas spreads across the upper left, a wide dark lane runs down the right-hand side, and beyond it the Pelican's head and neck are edged in the same golden light. Thousands of small white and pale blue stars cover the whole frame."
+photo: north-american-nebula
+---
+
+The first version of this one, from October last year, was a single Dwarf 3 frame with no integration time listed against it — this site's way of admitting there wasn't much behind it — and it was a tight crop on the Cygnus Wall and the dark bay beside it, with the rest of the continent running off the edges of the frame. This is the whole thing: a four-panel mosaic of NGC 7000, captured last night, with the Pelican Nebula across the lane on the right and 1 hour 40 minutes of integration behind it, 200 exposures of 30 seconds spread over the four panels.
+
+The mosaic is the point rather than a flourish. The North American Nebula is about two degrees across — four full Moons side by side — and the Pelican sits another degree or so to the west of it, which is more sky than a single Dwarf 3 frame will hold. The trade is that the hours get divided: 1h 40m across four panels is 25 minutes on each, and that's why the fainter northern reaches are noisier than the Wall. Mid-September is the right time to spend those minutes on it from here, though. Cygnus crosses the meridian in the late evening now, and NGC 7000 sits at declination +44, so from 56° north it passes within about a dozen degrees of the zenith — as little atmosphere and as little Edinburgh streetlight as any target gets.
+
+What the wider field shows is that the continent isn't really made of the nebula at all. The glowing gas is a single region of ionised hydrogen roughly 100 light-years across, about 2,590 light-years away, and it extends without a break from the North American Nebula into the Pelican. The coastline — the Gulf of Mexico, the eastern seaboard, the Florida peninsula, and the whole dark lane separating the two nebulae — is a foreground cloud of dust, LDN 935, silhouetted against that glow. It is the same trick the Horsehead plays, at a much larger scale. For decades nobody could say what was lighting the complex, because the source is hidden by the same cloud: it turned out to be an O-type binary now known as the Bajamar Star, buried in the dust roughly where the Bahamas would be, whose ultraviolet output ionises everything on both sides of the lane from behind the Gulf. The Cygnus Wall, the bright golden ridge along the Central America edge, is where that radiation meets the densest gas and is actively compressing it into new stars, and the sharp rims on the Pelican's head and neck at the right of the frame are the same ionisation front seen from the other side.
+
+There is a pleasing history to the shape too. William Herschel swept up the nebula in 1786 but could only see the brightest patch; it took Max Wolf's long-exposure photographs from Heidelberg, a century later, to reveal an outline distinct enough to name. A camera on a garden telescope now does in an evening what needed a professional observatory in the 1890s, which is a thought worth having while the panels come in. Full capture details and the 3D distance view are on the [photo page](/photos/north-american-nebula/).
