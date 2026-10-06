@@ -41,7 +41,7 @@ Personal astrophotography gallery. The gallery itself is a single self-contained
 - **Blog search** — the blog index has its own `/`-focused search bar, independent of the gallery's; it matches against the full text of every post, not just the visible excerpt
 - **Keyboard accessible** — `/` focuses search, `?` opens a shortcut cheatsheet, Tab reaches every card and control, Enter/Space opens a card, arrows navigate the lightbox, Escape closes; a **?** button in the header surfaces the same cheatsheet for mouse users
 - **Automatic WebP conversion** — a GitHub Action converts new images to WebP on every push and updates references in `index.html` and `_posts/` automatically
-- **Automatic thumbnails** — the same Action generates 640 px thumbnails in `images/thumbs/`; the gallery grid loads those (~1.4 MB total) instead of the full-resolution files (~20 MB), and the lightbox still opens the full image
+- **Automatic thumbnails** — the same Action generates 640 px thumbnails in `images/thumbs/`; the gallery grid loads those (~1.6 MB total) instead of the full-resolution files (~20 MB), and the lightbox still opens the full image
 - **Self-updating noscript SEO block and `ItemList`** — `scripts/update_noscript.py` regenerates both the crawler-visible capture list and the head's `ItemList` JSON-LD from the `CAPTURES` array, so neither can drift; it also runs inside the Action
 - **Self-updating README badges** — the Images and Integration time badges above are shields.io endpoint badges fed by `badges/*.json`, regenerated from the `CAPTURES` array by `scripts/generate_badges.py` inside the Action
 - **Open Graph / Twitter card meta tags** for rich link previews
@@ -428,7 +428,7 @@ The include is shared by `_layouts/capture.html` and `photos/index.html` specifi
 
 A `<noscript>` block in `index.html` lists every capture as static HTML so crawlers that don't execute JavaScript can still index the gallery. It is generated from the `CAPTURES` array by `scripts/update_noscript.py` (run automatically by the convert-webp Action, or manually with `python3 scripts/update_noscript.py`) — never edit it by hand.
 
-Each entry carries only the **first sentence** of its description. It used to carry the whole thing, which put a verbatim copy of all 59 capture-page bodies on the home page and left the canonical home of each description ambiguous — the same text was the entire body of `/photos/<slug>/`. One sentence still tells a non-JS crawler what the capture is, and the link beside it goes to the page that owns the full text. That alone halved the block, from about 41,000 characters to 18,700.
+Each entry carries only the **first sentence** of its description. It used to carry the whole thing, which put a verbatim copy of every capture-page body on the home page and left the canonical home of each description ambiguous — the same text was the entire body of `/photos/<slug>/`. One sentence still tells a non-JS crawler what the capture is, and the link beside it goes to the page that owns the full text. That alone halved the block, from about 41,000 characters to 18,700.
 
 The per-photo pages at `/photos/<slug>/` (see above) give every capture a real, individually indexable URL on top of the noscript block, and are picked up by the sitemap automatically.
 
