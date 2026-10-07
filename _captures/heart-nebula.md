@@ -3,15 +3,16 @@
 # CAPTURES array in index.html — do not edit by hand.
 layout: "capture"
 title: "Heart Nebula"
-description: "Heart Nebula (IC 1805 / Sh2-190) — a nebula imaged from Edinburgh on 8 Feb 2026 with a Dwarf 3 smart telescope."
+description: "Heart Nebula (IC 1805 / Sh2-190) — a nebula imaged from Edinburgh on 6 Oct 2026 with a Dwarf 3 smart telescope. 2h 52m of integration."
 catalogue: "IC 1805 / Sh2-190"
-date: "2026-02-08"
-display_date: "8 Feb 2026"
+date: "2026-10-06"
+display_date: "6 Oct 2026"
 location: "Edinburgh"
+integration: "2h 52m"
 tag: "nebula"
-image: "/images/ic1805_heart_nebula.webp"
-thumb: "/images/thumbs/ic1805_heart_nebula.webp"
+image: "/images/ic1805_heart_nebula_v2.webp"
+thumb: "/images/thumbs/ic1805_heart_nebula_v2.webp"
 gallery_link: "/?photo=heart-nebula"
 ---
 
-The Heart Nebula in Cassiopeia is a large emission nebula around 7,500 light-years away whose distinctive shape is carved by powerful stellar winds from the young open cluster Melotte 15 at its core. The central cluster contains several O-type stars, some of the hottest and most massive stars known, whose combined radiation ionises the surrounding hydrogen and sculpts the dramatic cavities and pillars visible in hydrogen-alpha imaging.
+The Heart Nebula in Cassiopeia is a large emission nebula around 7,500 light-years away, and the heart shape is a cavity: the young open cluster Melotte 15 at its centre contains several O-type stars, among the hottest and most massive known, whose winds and ultraviolet radiation have blown the gas outward and ionised what is left. The bright ridges and dark pillars around the centre are the denser material that has resisted, and new stars are still forming at their tips. The glowing knot at the upper right, NGC 896, is part of the same complex. William Herschel found the nebula in 1787, and at about two and a half degrees across it covers five full Moons of sky.
